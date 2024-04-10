@@ -1,0 +1,89 @@
+.custom-content-1 {
+    --background: rgb(15, 68, 84) !important;
+    width: 100%;
+    height: 100%;
+
+    .custom-fab {
+        .custom-fab-button {
+            --background: white !important;
+            .custom-icon {
+                color: rgb(50, 50, 50) !important;
+            }
+        }
+    }
+
+    .custom-grid-1 {
+        width: 100%;
+        height: 100%;
+
+        .custom-row-1 {
+            width: 100%;
+            height: 100%;
+
+            .custom-col-1 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+
+                .div-1 {
+                    width: 100%;
+                    height: 100%;
+
+                    .div-1-2 {
+                        width: 100%;
+                        padding: 10px 5px !important;
+
+                        .div-1-2-1 {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 100%;
+                            height: 80px;
+                            background: white;
+                            margin: 10px 0 !important;
+                            padding: 10px 0 !important;
+
+                            span {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: flex-start;
+                                width: 35%;
+                                height: 100%;
+
+                                .label-1 {
+                                    display: flex;
+                                    align-items: flex-start;
+                                    justify-content: center;
+                                    text-align: center;
+                                    height: 30px;
+                                    font-size: small;
+                                    color: rgb(50, 50, 50);
+                                }
+
+                                .label-2 {
+                                    display: flex;
+                                    align-items: flex-end;
+                                    justify-content: center;
+                                    text-align: center;
+                                    height: 30px;
+                                    font-size: small;
+                                    font-weight: bold;
+                                    color: #255075;
+                                }
+                            }
+
+                            .span-2,
+                            .span-3,
+                            .span-4 {
+                                border-left: 1px solid rgb(50, 50, 50);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

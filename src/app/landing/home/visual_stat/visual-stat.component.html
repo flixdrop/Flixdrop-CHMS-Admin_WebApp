@@ -1,0 +1,18 @@
+<ion-header mode="md" [translucent]="true">
+  <ion-toolbar class="back-btn-toolbar" color="none">
+    <ion-buttons slot="start">
+      <ion-back-button icon="arrow-undo" defaultHref="/landing/navs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center ion-margin-horizontal">Animal Collar Behaviourals</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div class="container outer-div"> 
+    <ion-icon style="cursor: pointer; color: var(--ion-color-primary-shade) !important; align-self: center;" name="play-skip-back" (click)="addChartDataSet()"></ion-icon>
+        <div class="container custom-div-2">
+      <canvas id="myChart" #myChart >{{ chart }}</canvas>
+    </div>
+    <ion-icon style="cursor: pointer; color: var(--ion-color-primary-shade) !important; align-self: center;" name="play-skip-forward" (click)="removeChartDataSet()"></ion-icon>
+  </div>     
+</ion-content>

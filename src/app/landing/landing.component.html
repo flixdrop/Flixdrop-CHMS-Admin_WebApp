@@ -1,0 +1,18 @@
+<ion-header [@slideUp]="isVisible ? 'in' : 'out'" class="custom-header-1">
+    <app-navigation></app-navigation>
+</ion-header>
+
+<ion-content id="main" [scrollEvents]="true" (ionScrollStart)="handleScrollStart()" (ionScrollEnd)="handleScrollEnd()"
+(ionScroll)="handleScroll($any($event))">
+    <ion-router-outlet></ion-router-outlet>
+</ion-content>
+
+<ion-footer [@slideDown]="isVisible ? 'in' : 'out'">
+    <div class="mask container-fluid" style="background-color: transparent; position: fixed; bottom: 0;">
+        <div class="d-flex flex-column justify-content-center align-items-start p-2 gap-3">
+          <img style="height: 25px; width: 25px; border-radius: 5px;" src="../../assets/images/fd.png" alt="fd-icon">
+          <p class="text-white">&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. </p>
+        </div>
+      </div>
+</ion-footer>
+                        

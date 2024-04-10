@@ -1,0 +1,324 @@
+.custom-content-1 {
+  .custom-div-1 {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+
+    .custom-div-1-1 {
+      align-self: center;
+      justify-self: center;
+    }
+
+    .custom-div-1-2 {
+
+      label,
+      select,
+      option {
+        font-size: 0.7rem !important;
+        color: rgba(50, 50, 50) !important;
+        letter-spacing: 1px !important;
+      }
+
+      select {
+        border: none !important;
+        width: max-content !important;
+        background: white;
+        background-color: white;
+        border-radius: 2px;
+        font-size: 0.7rem !important;
+      }
+    }
+
+    .custom-div-1-3 {
+      label {
+        font-size: 0.7rem !important;
+        color: rgba(50, 50, 50) !important;
+        letter-spacing: 1px !important;
+        font-weight: 800 !important;
+      }
+    }
+
+    .custom-div-1-4 {
+      label {
+        font-size: 0.7rem !important;
+        color: rgba(50, 50, 50) !important;
+        letter-spacing: 1px !important;
+        font-weight: 800 !important;
+      }
+    }
+
+    .custom-div-1-5 {
+    
+      .custom-card-1 {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 10px 1fr auto;
+        gap: 1rem;
+        padding: 1rem !important;
+        border-radius: 2px;
+        background: white;
+        background-color: white;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        .custom-card-div-1 {
+          
+          .collar{
+            position: absolute;
+            top: 7px;
+            left: 7px;
+
+            img{
+              width: 2rem;
+              height: 2rem;
+              border-radius: 50%;
+              box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+            }
+          }
+        }
+
+        .custom-card-div-2{
+          display: grid;
+          grid-template-columns: auto auto auto;
+          grid-template-rows: auto;        
+
+          label {
+            margin: 0 !important;
+            padding: 0 !important;
+            font-size: 0.7rem !important;
+            font-weight: 800 !important;
+            color: rgb(25, 25, 25) !important;
+          }
+
+          p {
+            color: rgb(50, 50, 50) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-weight: 800 !important;
+            font-size: 0.7rem !important;
+          }
+        }
+
+        .custom-card-div-3 {
+          display: grid;
+          grid-template-columns: auto auto auto;
+          grid-template-rows: auto;
+          gap: 1rem;
+
+          align-self: flex-end;
+          justify-content: flex-end;
+          align-content: flex-end;
+          justify-items: flex-end;
+
+          button{
+            cursor: pointer !important;
+            padding: 0.2rem !important;
+            border: none !important;
+            border-radius: 2px;
+            color: whitesmoke !important;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+          
+            label{
+              cursor: pointer !important;
+              color: whitesmoke !important;
+            }
+          }
+
+          .activate-collar{
+            background: var(--ion-color-success) !important;
+            color: var(--ion-color-success-contrast) !important;
+          }
+
+          .remove-collar{
+            background: var(--ion-color-danger) !important;
+            color: var(--ion-color-danger-contrast) !important;
+          }
+
+          label,
+          select,
+          option {
+            padding: 0.2rem !important;
+            border-radius: 2px;
+          }
+
+          select {
+            border: none !important;
+            width: max-content !important;
+            background: white;
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgb(50, 50, 50) 0px 0px 0px 2px;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .custom-content-1 {
+    .custom-div-1 {
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-rows: auto auto auto auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+      justify-items: center;
+  
+      .custom-div-1-1 {
+        align-self: center;
+        justify-self: center;
+      }
+  
+      .custom-div-1-2 {
+  
+        label,
+        select,
+        option {
+          font-size: 0.7rem !important;
+          color: rgba(50, 50, 50) !important;
+          letter-spacing: 1px !important;
+        }
+  
+        select {
+          border: none !important;
+          width: max-content !important;
+          background: white;
+          background-color: white;
+          border-radius: 2px;
+          font-size: 0.7rem !important;
+        }
+      }
+  
+      .custom-div-1-3 {
+        label {
+          font-size: 0.7rem !important;
+          color: rgba(50, 50, 50) !important;
+          letter-spacing: 1px !important;
+          font-weight: 800 !important;
+        }
+      }
+  
+      .custom-div-1-4 {
+        label {
+          font-size: 0.7rem !important;
+          color: rgba(50, 50, 50) !important;
+          letter-spacing: 1px !important;
+          font-weight: 800 !important;
+        }
+      }
+  
+      .custom-div-1-5 {
+      
+        .custom-card-1 {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 10px 1fr auto;
+          gap: 1rem;
+          padding: 1rem !important;
+          border-radius: 2px;
+          background: white;
+          background-color: white;
+          // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          .custom-card-div-1 {
+            
+            .collar{
+              position: absolute;
+              top: 7px;
+              left: 7px;
+  
+              img{
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+              }
+            }
+          }
+  
+          .custom-card-div-2{
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;        
+  
+            label {
+              margin: 0 !important;
+              padding: 0 !important;
+              font-size: 0.7rem !important;
+              font-weight: 800 !important;
+              color: rgb(25, 25, 25) !important;
+            }
+  
+            p {
+              color: rgb(50, 50, 50) !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              font-weight: 800 !important;
+              font-size: 0.7rem !important;
+            }
+          }
+  
+          .custom-card-div-3 {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: auto;
+            gap: 1rem;
+            padding: 1rem;
+  
+            align-self: flex-end;
+            justify-content: flex-end;
+            align-content: flex-end;
+            justify-items: flex-end;
+  
+            button{
+              cursor: pointer !important;
+              padding: 0.2rem !important;
+              border: none !important;
+              border-radius: 2px;
+              color: whitesmoke !important;
+              box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+            
+              label{
+                cursor: pointer !important;
+                color: whitesmoke !important;
+              }
+            }
+  
+            .activate-collar{
+              background: seagreen;
+            }
+  
+            .remove-collar{
+              background: tomato;
+            }
+  
+            label,
+            select,
+            option {
+              color: rgba(50, 50, 50) !important;
+              padding: 0.2rem !important;
+              border-radius: 2px;
+            }
+  
+            select {
+              border: none !important;
+              width: max-content !important;
+              background: white;
+              background-color: white;
+              box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgb(50, 50, 50) 0px 0px 0px 2px;
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

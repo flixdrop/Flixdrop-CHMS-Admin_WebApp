@@ -1,0 +1,9 @@
+ion-app {
+  --background: white !important;
+  background: white !important;
+  background-color: white !important;
+
+  ion-router-outlet {
+    display: contents;
+  }
+}

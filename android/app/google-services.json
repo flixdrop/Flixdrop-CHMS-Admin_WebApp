@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "734465480667",
+    "project_id": "flixdrop-firebase",
+    "storage_bucket": "flixdrop-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734465480667:android:b12c9c6320a05dc79cf9fe",
+        "android_client_info": {
+          "package_name": "com.flixdrop.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734465480667-pi7a189hfrr0f1e90hpk97kcj6dc4v73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmBgzI5CAtdDDZBdHiTLy-5aA-2j8A1fc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734465480667-pi7a189hfrr0f1e90hpk97kcj6dc4v73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

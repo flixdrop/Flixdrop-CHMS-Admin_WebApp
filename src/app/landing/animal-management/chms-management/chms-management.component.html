@@ -1,0 +1,117 @@
+<ion-header mode="md" [translucent]="true">
+    <ion-toolbar class="back-btn-toolbar" color="none">
+      <ion-buttons slot="start">
+        <ion-back-button icon="arrow-back-circle" defaultHref="/landing/navs/home" text=""></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="custom-content-1">
+    <ion-item color="none" lines="none">
+        <ion-icon slot="start" name="refresh" (click)="refreshData()"></ion-icon>
+    </ion-item>
+
+    <div class="custom-div-1">
+
+        <div class="custom-div-1-1">
+            <ion-searchbar search-icon="search-circle" color="none" mode="md" placeholder="Search for Cattles" [(ngModel)]="searchTerm"
+        [debounce]="1000" (ionInput)="handleInput($event)">
+      </ion-searchbar>
+        </div>
+
+        <div class="custom-div-1-2">
+            <form>
+                <label>Farm- </label>
+                <select class="location-select" (change)="onSelectFarm($event)">
+                    <option class="select-all" value="select-all"><b>All Animals</b></option>
+                    <option [value]="farm['section_location_id']" *ngFor="let farm of farms;">
+                      {{farm['location_name']}}</option>
+                  </select>
+            </form>
+        </div>
+
+        <div class="custom-div-1-3" *ngIf="farm !== 'allAnimals'">
+            <label>
+                Owner - {{farm['owner']['first_name']+" "+farm['owner']['middle_name']+" "+farm['owner']['last_name']}}
+            </label>
+        </div>
+
+        <div class="custom-div-1-4" *ngIf="farm !== 'allAnimals'">
+            <label *ngIf="farm">
+                Location - {{farm['location_name']}}
+            </label>
+        </div>
+
+        <div class="custom-div-1-5">
+
+            <ion-card color="none" class="custom-card-1" *ngFor="let animal of results; let animalIndex=index;">
+
+                <div class="custom-card-div-1">
+                    <div class="collar" *ngIf="animal['belt'] !== null && animal['belt'].assigned === true">
+                        <img src=".././../../../assets/images/device-img.PNG" />
+                    </div>
+                </div>
+
+                <div class="custom-card-div-2">
+                    <ion-item color="none" lines="none">
+                        <ion-label>
+                            <h3>Animal ID -</h3>
+                            <p>{{animal['id']}}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item color="none" lines="none">
+                        <ion-label>
+                            <h3>Date of Birth -</h3>
+                            <p>{{timeStampTODate(+animal['date_of_birth'])}}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item color="none" lines="none">
+                        <ion-label>
+                            <h3>Belongs to Farm -</h3>
+                            <p>{{animal['farm'].location_name}}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item color="none" lines="none">
+                        <ion-label>
+                            <h3>Device Name -</h3>
+                            <p *ngIf="animal['belt'] !== null && animal['belt'].assigned === true">{{animal['belt'].name}}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item color="none" lines="none">
+                        <ion-label>
+                            <h3>Device ID -</h3>
+                            <p *ngIf="animal['belt'] !== null && animal['belt'].assigned === true">
+                                {{animal['belt'].device_id}}</p>
+                            </ion-label>
+                    </ion-item>
+                </div>
+
+                <div class="custom-card-div-3">
+                    <!-- <div class="btn-section"> -->
+                        <button class="activate-collar" *ngIf="animal['belt'] === null || animal['belt'].assigned == false"
+                            (click)="assignBelt(animal['id'])">
+                            <label>
+                                Assign Collar
+                            </label>
+                        </button>
+                        <button class="remove-collar" *ngIf="animal['belt'] !== null && animal['belt'].assigned == true"
+                            (click)="unassignBelt(animal['belt'].device_id)">
+                            <label>
+                                Remove Collar
+                            </label>
+                        </button>
+                    <!-- </div> -->
+                    <select *ngIf="animal['belt'] === null || animal['belt'].assigned == false"
+                        (change)="selectCollar($event)">
+                        <option value="" disabled selected>Select a Collar</option>
+                        <option *ngFor="let collar of collars;" [value]="collar['device_id']">{{collar['name']}}
+                        </option>
+                    </select>
+                </div>
+                
+            </ion-card>
+
+        </div>
+    </div>
+
+</ion-content>

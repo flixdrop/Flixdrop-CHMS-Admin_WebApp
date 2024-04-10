@@ -1,0 +1,314 @@
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+   <ion-header>
+    
+    <div class="custom-div-outer container">
+
+      <div class="custom-div-1">
+
+        <div class="logo-section">
+          <div class="menu-btn-section">
+            <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button
+              (click)="drawer.toggle()">
+              <ion-icon name="menu"></ion-icon>
+            </button>
+          </div>
+
+          <div class="custom-div-1-1" style="margin: 1rem !important; border-right: 1px solid rgba(219, 219, 219, 0.7);">
+            <a href="/landing/navs/home">
+              <ion-img src="../../assets/icons/flixdrop-icon.png"></ion-img>
+            </a>
+          </div>
+   
+          <div *ngIf="!isLoading && typeOfUser !== 'superadmin'" class="custom-div-1-1" style="padding: 1rem !important; transform: scale(0.8);">
+            <a href="https://en.wikipedia.org/wiki/ITC_Limited">
+              <ion-img src="../../../assets/icons/itc.png"></ion-img>
+            </a>
+          </div>
+        </div>
+
+        <div class="custom-div-1-2" *ngIf="isWeb$ | async">
+
+          <div class="custom-div-1-2-1" (mouseover)="userManagement.closeMenu()" [routerLink]="['/landing/navs/home']"
+            routerLinkActive="router-link-active">
+            <ion-icon name="home"></ion-icon>
+            <label>{{'Home' | translate }}</label>
+          </div>
+
+          <div (mouseover)="animalManagement.closeMenu()" (mouseover)="userManagement.openMenu()"
+            #userManagement="matMenuTrigger" [matMenuTriggerFor]="userManagementOptions" class="custom-div-1-2-1">
+            <ion-icon name="people-sharp"></ion-icon>
+            <label>{{'User Management' | translate}}</label>
+            <mat-menu class="mat-menu" #userManagementOptions="matMenu" [hasBackdrop]="false">
+              <div class="drop-down" (mouseleave)="userManagement.closeMenu()" >
+                <button mat-menu-item [routerLink]="['/landing/navs/user-management']" [disabled]="true">
+                  {{'Manage Existing Users' | translate }}</button>
+                <button mat-menu-item [routerLink]="['/landing/navs/user-management/add-admin']" [disabled]="true">
+                  {{'Add New Admin' | translate}}</button>
+                <button mat-menu-item [routerLink]="['/landing/navs/user-management/add-user']" [disabled]="true">
+                  {{'Add New User' | translate}}</button>
+              </div>
+            </mat-menu>
+          </div>
+
+          <div (mouseover)="userManagement.closeMenu()" (mouseover)="animalManagement.openMenu()"
+            #animalManagement="matMenuTrigger" [matMenuTriggerFor]="animalManagementOptions" class="custom-div-1-2-1">
+            <ion-img src="../../assets/icons/favicon.png"></ion-img>
+            <label>{{'Animal Management'| translate}}</label>
+            <mat-menu class="mat-menu" #animalManagementOptions="matMenu" [hasBackdrop]="false">
+              <div class="drop-down" (mouseleave)="animalManagement.closeMenu()">
+                <button mat-menu-item [routerLink]="['/landing/navs/animal-management']" [disabled]="true">
+                  {{'Manage Existing Animals'| translate}} </button>
+                <button mat-menu-item [routerLink]="['/landing/navs/animal-management/chms-management']" [disabled]="true">
+                  {{'Manage CHMS Animals'| translate}}
+                  </button>
+                <button mat-menu-item [routerLink]="['/landing/navs/animal-management/add-animal']" [disabled]="true">
+                  {{'Add New Animal'| translate}}</button>
+              </div>
+            </mat-menu>
+          </div>
+
+          <div>
+            <ion-badge
+              style="cursor: not-allowed; position: absolute; top: 5px; font-size: 10px !important; border-radius: 4px 4px 4px 0px;"
+              color="success">
+              <ion-label>
+                {{'Coming Soon'| translate}}
+              </ion-label>
+            </ion-badge>
+            <ion-icon class="inactive-nav" name="wallet"></ion-icon>
+            <label class="inactive-nav">{{'Payment Management'| translate}}</label>
+          </div>
+
+          <div>
+            <ion-badge
+              style="cursor: not-allowed; position: absolute; top: 5px; font-size: 10px !important; border-radius: 4px 4px 4px 0px;"
+              color="success">
+              <ion-label>
+                {{'Coming Soon'| translate}}
+              </ion-label>
+            </ion-badge>
+            <ion-icon class="inactive-nav" name="notifications-circle-outline"></ion-icon>
+            <label class="inactive-nav">{{'Notification Management'| translate}}</label>
+          </div>
+
+          <div>
+            <ion-select style="align-self: flex-start; --padding-start: 1rem; --padding-end: 1rem; min-width: 200px !important; height: auto !important; border-radius: 5px; transform: scaleY(0.8);" interface="popover" [okText]="'Select' | translate" [cancelText]="'Cancel' | translate" label="Language" label-placement="floating" [(ngModel)]="language" (ionChange)="changeLanguageTo($event)">
+              <ion-select-option value="en" selected-text="language == 'en'">ENGLISH</ion-select-option>
+              <ion-select-option value="hi" selected-text="language == 'hi'">हिंदी</ion-select-option>
+              <ion-select-option value="ka" selected-text="language == 'ka'">ಕನ್ನಡ</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div class="custom-div-1-2-1"
+            style="border-left: 1px solid gainsboro !important; border-radius: 0 !important;"
+            (mouseover)="animalManagement.closeMenu()" (click)="onClickLogout()">
+            <ion-button class="logout-btn" expand="block">
+              <ion-label slot="start">{{'Logout'| translate}}</ion-label>
+              <ion-icon name="log-out-outline" color="danger"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>    
+   </ion-header> 
+  </mat-sidenav-content>
+
+
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'push' : 'side'">
+
+    <div class="custom-div-3">
+
+      <div class="custom-div-3-1">
+        <a href="/landing/navs/home">
+          <img class="fd-logo" src="../../assets/icons/fd.png" />
+        </a>
+      </div>
+
+      <div class="custom-div-3-2">
+        <mat-nav-list>
+          <ion-item lines="none" [routerLink]="['/landing/navs/home']" routerLinkActive="router-link-active"
+            (click)="drawer.toggle()" button>
+            <ion-icon name="home"></ion-icon>
+            <ion-label>H{{'Home'| translate}}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none" button>
+            <ion-icon name="people-sharp"></ion-icon>
+            <ion-accordion-group #accordianGroup_1>
+              <ion-accordion value="first">
+                <div class="accordion-header" slot="header" button>
+                  <ion-label>{{'User Management'| translate}}</ion-label>
+                </div>
+                <div class="accordion-content" slot="content">
+                  <ion-label [routerLink]="['/landing/navs/user-management']" (click)="drawer.toggle()"
+                    (click)="onSelectAccordianItem_1()">{{'Manage Existing Users'| translate}}</ion-label>
+                  <ion-label [routerLink]="['/landing/navs/user-management/add-admin']" (click)="drawer.toggle()"
+                    (click)="onSelectAccordianItem_1()">{{'Add New Admin'| translate}}</ion-label>
+                  <ion-label [routerLink]="['/landing/navs/user-management/add-user']" (click)="drawer.toggle()"
+                    (click)="onSelectAccordianItem_1()">{{'Add New User'| translate}}</ion-label>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-item>
+
+          <ion-item lines="none" button>
+            <ion-img src="../../assets/icons/favicon.png"></ion-img>
+            <ion-accordion-group #accordianGroup_2>
+              <ion-accordion value="first">
+                <div class="accordion-header" slot="header" color="none" button>
+                  <ion-label>{{'Animal Management'| translate}}</ion-label>
+                </div>
+                <div class="accordion-content" slot="content">
+                  <ion-label [routerLink]="['/landing/navs/animal-management']" (click)="drawer.toggle()"
+                    (click)="onSelectAccordianItem_2()">
+                    {{'Manage Existing Animals'| translate}}</ion-label>
+                  <ion-label [routerLink]="['/landing/navs/animal-management/chms-management']"
+                    (click)="drawer.toggle()" (click)="onSelectAccordianItem_2()">
+                    {{'Manage CHMS Animals'| translate}}</ion-label>
+                  <ion-label [routerLink]="['/landing/navs/animal-management/add-animal']" (click)="drawer.toggle()"
+                    (click)="onSelectAccordianItem_2()">
+                    {{'Add New Animal'| translate}}</ion-label>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-item>
+          <ion-item [disabled]="true" lines="none" button (click)="drawer.toggle()" button>
+            <ion-icon name="wallet"></ion-icon>
+            <ion-label>{{'Payment Management'| translate}}</ion-label>
+            <ion-badge color="tertiary">{{'Coming Soon'| translate}}</ion-badge>
+          </ion-item>
+          <ion-item [disabled]="true" lines="none" button (click)="drawer.toggle()" button>
+            <ion-icon name="notifications-circle-outline"></ion-icon>
+            <ion-label>{{'Notification Management'| translate}}</ion-label>
+            <ion-badge color="tertiary">{{'Coming Soon'| translate}}</ion-badge>
+          </ion-item>
+          <ion-item color="none" class="logout-btn-item" lines="none" button (click)="drawer.toggle()" button>
+            <ion-icon name="log-out" (click)="onClickLogout()"></ion-icon>
+            <ion-label>{{'Logout'| translate}}</ion-label>
+          </ion-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </mat-sidenav>
+
+</mat-sidenav-container> 
+ -->
+
+
+
+
+
+<div class="container-fluid custom-header">
+
+  <nav class="navbar navbar-expand-sm navbar-light bg-light align-items-center">
+
+    <!-- <a class="navbar-brand" href="" style="min-height: 100px; min-width: 100px; max-width: 100px; max-height: 100px;">
+      <img src="../../assets/icons/flixdrop-icon.png" />
+    </a> -->
+    
+    <a class="navbar-brand mx-2" href="" style="min-height: 70px; min-width: 70px; max-width: 70px; max-height: 70px; border-right: 2px solid gainsboro; padding: 2px; display: flex; align-items: center; justify-content: center;" >
+        <img src="../../assets/icons/flixdrop-icon.png" />
+      </a>
+
+    <a *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'" href="https://en.wikipedia.org/wiki/ITC_Limited" class="navbar-brand" href="" style="min-height: 50px; min-width: 50px; max-width: 50px; max-height: 50px;">
+        <img src="../../../assets/icons/itc.png" />
+      </a>
+
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+      </button> -->
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <form class="form-inline my-lg-0">
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: center; margin: 0 1rem !important;">
+              <ion-icon *ngIf="isSearchBarFocused" style="cursor: pointer; position: relative; left: -1rem;"
+                name="chevron-forward" color="danger" (click)="minimizeSearchBar()"></ion-icon>
+              <ion-searchbar #searchBar placeholder="{{'Search by Animal No.' | translate}}" style="justify-self: center;"
+                class="searchToolbar" (ionFocus)="onSearchBarFocus()"
+                [ngClass]="{'searchToolbarOnFocus': isSearchBarFocused}" animated="true" [debounce]="1000"
+                (ionInput)="handleInput($event)"></ion-searchbar>
+            </div>
+
+            <!-- <div *ngIf="isSearchBarFocused && !isLoading"
+              style="position: fixed; top: auto; left: auto; border-radius: 2.5px; margin-left: 1rem !important; width: 420px; height: auto !important; min-height: 0px !important; max-height: 400px !important; background: white; overflow: scroll; overflow-x: unset;">
+              <ion-list>
+                <ion-item lines="none" *ngFor="let animal of results" (click)="onClickAnimal(animal['id'])"
+                  class="searchItem">
+                  <ion-label>
+                    <h2>{{'Animal No. '+animal['name']}}</h2>
+                    <p>{{'Collar No. '+animal['belt']['device_id']}}</p>
+                    <ion-note>{{'Farm Name - '+animal['farm']['location_name']}}</ion-note>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div> -->
+          </div>
+
+        </div>
+
+      </form>
+
+
+      <ul class="navbar-nav mr-auto align-items-baseline custom-navbar-nav" style="gap: 1rem; text-wrap: balance;">
+
+        <li class="nav-item active" [routerLink]="['/', 'landing', 'navs', 'home']"
+        routerLinkActive="router-link-active">
+          <ion-label>{{'Home' | translate}}</ion-label>
+        </li>
+
+        <li class="nav-item inactive-nav">
+          <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+          <ion-select disabled="true" interface="popover" selectedText="{{'Manage Users' | translate}}">
+            <ion-select-option>{{'Manage Users' | translate}}</ion-select-option>
+          </ion-select>
+        </li>
+        <li class="nav-item inactive-nav">
+          <!-- <a class="nav-link" href="#">Link</a> -->
+
+          <ion-select disabled="true" interface="popover" selectedText="{{'Manage Animals' | translate}}">
+            <ion-select-option>{{'Manage Animals' | translate}}</ion-select-option>
+            <ion-select-option>{{'CHMS Service' | translate}}</ion-select-option>
+          </ion-select>
+
+        </li>
+
+        <li class="nav-item inactive-nav">
+          <ion-label class="nav-link disabled" href="#">{{'Manage Payment' | translate}}</ion-label>
+          <ion-badge color="warning">{{'coming soon' | translate}}</ion-badge>
+        </li>
+
+        <li class="nav-item inactive-nav">
+          <ion-label class="nav-link disabled" href="#">{{'Manage Notification' | translate}}</ion-label>
+          <ion-badge color="warning">{{'coming soon' | translate}}</ion-badge>
+        </li>
+      </ul>
+
+      
+    </div>
+
+    <ul class="navbar-nav mr-auto p-2 custom-navbar-nav" style="gap: 1rem; text-wrap: balance;">
+      <li class="nav-item">
+        <ion-select interface="popover" [okText]="'Select' | translate" [cancelText]="'Cancel' | translate" [(ngModel)]="language" label="Language" selectedText="{{language | translate}}" (ionChange)="changeLanguageTo($event)">
+          <ion-select-option value="en" selected-text="language == 'en'">ENGLISH</ion-select-option>
+          <ion-select-option value="hi" selected-text="language == 'hi'">हिंदी</ion-select-option>
+          <ion-select-option value="ka" selected-text="language == 'ka'">ಕನ್ನಡ</ion-select-option>
+        </ion-select>
+    </li>
+
+      <li class="nav-item">
+      <ion-select interface="popover" toggleIcon="settings" selectedText="{{'All' | translate}}" (ionChange)="onClickSettings($event)">
+        <ion-select-option value="my-account">{{'My Account' | translate}}</ion-select-option>
+        <ion-select-option value="logout">{{'Logout' | translate}}</ion-select-option>
+      </ion-select>
+    </li>
+
+  </ul>
+  </nav>
+</div>

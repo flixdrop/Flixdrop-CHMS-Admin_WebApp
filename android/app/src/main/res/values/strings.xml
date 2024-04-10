@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">com.flixdrop.admin</string>
+    <string name="title_activity_main">com.flixdrop.admin</string>
+    <string name="package_name">com.flixdrop.admin</string>
+    <string name="custom_url_scheme">com.flixdrop.admin</string>
+</resources>

@@ -1,0 +1,133 @@
+<ion-header mode="md" [translucent]="true">
+  <ion-toolbar class="back-btn-toolbar" color="none">
+    <ion-buttons slot="start">
+      <ion-back-button icon="arrow-back-circle" defaultHref="/landing/navs/home" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-content-1">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="4" offset-md="4">
+
+        <div class="custom-div-1">
+
+          <div class="custom-header-1">
+            <label>User Sign-Up</label>
+          </div>
+
+          <form class="custom-form-1" [formGroup]="userForm" (ngSubmit)="onClickRegisterUser()">
+
+            <fieldset>
+
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">User'r Name</ion-label>
+                <ion-select class="location-select" interface="popover" formControlName="name" (ionChange)="onSelectFarm($event)" placeholder="Select User">
+                  <ion-select-option [value]="item['section_location_id']" *ngFor="let item of farms;">
+                      {{item['location_name']}}</ion-select-option>
+                  </ion-select>            
+                </ion-item>
+  
+                <ion-item lines="none" color="none">
+                  <ion-label position="stacked">FARM</ion-label>
+                  <ion-select class="location-select" interface="popover" formControlName="name" (ionChange)="onSelectFarm($event)" placeholder="Select Farm">
+                    <ion-select-option [value]="item['section_location_id']" *ngFor="let item of farms;">
+                        {{item['location_name']}}</ion-select-option>
+                    </ion-select>            
+                  </ion-item>
+  
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">NAME</ion-label>
+                <ion-input type="text" placeholder="Enter your Name" formControlName="name"></ion-input>
+              </ion-item>
+  
+  
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">EMAIL</ion-label>
+                <ion-input type="text" placeholder="Enter your Email Address" formControlName="email"></ion-input>
+                <p *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched && userForm.controls['email'].dirty"
+                  class="input-error">please enter a valid E-Mail Address</p>
+              </ion-item>
+             
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">MOBILE NUMBER</ion-label>
+                <ion-input type="tel" inputmode="tel" placeholder="Enter your Phone No."
+                  formControlName="phone_number_for_login" required minlength="8" maxlength="10"
+                  oninput="this.value = this.value.replace(/[^0-9+()]/g, '');" pattern=".{10,10}">
+                </ion-input>
+                <p *ngIf="!userForm.controls['phone_number_for_login'].valid && userForm.controls['phone_number_for_login'].touched && userForm.controls['phone_number_for_login'].dirty"
+                  class="input-error">please enter a Mobile Number!</p>
+              </ion-item>
+
+            </fieldset>
+
+            <ion-modal class="username-password" trigger="username-password" show-backdrop="false"
+        backdrop-dismiss="false">
+        <ng-template>
+          <div class="custom-div-1">
+
+            <div class="custom-header-1">
+              <label>Create Username & Password</label>
+            </div>
+
+            <form class="custom-form-1" [formGroup]="userForm" (ngSubmit)="onClickRegisterUser()">
+            <fieldset>
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">Username</ion-label>
+                <ion-input type="text" placeholder="Enter a Username" formControlName="username"></ion-input>
+              </ion-item>
+              <ion-item lines="none" color="none">
+                <ion-label position="stacked">Password</ion-label>
+                <ion-input type="text" placeholder="Enter a Password" formControlName="password"></ion-input>
+              </ion-item>
+            </fieldset>
+
+            <div class="custom-modal-div-1">
+              <button class="submit-btn" type="submit" (click)="onClickRegisterUser()">
+                <label>Create</label>
+                <ion-icon name="create-outline"></ion-icon>
+            </button>
+              <button class="cancel-btn" (click)="onCloseModal()">
+                <label> Cancel</label>
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </div>
+
+          </form>
+        </div>
+        </ng-template>
+      </ion-modal>
+
+          </form>
+        </div>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="custom-footer-1">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="4" offset-md="4">
+        <div class="custom-div-1">
+          <button class="submit-btn" type="submit" id="username-password">
+            <label> Register User </label>
+            <ion-icon name="create"></ion-icon>
+          </button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+
+
+
+
+
+
+
+
+
+

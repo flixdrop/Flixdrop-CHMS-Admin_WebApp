@@ -1,0 +1,153 @@
+<!-- <ion-header class="custom-header">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+
+        <div class="div-1">
+
+          <div class="div-1-1">
+            <div class="div-1-1-1">
+              <img src="../../assets/images/chms-logo.png" />
+            </div>
+            <div class="div-1-1-2">
+              <img src="../../assets/images/admin-logo.png" />
+            </div>
+          </div>
+
+          <div class="div-1-2">
+            <div (mouseover)="userManagement.closeMenu()" class="div-1-2-1" [routerLink]="['/landing/navs/home']"
+              routerLinkActive="router-link-active">
+              <img src="../../assets/icons/home.svg" />
+              <span>
+                <label>HOME</label>
+              </span>
+            </div>
+            <div (mouseover)="animalManagement.closeMenu()" (mouseover)="userManagement.openMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/user-management.svg" />
+              <span>
+                <label #userManagement="matMenuTrigger" [matMenuTriggerFor]="userManagementOptions">USER
+                  MANAGEMENT</label>
+              </span>
+              <mat-menu class="mat-menu" #userManagementOptions="matMenu" [hasBackdrop]="false">
+                <div class="drop-down" (mouseleave)="userManagement.closeMenu()">
+                  <button mat-menu-item [routerLink]="['/landing/navs/user-management']">Manage Existing Users</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/user-management/add-user']">Add New Users</button>
+                </div>
+              </mat-menu>
+            </div>
+
+            <div (mouseover)="userManagement.closeMenu()" (mouseover)="animalManagement.openMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/animal-management.svg" />
+              <span>
+                <label #animalManagement="matMenuTrigger" [matMenuTriggerFor]="animalManagementOptions">ANIMAL
+                  MANAGEMENT</label>
+              </span>
+              <mat-menu class="mat-menu" #animalManagementOptions="matMenu" [hasBackdrop]="false">
+                <div class="drop-down" (mouseleave)="animalManagement.closeMenu()">
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management']">Manage Existing
+                    Animals</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management/chms-management']">Manage CHMS
+                    Animals</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management/add-animal']">Add New
+                    Animals</button>
+                </div>
+              </mat-menu>
+            </div>
+            <div (mouseover)="userManagement.closeMenu() === animalManagement.closeMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/payment-management.svg" />
+              <span>
+                <label>PAYMENT MANAGEMENT</label>
+              </span>
+            </div>
+            <div class="div-1-2-1">
+              <img src="../../assets/icons/notification-management.svg" />
+              <span>
+                <label>NOTIFICATION MANAGEMENT</label>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header> -->
+
+
+
+<ion-header class="custom-header">
+  <ion-grid>
+    <ion-row class="div-1">
+    
+          <ion-col class="div-1-1" size="4">
+            <div class="div-1-1-1">
+              <img src="../../assets/images/chms-logo.png" />
+            </div>
+            <div class="div-1-1-2">
+              <img src="../../assets/images/admin-logo.png" />
+            </div>
+          </ion-col>
+
+          <ion-col class="div-1-2" size="8">
+
+            <ion-row>
+
+
+            <ion-col (mouseover)="userManagement.closeMenu()" class="div-1-2-1" [routerLink]="['/landing/navs/home']"
+              routerLinkActive="router-link-active">
+              <img src="../../assets/icons/home.svg" />
+              <span>
+                <label>HOME</label>
+              </span>
+            </ion-col>
+            <ion-col (mouseover)="animalManagement.closeMenu()" (mouseover)="userManagement.openMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/user-management.svg" />
+              <span>
+                <label #userManagement="matMenuTrigger" [matMenuTriggerFor]="userManagementOptions">USER
+                  MANAGEMENT</label>
+              </span>
+              <mat-menu class="mat-menu" #userManagementOptions="matMenu" [hasBackdrop]="false">
+                <div class="drop-down" (mouseleave)="userManagement.closeMenu()">
+                  <button mat-menu-item [routerLink]="['/landing/navs/user-management']">Manage Existing Users</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/user-management/add-user']">Add New Users</button>
+                </div>
+              </mat-menu>
+            </ion-col>
+
+            <ion-col (mouseover)="userManagement.closeMenu()" (mouseover)="animalManagement.openMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/animal-management.svg" />
+              <span>
+                <label #animalManagement="matMenuTrigger" [matMenuTriggerFor]="animalManagementOptions">ANIMAL
+                  MANAGEMENT</label>
+              </span>
+              <mat-menu class="mat-menu" #animalManagementOptions="matMenu" [hasBackdrop]="false">
+                <div class="drop-down" (mouseleave)="animalManagement.closeMenu()">
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management']">Manage Existing
+                    Animals</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management/chms-management']">Manage CHMS
+                    Animals</button>
+                  <button mat-menu-item [routerLink]="['/landing/navs/animal-management/add-animal']">Add New
+                    Animals</button>
+                </div>
+              </mat-menu>
+            </ion-col>
+            <ion-col (mouseover)="userManagement.closeMenu() === animalManagement.closeMenu()" class="div-1-2-1">
+              <img src="../../assets/icons/payment-management.svg" />
+              <span>
+                <label>PAYMENT MANAGEMENT</label>
+              </span>
+            </ion-col>
+            <ion-col class="div-1-2-1">
+              <img src="../../assets/icons/notification-management.svg" />
+              <span>
+                <label>NOTIFICATION MANAGEMENT</label>
+              </span>
+            </ion-col>
+
+          </ion-row>
+          </ion-col>
+     
+    </ion-row>
+  </ion-grid>
+</ion-header>

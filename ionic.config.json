@@ -1,0 +1,7 @@
+{
+  "name": "chms-admin-application-ionic-angular",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
