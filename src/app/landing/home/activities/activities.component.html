@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button icon="arrow-undo-circle-sharp" defaultHref="/farm/dashboard" text=""></ion-back-button>
+      <ion-chip style="border-radius: 4px;">
+        <ion-label>
+          {{'Activities' | translate}}
+        </ion-label>
+        <ion-badge color="warning" style="margin-left: 8px;">
+          <ion-label>
+            {{results.length}}
+          </ion-label>
+        </ion-badge>
+      </ion-chip>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-content" [scrollEvents]="true">
+
+  <div style="width: 100%; display: flex; align-items: center;
+  justify-content: center;" *ngIf="isLoading">
+    <ion-spinner name="circular" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading" class="table-container">
+    <table id="myTable" class="table">
+      <ion-grid>
+        <ion-row>
+          <ion-col sizeLg="4">
+            <ion-toolbar>
+              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+              </ion-searchbar>
+            </ion-toolbar>
+          </ion-col>
+          <ion-col>
+            <div class="filter-section">
+              <span>
+                <ion-icon name="calendar"></ion-icon>
+                <ion-label>From</ion-label>
+                <ion-datetime-button datetime="datetime-1"></ion-datetime-button>
+              </span>
+              <span>
+                <ion-icon name="calendar"></ion-icon>
+                <ion-label>Till</ion-label>
+                <ion-datetime-button datetime="datetime-2"></ion-datetime-button>
+              </span>
+            </div>
+
+            <ion-popover [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime-1" presentation="date" [(ngModel)]="fromDate" [showDefaultButtons]="true"
+                  displayFormat="YYYY-MM-DD" [max]="maxDate" (ionChange)="filterEvents()"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+            <ion-popover [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime-2" presentation="date" [(ngModel)]="toDate" [showDefaultButtons]="true"
+                  displayFormat="YYYY-MM-DD" [min]="fromDate" [max]="maxDate"
+                  (ionChange)="filterEvents()"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <caption *ngIf="results.length > 0">List of Activities</caption>
+      <caption *ngIf="results.length == 0">
+        {{'No Activities Available'| translate}}</caption>
+
+      <thead>
+        <tr>
+          <th scope="col" (click)="sortTable(0)"
+            [ngClass]="{'sort-asc': sortOrders[0] === 'asc', 'sort-desc': sortOrders[0] === 'desc'}">{{'Owner\s Name'|
+            translate}}</th>
+
+          <th scope="col" (click)="sortTable(1)"
+            [ngClass]="{'sort-asc': sortOrders[1] === 'asc', 'sort-desc': sortOrders[1] === 'desc'}">{{'Farm Name'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(2)"
+            [ngClass]="{'sort-asc': sortOrders[2] === 'asc', 'sort-desc': sortOrders[2] === 'desc'}">{{'Animal Name'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(2)"
+            [ngClass]="{'sort-asc': sortOrders[2] === 'asc', 'sort-desc': sortOrders[2] === 'desc'}">{{'Collar No.'|
+            translate}}</th>
+            <th scope="col" (click)="sortTable(3)"
+            [ngClass]="{'sort-asc': sortOrders[3] === 'asc', 'sort-desc': sortOrders[3] === 'desc'}">{{'Activity
+            Type'| translate}}
+          </th>
+          <th scope="col" (click)="sortTable(3)"
+            [ngClass]="{'sort-asc': sortOrders[3] === 'asc', 'sort-desc': sortOrders[3] === 'desc'}">{{'Activity
+            Duration'| translate}}
+          </th>
+          <th scope="col" (click)="sortTable(4)"
+            [ngClass]="{'sort-asc': sortOrders[4] === 'asc', 'sort-desc': sortOrders[4] === 'desc'}">{{'Activity Hours'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(5)"
+            [ngClass]="{'sort-asc': sortOrders[5] === 'asc', 'sort-desc': sortOrders[5] === 'desc'}">{{'Notice'|
+            translate}}</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="results.length > 0">
+        <tr *ngFor="let actiity of results; let i=index">
+
+          <td>{{actiity?.animal?.farm?.organization?.user?.username}}</td>
+          <td>{{actiity?.animal?.farm?.name}}</td>
+
+          <td>{{actiity?.animal.name}}</td>
+          <td>{{actiity?.animal?.collar?.name}}</td>
+          <td>{{actiity?.type}}</td>
+          <td>
+            <span class='heat-label'>
+              <p>
+                {{'Duration : '+ actiity?.value+" Minutes / Day"}}
+                <ion-icon name="timer" color="success"></ion-icon>
+              </p>
+            </span>
+          </td>
+          <td>{{actiity?.timestamp | date: 'MMM d, y, h:mm a'}}</td>
+          <td>
+            <ion-label>
+              <h2>Abnormality Found</h2>
+              <h4>
+                {{"Animal collar has recorded "+actiity.type+" activity for a duration of "+actiity.value+" Minutes Per
+                Day."}}
+              </h4>
+            </ion-label>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+</ion-content>

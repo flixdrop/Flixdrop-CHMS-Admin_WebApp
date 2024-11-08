@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrollDetail } from '@ionic/angular';
 import { StatusBar } from '@capacitor/status-bar';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-landing',
@@ -20,8 +20,8 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
       opacity: 0,
       display: 'none'
     })),
-    transition('in => out', animate('100ms ease-out')),
-    transition('out => in', animate('700ms ease-in'))
+    transition('in => out', animate('100ms ease-in')),
+    transition('out => in', animate('100ms ease-out'))
   ]),
 
   trigger('slideDown', [
@@ -33,8 +33,8 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
       transform: 'translateY(-0%)',
       opacity: 0
     })),
-    transition('in => out', animate('700ms ease-out')),
-    transition('out => in', animate('700ms ease-in'))
+    transition('in => out', animate('100ms ease-in')),
+    transition('out => in', animate('100ms ease-out'))
   ])
 ]
 
@@ -62,13 +62,18 @@ export class LandingComponent implements OnInit {
   handleScrollEnd() {
   
   }
-  
+
   handleScroll(ev: CustomEvent<ScrollDetail>) {
-    if(ev.detail.scrollTop >=100){
+    if (ev.detail.scrollTop > 0) {
       this.isVisible = false;
-    }
-    else if(ev.detail.scrollTop === 0){
+    } else if (ev.detail.scrollTop === 0) {
       this.isVisible = true;
+    }
+    else{
+      this.isVisible = true;
+      // clearTimeout(this.scrollTimeout);
+      // this.scrollTimeout = setTimeout(() => {
+      // }, 3000);
     }
   }
 

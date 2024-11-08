@@ -1,127 +1,124 @@
-<ion-content [scrollEvents]="true">
+<ion-content [scrollEvents]="true" class="ion-padding">
 
-    <div class="outer-div container">
+  <div style="width: 100%; display: flex; align-items: center;
+        justify-content: center;" *ngIf="isLoading">
+          <ion-spinner name="circular" color="primary"></ion-spinner>
+  </div>
 
-    <div *ngIf="isLoading" style="display: flex; align-items: center; justify-content: center; width: 100% !important;">
-      <ion-spinner style="color:  silver !important; transform: scale(1.1); " name="dots"></ion-spinner>
+  <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-button id="open-modal" expand="block" style="margin: 1rem;">
+      <ion-icon size="large" name="logo-ionitron" style="margin-right: 8px;"></ion-icon>
+      <ion-label style="font-size: small; font-weight: bold;">
+        Chatbot
+      </ion-label>
+    </ion-button>
+  </ion-fab> -->
+  <ion-modal #modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            <ion-icon size="large" name="logo-ionitron" style="margin-right: 8px;"></ion-icon>
+            Chat with Flixdrop AI Assistant</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="modal.dismiss()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <!-- <ion-content>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-self-start">
+              <ion-item style="width: 100%;">
+                <ion-label position="stacked">Bot</ion-label>
+                <ion-text label="Bot" labelPlacement="stacked" ngModel="Welcome to Flixdrop-CHMS Assistant Service, How can I help you ?"></ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-justify-content-end">
+            <ion-col offset="2" class="ion-align-self-end">
+              <ion-item style="width: 100%;">
+                <ion-input label="You" labelPlacement="stacked" [(ngModel)]="inputText"
+                  placeholder="Write Something."></ion-input>
+                <ion-button size="small" expand="block" fill="clear" style="border-radius: 4px;"
+                  (click)="sendMessage()">
+                  <ion-label style="font-size: small; font-weight: bold;">
+                    Send
+                  </ion-label>
+                  <ion-icon name="send" style="margin-left: 8px;"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-col>
+
+            <div *ngIf="chatResponse">
+              <h3>Response:</h3>
+              <p>{{ chatResponse }}</p>
+            </div>
+
+          </ion-row>
+        </ion-grid>
+      </ion-content> -->
+
+
+
+
+      <ion-content #chatContainer class="chatbox">
+
+        <!-- Chat Messages -->
+        <div *ngFor="let message of messages">
+          <p [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">
+            <label [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">{{ message.sender === 'user' ? 'You' : 'AI' }}:</label><br /> 
+            {{ message.content }}
+          </p>
+        </div>
+
+        <ion-item>
+          <ion-input label="You" labelPlacement="stacked" [(ngModel)]="inputText"
+            placeholder="Enter your message."></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-button slot="end" size="small" expand="block" fill="clear" style="border-radius: 4px;"
+            (click)="sendMessage()">
+            <ion-label style="font-size: small; font-weight: bold;">
+              Send
+            </ion-label>
+            <ion-icon name="send" style="margin-left: 8px;"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div *ngIf="!isLoading" class="div-1 container-fluid">
+    <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
+      routerLinkActive="router-link-active">
+      <div class="div-1-1-1">
+        <img src="{{item.icon}}"/>
+      </div>
+      <div class="div-1-1-2">
+        <div>
+          <h1 class="value counter">{{ item.value }}</h1>
+        </div>
+        <div>
+          <p class="label">{{ item.label | translate}}</p>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div *ngIf="!isLoading"  class="div-1 container">
-      <div class="div-1-1 cattles" [routerLink]="['/', 'landing', 'navs', 'home','animal-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/Cattle_Icon.png" />
-        <abbr title="All Registered Cattles">
-          <p class="value">{{animalsCount}}</p>
-        </abbr>
-        <p class="label">{{'Cattles' | translate}}</p>
-      </div>
-
-      <div class="div-1-1 farms" [routerLink]="['/', 'landing', 'navs', 'home', 'farm-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/Farm_Icon.png" />
-        <abbr title="All Registered Farms">
-          <p class="value">{{farmsCount}}</p>
-        </abbr>
-        <p class="label">{{'Farms' | translate}}</p>
-      </div>
-
-      <div class="div-1-1 installation" [routerLink]="['/', 'landing', 'navs', 'home', 'installation-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/New Installtions_Icon.png" />
-        <abbr title="All Installed Collars">
-          <p class="value">{{collarsCount}}</p>
-        </abbr>
-        <p class="label">{{'New Installations' | translate}}</p>
-      </div>
-
-
-      <!-- <div class="div-1-1 heat-pregnant" [routerLink]="['/', 'landing', 'navs', 'home', 'heat-pregnant-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/preg_vs_heat.jpeg" />
-        <abbr title="Accuracy of Heat & Pregnant Proportion">
-          <p class="value">0</p>
-        </abbr>
-        <p class="label">{{'Heat vs Pregnant' | translate}}</p>
-      </div>
-
-      <div class="div-1-1 insemination" [routerLink]="['/', 'landing', 'navs', 'home', 'insemination-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/artificial_insemination.jpg" />
-        <abbr title="Inseminations done in 24 Hrs">
-            <p class="value">0</p>
-        </abbr>
-        <p class="label">{{'On Time Inseminations' | translate}}</p>
-      </div>
-
-      <div class="div-1-1 illness-map">
-        <img src="../../../assets/images/health_map.jpeg" />
-        <abbr title="Percentage of Heat Cattles within the Farm Location">
-          <p class="value">0</p>
-        </abbr>
-        <p class="label">{{'Illness Map' | translate}}</p>
-      </div> -->
-
-      <div class="div-1-1 heat" [routerLink]="['/', 'landing', 'navs', 'home', 'heat-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/Heat_Icon.png" />
-        <abbr title="Active Heat Alerts in 24 Hrs">
-          <p class="value">{{heatEventsCount}}</p>
-        </abbr>
-        <p class="label">{{'Heat' | translate}}</p>
-      </div>
-
-      <div class="div-1-1 illness" [routerLink]="['/', 'landing', 'navs', 'home', 'illness-details']"
-        routerLinkActive="router-link-active">
-        <img src="../../../assets/images/Health_Icon.png" />
-        <abbr title="Active Health Alerts in 24 Hrs">
-          <p class="value">{{healthEventsCount}}</p>
-        </abbr>
-        <p class="label">{{'Health' | translate}}</p>
-      </div>
-
+  <div *ngIf="!isLoading" class="div-2 container-fluid">
+    <div class="div-2-1">
+      <canvas class="canvas" #myChart_1 data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
+        aria-expanded="false" aria-controls="collapseWidthExample"></canvas>
     </div>
-
-    <div class="div-2" style="border-top: 1px solid gainsboro; margin: 1rem 0 !important;">
-
-      <div class="div-2-1">
-        <div *ngIf="isGraphLoading" style="display: flex; align-items: center; justify-content: center;">
-          <ion-spinner style="color:  silver !important; transform: scale(0.7); " name="circular"></ion-spinner>
-        </div>
-        <canvas class="canvas" #myChart_1  data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"></canvas>
-      </div>
-
-      <div></div>
-
-      <div class="div-2-1">
-        <div *ngIf="isGraphLoading" style="display: flex; align-items: center; justify-content: center;">
-          <ion-spinner style="color:  silver !important; transform: scale(0.7); " name="circular"></ion-spinner>
-        </div>
-        <canvas class="canvas" #myChart_2></canvas>
-      </div>
-
-      <!-- <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
-          Toggle width collapse
-        </button>
-      </p> -->
-      <div style="min-height: 120px;">
-        <div class="collapse collapse-horizontal" id="collapseWidthExample">
-          <div class="card card-body" style="width: 300px;">
-            All Animals - Total Animals avaible from all the farms  
-            Heat - All the active Heat Events of Animals from all the farms
-            Health - All the active Health Events of Animals from all the farms
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="div-2-1">
-        <div *ngIf="isGraphLoading" style="display: flex; align-items: center; justify-content: center;">
-          <ion-spinner style="color:  silver! important; transform: scale(0.7); " name="circular"></ion-spinner>
-        </div>
-        <canvas class="canvas" #myChart_3></canvas>
-      </div> -->
-
+    <div></div>
+    <div></div>
+    <div class="div-2-1">
+      <canvas class="canvas" #myChart_2></canvas>
     </div>
-
   </div>
 </ion-content>

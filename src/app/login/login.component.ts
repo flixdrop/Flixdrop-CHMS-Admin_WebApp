@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Platform } from "@ionic/angular";
+import { IonicModule, Platform } from "@ionic/angular";
 import { Capacitor } from "@capacitor/core";
 import { StatusBar } from "@capacitor/status-bar";
 import {
@@ -8,13 +8,20 @@ import {
   NavController,
   ToastController,
 } from "@ionic/angular";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../services/auth/auth.service";
-import { UserService } from "../services/user/user.service";
 import { Subscription } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-login",
+  standalone: true,
+  imports: [
+        CommonModule,
+        IonicModule,
+        FormsModule, 
+        ReactiveFormsModule
+  ],
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
@@ -34,7 +41,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private navControl: NavController,
     private alertCtrl: AlertController,
     private authService: AuthService,
-    private userService: UserService
   ) {}
 
   ngOnDestroy() {
@@ -89,13 +95,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async showToast(msg, isLoggedIn) {
     const toast = await this.toastController.create({
+      header: "Flixdrop-CHMS",
       message: msg,
       translucent: true,
       animated: true,
-      icon: "information-circle",
+      icon: "shield-checkmark",
       position: "top",
-      mode: "ios",
-      color: isLoggedIn ? "success" : "danger",
+      color: isLoggedIn ? "light" : "danger",
       duration: 2500,
     });
     toast.present();
@@ -116,59 +122,143 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.rememberUser = event.detail.checked;
   }
 
-  async onClickSubmit() {
+  // async onClickSubmit() {
     
+  //   const username = this.loginForm.value.username;
+  //   const password = this.loginForm.value.password;
+
+  //   this.loadingController
+  //     .create({
+  //       animated: true,
+  //       spinner: "dots",
+  //       message: "Please Wait..",
+  //       translucent: true,
+  //     })
+  //     .then((loadingEL) => {
+  //       loadingEL.present();
+  //       this.loginSub = this.authService
+  //         .login(username, password)
+  //         .subscribe(
+  //           () => {
+  //             this.navControl.navigateForward("/landing");
+  //             loadingEL.dismiss();
+  //             this.authUserSub = this.authService.authenticatedUser.subscribe((data) => {
+  //               if(data){
+  //                 const username = data["email"];
+  //                 if (username) {
+  //                   this.showToast(`Welcome ${username}`, true);
+  //                   this.userDataSub.unsubscribe();
+  //                 }
+  //               }
+  //             });
+  //           },
+
+  //           (error) => {
+  //             loadingEL.dismiss();
+  //             this.showToast("Login Failed", false);
+  //             console.log("Error at Login:", error.status);
+  //             let errorCode = +error.status;
+  //             if (error.status >= errorCode) {
+  //               this.alertCtrl
+  //                 .create({
+  //                   header: "Authentication Failed!",
+  //                   subHeader: "User Not Found",
+  //                   message: "Make sure your Username & Password is Correct.",
+  //                   buttons: ["OK"],
+  //                 })
+  //                 .then((alertEl) => {
+  //                   alertEl.present();
+  //                 });
+  //             }
+  //           }
+  //         );
+  //     });
+
+  //   this.loginForm.reset();
+  // }
+
+
+  async onClickSubmit() {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
+  
+    const loadingEl = await this.loadingController.create({
+      
+      animated: true,
+      spinner: "circular",
+      message: "Please Wait..",
+      translucent: true,
+    });
 
-    this.loadingController
-      .create({
-        animated: true,
-        mode: "ios",
-        spinner: "circular",
-        message: "Please Wait..",
-        translucent: true,
-      })
-      .then((loadingEL) => {
-        loadingEL.present();
-        this.loginSub = this.authService
-          .login(username, password)
-          .subscribe(
-            () => {
-              this.navControl.navigateForward("/landing");
-              loadingEL.dismiss();
-              this.authUserSub = this.authService.authenticatedUser.subscribe((data) => {
-                if(data){
-                  const username = data["email"];
-                  if (username) {
-                    this.showToast(`Welcome ${username}`, true);
-                    this.userDataSub.unsubscribe();
-                  }
-                }
-              });
-            },
+    await loadingEl.present();
+  
+    try {
+      this.authService.login(username, password).subscribe((data) =>{
+        if(data){
 
-            (error) => {
-              loadingEL.dismiss();
-              this.showToast("Login Failed", false);
-              console.log("Error at Login:", error.status);
-              let errorCode = +error.status;
-              if (error.status >= errorCode) {
-                this.alertCtrl
-                  .create({
-                    header: "Authentication Failed!",
-                    subHeader: "User Not Found",
-                    message: "Make sure your Username & Password is Correct.",
-                    buttons: ["OK"],
-                  })
-                  .then((alertEl) => {
-                    alertEl.present();
-                  });
-              }
-            }
-          );
-      });
+      if(!this.authUserSub){
+        this.authUserSub = this.authService.authenticatedUser.subscribe((data) => {
+          if (data) {
+            this.showToast(`Welcome ${data?.['email']}`, true);
+            this.navControl.navigateForward("/farm");
+            loadingEl.dismiss();
+          }
+        });
+      }
 
-    this.loginForm.reset();
+    }
+  }, (error)=>{
+    loadingEl.dismiss();
+    this.showToast("Login Failed", false);
+    // console.error("Error at Login:", error); 
+      this.showToast("User not found.", false);
+      this.alertCtrl
+        .create({
+          header: "Authentication Failed!",
+          subHeader: "User Not Found",
+          message: "Make sure your Username & Password is Correct.",
+          buttons: ["OK"],
+        })
+        .then((alertEl) => alertEl.present());
+      this.showToast("An error occurred. Please try again.", false);
+  });
+  
+  // if(!this.authUserSub){
+  //   this.authUserSub = this.authService.authenticatedUser.subscribe((data) => {
+  //     if (data) {
+  //       this.showToast(`Welcome ${data?.['email']}`, true);
+  //       this.navControl.navigateForward("/landing");
+  //       loadingEl.dismiss();
+  //     }
+  //   });
+  // }
+
+    } catch (error) {
+      loadingEl.dismiss();
+      this.showToast("Login Failed", false);
+      // console.error("Error at Login:", error); 
+        this.showToast("Network Error. Please try again later.", false);
+        this.alertCtrl
+          .create({
+            header: "Authentication Failed!",
+            subHeader: "User Not Found",
+            message: "Make sure your Username & Password is Correct.",
+            buttons: ["OK"],
+          })
+          .then((alertEl) => alertEl.present());
+        this.showToast("An error occurred. Please try again.", false);
+    } finally {
+      this.loginForm.reset();
+
+      if (this.loginSub) {
+        this.loginSub.unsubscribe();
+      }
+      if (this.authUserSub) {
+        this.authUserSub.unsubscribe();
+      }
+      if (this.userDataSub) {
+        this.userDataSub.unsubscribe();
+      }
+    }
   }
 }

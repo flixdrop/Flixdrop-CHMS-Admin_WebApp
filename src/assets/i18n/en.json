@@ -21,6 +21,10 @@
   "Drying": "Drying",
   "Calving": "Calving",
   "Milking": "Milking",
+  "Inseminations": "Inseminations",
+  "Activities": "Activities",
+  "Fertility Ratio": "Fertility Ratio",
+  "Installations":"Installations",
 
   "Animals in Heat": "Animals in Heat",
   "Insemination done": "Insemination done",
@@ -82,9 +86,11 @@
 
   "Search Animals":"Search Animals",
   
+  "Generate Report": "Generate Report",
   "Total Animals":"Total Animals",
   "Animals":"Animals",
-  "Animal No.": "Animal No.",
+  "Owner Name": "Owner Name",
+  "Animal Name": "Animal Name",
   "Collar No.": "Collar No.",
   "Reproductive Status": "Reproductive Status",
   "Last Heat": "Last Heat",
@@ -128,5 +134,12 @@
   "Collar Assigned": "Collar Assigned",
   "Not Assigned":"Not Assigned",
   "Collar Not in Use":"Collar Not in Use",
-  "No installation Available":"No installation Available"
+  "No installation Available":"No installation Available",
+
+  "Insemination Date": "Insemination Date",
+  "Process of Insemination": "Process of Insemination",
+  "Origin of Semen": "Origin of Semen",
+  "Insemination Type": "Insemination Type",
+  "Inseminator": "Inseminator"
+  
 }

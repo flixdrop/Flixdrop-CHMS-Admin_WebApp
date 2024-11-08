@@ -1,42 +1,38 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { UserService } from "src/app/services/user/user.service";
 import Chart, { ChartConfiguration } from "chart.js/auto";
-import { Subscription } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
+import { combineLatest, Subscription } from "rxjs";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnDestroy {
   @ViewChild("myChart_1", { static: false }) myChart_1: ElementRef;
   @ViewChild("myChart_2", { static: false }) myChart_2: ElementRef;
-  // @ViewChild("myChart_3", { static: false }) myChart_3: ElementRef;
 
   ctx_1: CanvasRenderingContext2D;
   ctx_2: CanvasRenderingContext2D;
-  // ctx_3: CanvasRenderingContext2D;
 
-  fetchUserDataSub: Subscription;
-  userDataSub: Subscription;
+  private fetchUserDataSub: Subscription;
+  private userDataSub: Subscription;
+  private farmIdSubscription: Subscription;
 
   language: string = "English";
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   isGraphLoading: boolean = true;
 
-  farmsCount: Number = 0;
-  animalsCount: Number = 0;
-  collarsCount: Number = 0;
-  heatEventsCount: Number = 0;
-  healthEventsCount: Number = 0;
+  alertItems: {
+    label: string;
+    value: string;
+    totalCount: number;
+    icon: string;
+    counter: number;
+    route: string;
+  }[] = [];
 
   chart1Title: string = "";
   chart1Parameter1: string = "";
@@ -46,6 +42,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   chart2Title: string = "";
   chart2Parameter1: string = "";
   chart2Parameter2: string = "";
+
+  animals: any[] = [];
+  collars: any[] = [];
+  heats: any[] = [];
+  healths: any[] = [];
+  inseminations: any[] = [];
+  pregnancy_checks: any[] = [];
+  activities: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -60,80 +64,280 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.fetchUserDataSub) {
       this.fetchUserDataSub.unsubscribe();
     }
+    if (this.farmIdSubscription) {
+      this.farmIdSubscription.unsubscribe();
+    }
     this.destroyCharts();
-  }
-
-  ngOnInit() {
-    this.userDataSub = this.userService.userData.subscribe((data) => {
-      if (data) {
-        const currentTime = new Date().getTime();
-
-        this.farmsCount = data.farms ? data.farms.length : 0;
-        this.animalsCount = data.animals ? data.animals.length : 0;
-        this.collarsCount = data.collars ? data.collars.length : 0;
-
-        this.heatEventsCount = data.heatEvents
-          ? data.heatEvents.filter((item) => {
-              const startedAtTime = new Date(item.startedAt).getTime();
-              return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
-            }).length
-          : 0;
-
-        this.healthEventsCount = data.healthEvents
-          ? data.healthEvents.filter((item) => {
-              const startedAtTime = new Date(item.startedAt).getTime();
-              return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
-            }).length
-          : 0;
-      }
-    });
-
-    this.translate.get(['Overall Heat & Health Cases', 'All Animals', 'Heat', 'Health', 'Heat vs Pregnant', 'Pregnancy']).subscribe(translations => {
-      if(translations){
-        this.chart1Title = translations['Overall Heat & Health Cases'];
-        this.chart1Parameter1 = translations['All Animals'];
-        this.chart1Parameter2 = translations['Heat'];
-        this.chart1Parameter3 = translations['Health']; 
-        this.chart2Title = translations['Heat vs Pregnant'];
-        this.chart2Parameter1 = translations['Heat'];
-        this.chart2Parameter2 = translations['Pregnancy'];
-      }
-      });
   }
 
   ionViewWillEnter() {
     this.isLoading = true;
     this.authService.authenticatedUser.subscribe((user) => {
-      this.userService
-        .fetchOrganizationDocuments(user["id"])
-        .subscribe((data) => {
-          this.isLoading = false;
-          this.createCharts();
-        });
+      if (user) {
+        this.handleAuthenticatedUser(user["id"], user["role"]);
+        this.translate
+          .get([
+            "Overall Heat & Health Cases",
+            "All Animals",
+            "Heat",
+            "Health",
+            "Heat vs Pregnant",
+            "Pregnancy",
+          ])
+          .subscribe((translations) => {
+            if (translations) {
+              this.chart1Title = translations["Overall Heat & Health Cases"];
+              this.chart1Parameter1 = translations["All Animals"];
+              this.chart1Parameter2 = translations["Heat"];
+              this.chart1Parameter3 = translations["Health"];
+              this.chart2Title = translations["Heat vs Pregnant"];
+              this.chart2Parameter1 = translations["Heat"];
+              this.chart2Parameter2 = translations["Pregnancy"];
+            }
+          });
+      }
+      this.isLoading = false;
     });
   }
 
-  onSelectFarm(event) {
-    console.log("Selected Value: ", event.detail.value);
+  handleAuthenticatedUser(userId: string, role: string) {
+    this.isLoading = true;
+
+    if (role === "SUPER_ADMIN") {
+      combineLatest([
+        this.userService.adminId$,
+        this.userService.farmId$,
+      ]).subscribe(([adminId, farmId]) => {
+        adminId = adminId || "All Admins";
+        farmId = farmId || "All Farms";
+        this.fetchDataForFarm(adminId, farmId);
+      });
+    } else if (role === "ADMIN") {
+      combineLatest([
+        this.userService.adminId$,
+        this.userService.farmId$,
+      ]).subscribe(([adminId, farmId]) => {
+        adminId = adminId || "All Admins";
+        farmId = farmId || "All Farms";
+        this.fetchDataForFarm(adminId, farmId);
+      });
+    } else if (role === "USER") {
+      combineLatest([this.userService.farmId$]).subscribe(([farmId]) => {
+        farmId = farmId || "All Farms";
+        this.fetchDataForFarm(userId, farmId);
+      });
+    }
+
+    this.isLoading = false;
+  }
+
+  fetchDataForFarm(userId: string, farmId: string) {
+    this.isLoading = true;
+    this.fetchUserDataSub = this.userService
+      .fetchOrganizationDocuments(userId)
+      .subscribe((data) => {
+        if (data) {
+          this.animals = data["animals"] || [];
+          this.collars = data["collars"] || [];
+          this.heats = data["heatEvents"] || [];
+          this.healths = data["healthEvents"] || [];
+          this.inseminations = data["inseminations"] || [];
+          this.pregnancy_checks = data["pregnancy_checks"] || [];
+          this.activities = data["activities"] || [];
+          this.updateAlertItems(farmId);
+          this.createCharts();
+        }
+        this.isLoading = false;
+      });
+  }
+
+  updateAlertItems(farmId: string) {
+    const currentTime = new Date().getTime();
+
+    this.alertItems = [
+      {
+        label: "Animals",
+        value:
+          farmId === "All Farms"
+            ? this.animals.length.toString()
+            : this.animals
+                .filter((animal) => animal.farm.id === farmId)
+                .length.toString(),
+        totalCount: 0,
+        icon: "../../../assets/images/Cattle_Icon.png",
+        counter: 0,
+        route: "animals",
+      },
+
+      // {
+      //   label: "Activities",
+      //   value:
+      //     farmId === "All Farms"
+      //       ? this.activities.length.toString()
+      //       : this.activities
+      //           .filter((event) => event.animal.farm.id === farmId)
+      //           .length.toString(),
+      //   totalCount: 0,
+      //   icon: "../../../assets/images/Cattle_Icon.png",
+      //   counter: 0,
+      //   route: "activities",
+      // },
+
+      {
+        label: "Heat Events",
+        value:
+          farmId === "All Farms"
+            ? this.heats
+                .filter((event) => {
+                  const startedAtTime = new Date(event?.detectedAt).getTime();
+                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+                })
+                .length.toString()
+            : this.heats
+                .filter(
+                  (event) =>
+                    event?.animal.farm.id === farmId &&
+                    currentTime - new Date(event?.detectedAt).getTime() <
+                      30 * 24 * 60 * 60 * 1000
+                )
+                .length.toString(),
+        totalCount:
+          farmId === "All Farms"
+            ? this.heats.length
+            : this.heats.filter((event) => event?.animal.farm.id === farmId)
+                .length,
+        icon: "../../../assets/images/Heat_Icon.png",
+        counter: 0,
+        route: "heats",
+      },
+      {
+        label: "Health Events",
+        value:
+          farmId === "All Farms"
+            ? this.healths
+                .filter((event) => {
+                  const startedAtTime = new Date(event?.detectedAt).getTime();
+                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+                })
+                .length.toString()
+            : this.healths
+                .filter(
+                  (event) =>
+                    event?.animal.farm.id === farmId &&
+                    currentTime - new Date(event?.detectedAt).getTime() <
+                      30 * 24 * 60 * 60 * 1000
+                )
+                .length.toString(),
+        totalCount:
+          farmId === "All Farms"
+            ? this.healths.length
+            : this.healths.filter((event) => event?.animal.farm.id === farmId)
+                .length,
+        icon: "../../../assets/images/Health_Icon.png",
+        counter: 0,
+        route: "healths",
+      },
+      {
+        label: "Inseminations",
+        value:
+          farmId === "All Farms"
+            ? this.inseminations
+                .filter((event) => {
+                  const startedAtTime = new Date(
+                    event?.eventDateTime
+                  ).getTime();
+                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+                })
+                .length.toString()
+            : this.inseminations
+                .filter(
+                  (event) =>
+                    event?.animal.farm.id === farmId &&
+                    currentTime - new Date(event?.eventDateTime).getTime() <
+                      30 * 24 * 60 * 60 * 1000
+                )
+                .length.toString(),
+        totalCount: 0,
+        icon: "../../../assets/images/Farm_Icon.png",
+        counter: 0,
+        route: "inseminations",
+      },
+      {
+        label: "Fertility Ratio",
+        value:
+          farmId === "All Farms"
+            ? this.heats.length.toString() +
+              "/" +
+              this.pregnancy_checks.length.toString()
+            : this.heats
+                .filter((event) => {
+                  const startedAtTime = new Date(event?.detectedAt).getTime();
+                  return (
+                    currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
+                    event?.animal.farm.id === farmId
+                  );
+                })
+                .length.toString() +
+              "/" +
+              this.pregnancy_checks
+                .filter((event) => {
+                  const startedAtTime = new Date(
+                    event?.eventDateTime
+                  ).getTime();
+                  return (
+                    currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
+                    event?.animal.farm.id === farmId
+                  );
+                })
+                .length.toString(),
+        totalCount: 0,
+        icon: "../../../assets/images/Farm_Icon.png",
+        counter: 0,
+        route: "fertilityratio",
+      },
+      // {
+      //   label: "Installations",
+      //   value:
+      //     farmId === "All Farms"
+      //       ? this.collars.length.toString()
+      //       : this.collars
+      //           .filter((collar) => collar.animal.farm.id === farmId)
+      //           .length.toString(),
+      //   totalCount: 0,
+      //   icon: "../../../assets/images/New Installtions_Icon.png",
+      //   counter: 0,
+      //   route: "installations",
+      // },
+
+      {
+        label: "Installations",
+        value:
+          farmId === "All Farms"
+            ? Math.floor(this.collars.length * 0.9).toString()
+            : Math.floor(
+                this.collars.filter(
+                  (collar) => collar.animal.farm.id === farmId
+                ).length * 0.9
+              ).toString(),
+        totalCount: 0,
+        icon: "../../../assets/images/New Installtions_Icon.png",
+        counter: 0,
+        route: "installations",
+      },
+    ];
   }
 
   createCharts() {
-    this.destroyCharts();
+    this.isLoading = true;
     this.isGraphLoading = true;
     if (this.myChart_1 && this.myChart_2) {
+      this.destroyCharts();
       this.ctx_1 = this.myChart_1.nativeElement.getContext("2d");
       this.ctx_2 = this.myChart_2.nativeElement.getContext("2d");
       this.plotGraph_1();
       this.plotGraph_2();
     }
-    // if (this.myChart_1 && this.myChart_2 && this.myChart_3) {
-    //   this.ctx_1 = this.myChart_1.nativeElement.getContext("2d");
-    //   this.ctx_2 = this.myChart_2.nativeElement.getContext("2d");
-    //   this.ctx_3 = this.myChart_3.nativeElement.getContext("2d");
-    //   this.plotGraph_1();
-    //   this.plotGraph_2();
-    //   this.plotGraph_3();
-    // }
+    this.isLoading = false;
     this.isGraphLoading = false;
   }
 
@@ -157,16 +361,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
       Chart.getChart(this.ctx_2).destroy();
     }
-
-    // if (this.ctx_3) {
-    //   this.ctx_3.clearRect(
-    //     0,
-    //     0,
-    //     this.ctx_3.canvas.width,
-    //     this.ctx_3.canvas.height
-    //   );
-    //   Chart.getChart(this.ctx_3).destroy();
-    // }
   }
 
   formatPercentage(value: number): string {
@@ -178,47 +372,59 @@ export class HomeComponent implements OnInit, OnDestroy {
     new Chart(this.ctx_1, <ChartConfiguration>{
       type: "doughnut",
       data: {
-        labels: [`${this.chart1Parameter3}`, `${this.chart1Parameter2}`, `${this.chart1Parameter1}`],
+        labels: [
+          `${this.chart1Parameter2}`,
+          `${this.chart1Parameter3}` 
+        ],
         datasets: [
           {
             data: [
-              +this.healthEventsCount,
-              +this.heatEventsCount,
-              +this.animalsCount,
+              +this.alertItems.find((item) => item.label == "Heat Events")
+              ?.totalCount,
+              +this.alertItems.find((item) => item.label == "Health Events")
+                ?.totalCount,
             ],
-            backgroundColor: ["#BE3144","#D2DE32", "#3652AD"],
+            spanGaps: 5,
+            borderWidth: 4,
+            pointBorderWidth: 0,
+            borderRadius: 8,
+            pointBackgroundColor:["#ffffff","#ffffff"],
+            backgroundColor: ["#8fa25f70", "#10779470"],
           },
         ],
       },
 
       options: {
-        cutout: 0,
-        borderRadius: 4,
-        borderWidth: 3,
         borderColor: "white",
-        animation: false,
-        responsive: true,
-        maintainAspectRatio: true,
         devicePixelRatio: 4,
         plugins: {
           legend: {
             display: true,
+            position: "top",
+            align: "end",
             labels: {
+              padding: 20,
+              textAlign: "right",
               font: {
-                weight: "bold",
+                weight: "bolder",
               },
               usePointStyle: true,
-              pointStyle: "circle",
+              pointStyle: "rect",
             },
-            reverse: true,
+            reverse: false,
           },
           title: {
+            padding: 10,
+            align: "start",
+            position: "top",
             display: true,
             text: `${this.chart1Title}`,
+            font: {
+              weight: "bolder",
+            },
           },
           tooltip: {
-            position: "nearest",
-            usePointStyle: true,
+            position: "average",
           },
         },
       },
@@ -233,32 +439,38 @@ export class HomeComponent implements OnInit, OnDestroy {
         datasets: [
           {
             label: `${this.chart2Parameter1}`,
-            barPercentage: 0.5,
-            barThickness: 25,
-            maxBarThickness: 25,
-            minBarLength: 2,
-            data: [+this.heatEventsCount],
-            backgroundColor: "#D2DE32",
+            barPercentage: 1,
+            borderRadius: 4,
+            borderWidth: 4,
+            pointBorderWidth: 0,
+            pointBackgroundColor: "#ffffff",
+            data: [
+              +this.alertItems.find((item) => item.label == "Heat Events")
+                ?.value,
+            ],
+            backgroundColor: "#8fa25f70",
           },
           {
             label: `${this.chart2Parameter2}`,
-            barPercentage: 0.5,
-            barThickness: 25,
-            maxBarThickness: 25,
-            minBarLength: 2,
-            data: [+0],
-            backgroundColor: "#E19898",
+            barPercentage: 1,
+            borderRadius: 4,
+            borderWidth: 4,
+            pointBorderWidth: 0,
+            pointBackgroundColor: "#ffffff",
+            data: [
+              +this.alertItems
+                .find((item) => item.label == "Fertility Ratio")
+                ?.value.toString()
+                .split("/")[1],
+            ],
+            backgroundColor: "#f46a9b70",
           },
         ],
       },
 
       options: {
         indexAxis: "y",
-        borderRadius: 7,
         borderColor: "white",
-        animation: false,
-        responsive: true,
-        maintainAspectRatio: true,
         devicePixelRatio: 4,
         elements: {
           point: {
@@ -274,6 +486,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             grid: {
               display: true,
             },
+            ticks: {
+              stepSize: 1,
+            },
           },
           y: {
             border: {
@@ -281,108 +496,37 @@ export class HomeComponent implements OnInit, OnDestroy {
             },
           },
         },
-
         plugins: {
           legend: {
             display: true,
+            position: "top",
+            align: "end",
             labels: {
+              padding: 20,
+              textAlign: "right",
               font: {
-                weight: "bold",
+                weight: "bolder",
               },
               usePointStyle: true,
-              pointStyle: "circle",
+              pointStyle: "rect",
             },
-            reverse: true,
+            reverse: false,
           },
           title: {
+            padding: 10,
+            align: "start",
+            position: "top",
             display: true,
             text: `${this.chart2Title}`,
+            font: {
+              weight: "bolder",
+            },
           },
           tooltip: {
-            position: "nearest",
-            usePointStyle: true,
+            position: "average",
           },
         },
       },
     });
   }
-
-  // plotGraph_3() {
-  //   new Chart(this.ctx_3, <ChartConfiguration>{
-  //     type: "polarArea",
-  //     data: {
-  //       labels: [
-  //         "Successful Pregnancy",
-  //         "Expected Insemination",
-  //         "Verified On Time Insemination",
-  //       ],
-
-  //       datasets: [
-  //         {
-  //           data: [
-  //             this.signedInUser["pregnant_animals_count"],
-  //             this.signedInUser["inseminations"]["length"],
-  //             (this.signedInUser["pregnant_animals_count"] /
-  //               this.signedInUser["inseminations"]["length"]) *
-  //               100,
-  //           ],
-  //           backgroundColor: ["#98FB9880", "#FFD70080", "#87CEEB80"],
-  //         },
-  //       ],
-  //     },
-
-  //     options: {
-  //       borderRadius: 7,
-  //       borderWidth: 7,
-  //       borderColor: "white",
-  //       animation: false,
-  //       responsive: true,
-  //       maintainAspectRatio: false,
-  //       devicePixelRatio: 4,
-  //       elements: {
-  //         point: {
-  //           radius: 0,
-  //         },
-  //       },
-  //       scales: {
-  //         x: {
-  //           border: {
-  //             display: false,
-  //           },
-  //           grid: {
-  //             drawOnChartArea: false,
-  //             display: false,
-  //           },
-  //         },
-  //         y: {
-  //           border: {
-  //             display: false,
-  //           },
-  //         },
-  //       },
-
-  //       plugins: {
-  //         legend: {
-  //           display: true,
-  //           labels: {
-  //             font: {
-  //               weight: "bold",
-  //             },
-  //             usePointStyle: true,
-  //             pointStyle: "circle",
-  //           },
-  //           reverse: true,
-  //         },
-  //         title: {
-  //           display: true,
-  //           text: `Successful Insemination Prediction`,
-  //         },
-  //         tooltip: {
-  //           position: "nearest",
-  //           usePointStyle: true,
-  //         },
-  //       },
-  //     },
-  //   });
-  // }
 }

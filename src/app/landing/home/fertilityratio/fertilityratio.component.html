@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button icon="arrow-undo-circle-sharp" defaultHref="/farm/dashboard" text=""></ion-back-button>
+      <ion-chip style="border-radius: 4px;">
+        <ion-label>
+          {{'Fertility Ratio' | translate}}
+        </ion-label>
+        <ion-badge color="warning" style="margin-left: 8px;">
+          <ion-label>
+            {{results.length+"/"+pregnancyEvents.length}}
+          </ion-label>
+        </ion-badge>
+      </ion-chip>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-content" [scrollEvents]="true">
+
+  <div style="width: 100%; display: flex; align-items: center;
+  justify-content: center;" *ngIf="isLoading">
+    <ion-spinner name="circular" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading" class="table-container">
+    <table id="myTable" class="table">
+      <ion-grid>
+        <ion-row>
+          <ion-col sizeLg="4">
+
+            <ion-toolbar>
+              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+              </ion-searchbar>
+            </ion-toolbar>
+          </ion-col>
+
+          <ion-col>
+
+            <ion-toolbar>
+              <ion-icon slot="start" name="filter"></ion-icon>
+              <ion-breadcrumbs>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 7">
+                  Last 7 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 30">
+                  Last 30 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 60">
+                  Last 60 Days
+                </ion-breadcrumb>
+              </ion-breadcrumbs>
+            </ion-toolbar>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <caption *ngIf="results.length > 0">List of Animals</caption>
+      <caption *ngIf="results.length == 0">
+        {{'No Animal Available'| translate}}</caption>
+      <thead>
+
+        <tr>
+          <th scope="col" (click)="sortTable(0)"
+            [ngClass]="{'sort-asc': sortOrders[0] === 'asc', 'sort-desc': sortOrders[0] === 'desc'}">
+            {{'Animal Name' | translate}}
+          </th>
+          <th scope="col" (click)="sortTable(1)"
+            [ngClass]="{'sort-asc': sortOrders[1] === 'asc', 'sort-desc': sortOrders[1] === 'desc'}">{{'Collar No.'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(2)"
+            [ngClass]="{'sort-asc': sortOrders[2] === 'asc', 'sort-desc': sortOrders[2] === 'desc'}">{{'Last Heat'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(3)"
+            [ngClass]="{'sort-asc': sortOrders[3] === 'asc', 'sort-desc': sortOrders[3] === 'desc'}">{{'Last Insemination'| translate}}
+          </th>
+          <th scope="col" (click)="sortTable(4)"
+            [ngClass]="{'sort-asc': sortOrders[4] === 'asc', 'sort-desc': sortOrders[4] === 'desc'}">{{'Reproductive Status'| translate}}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let event of results">
+
+          <td> <a [routerLink]="['/', 'farm','dashboard', 'charts', event?.animal?.collar?.name]"
+              routerLinkActive="router-link-active">{{event?.animal?.name}}</a> </td>
+          <td> <a> {{event?.animal?.collar?.name}} </a></td>
+        
+          <td style="vertical-align: middle !important;">
+            <ion-label>
+              <h4>Intensity : {{getAnimalHeatStrength(event?.animal?.id) ? getAnimalHeatStrength(event.animal.id).heatStrength : "0"}}</h4>
+              <h4>Alert Status: {{getAnimalHeatStrength(event?.animal?.id).isActive ? "Active": "Inactive"}}</h4>
+              <h4 *ngIf="getAnimalHeatStrength(event?.animal?.id)">Detected On: {{getAnimalHeatStrength(event.animal.id).startedAt | date: 'MMM d, y, h:mm a' }}</h4>
+            </ion-label>
+          </td>
+
+          <td style="vertical-align: middle !important;">
+            <ion-label>
+              <h4>Process Status: {{getAnimalLastInsemination(event?.animal?.id) ? "Done": "Not Done"}}</h4>
+              <h4 *ngIf="getAnimalLastInsemination(event?.animal?.id)">Done On: {{getAnimalLastInsemination(event.animal.id).eventDateTime | date: 'MMM d, y, h:mm a' }}</h4>
+              <h4 *ngIf="getAnimalLastInsemination(event?.animal?.id)?.inseminator">Inseminator: {{getAnimalLastInsemination(event.animal.id)?.inseminator?.name ? getAnimalLastInsemination(event.animal.id)?.inseminator?.name : getAnimalLastInsemination(event.animal.id)?.inseminator?.username}}</h4>
+              <h4>Phone No: {{getAnimalLastInsemination(event?.animal?.id)?.inseminator?.phoneNumber ?? "Not Available"}}</h4>
+            </ion-label>
+          </td>
+
+          <td style="vertical-align: middle !important;">
+            <ion-label>
+              <h4>Status: {{getAnimalPregnancyStatus(event?.animal?.id) ? getAnimalPregnancyStatus(event.animal.id).result : "Pending"}}</h4>
+              <h4 *ngIf="getAnimalPregnancyStatus(event?.animal?.id)">Detected On: {{getAnimalPregnancyStatus(event.animal.id).eventDateTime | date: 'MMM d, y, h:mm a' }}</h4>
+            </ion-label>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</ion-content>

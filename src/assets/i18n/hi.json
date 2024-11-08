@@ -14,6 +14,10 @@
   "Drying": "सूखे पशु",
   "Calving": "ब्यांत",
   "Milking": "दुधारू",
+  "Inseminations": "गर्भाधान",
+  "Activities": "गतिविधियाँ",
+  "Fertility Ratio": "प्रजनन अनुपात",
+  "Installations":"अधिष्ठापन",
 
   "Language": "भाषा",
   "Select": "चयन",
@@ -77,9 +81,11 @@
 
   "Search Animals":"पशु खोजें",
   
+  "Generate Report": "रिपोर्ट प्राप्त करें",
   "Animals":"पशु",
   "Total Animals":"कुल पशु",
-  "Animal No.": "पशु संख्या",
+  "Owner Name": "मालिक का नाम",
+  "Animal Name": "पशु का नाम",
   "Collar No.": "कॉलर संख्या",
   "Reproductive Status": "प्रजनन स्थिति",
   "Last Heat": "अंतिम हिट",
@@ -122,5 +128,12 @@
   "Collar Assigned": "कॉलर सौंपा गया",
   "Not Assigned":"कॉलर निर्दिष्ट नहीं है",
   "Collar Not in Use":"कॉलर उपयोग में नहीं है",
-  "No installation Available":"कोई इंस्टालेशन उपलब्ध नहीं"
+  "No installation Available":"कोई इंस्टालेशन उपलब्ध नहीं",
+
+  "Insemination Date": "गर्भाधान तिथि",
+  "Process of Insemination": "गर्भाधान की प्रक्रिया",
+  "Origin of Semen": "गर्भाधान की उत्पत्ति",
+  "Insemination Type": "गर्भाधान का प्रकार",
+  "Inseminator": "इनसेमिनेटर"
+
 }

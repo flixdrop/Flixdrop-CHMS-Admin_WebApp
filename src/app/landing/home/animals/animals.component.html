@@ -1,0 +1,209 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button icon="arrow-undo-circle-sharp" defaultHref="/farm/dashboard" text=""></ion-back-button>
+      <ion-chip style="border-radius: 4px;">
+        <ion-label>
+          {{'Animals' | translate}}
+        </ion-label>
+        <ion-badge color="warning" style="margin-left: 8px;">
+          <ion-label>
+            {{results.length}}
+          </ion-label>
+        </ion-badge>
+      </ion-chip>
+    </ion-buttons>
+
+    <ion-buttons *ngIf="!isLoading" slot="end">
+      <!-- <ion-button size="small" id="open-register-animal" expand="block"
+        [disabled]="typeOfUser == 'ADMIN' || typeOfUser == 'USER'">
+        <ion-label class="button-label">Register Animals</ion-label>
+        <ion-icon name="document-outline"></ion-icon>
+      </ion-button> -->
+
+      <ion-button size="small" expand="block" (click)="confirmDownload()">
+        <ion-label class="button-label">
+          {{'Generate Report' | translate}}
+        </ion-label>
+        <ion-icon name="print"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-modal trigger="open-register-animal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.50, 0.75, 1]"
+  handleBehavior="cycle">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancelRegistration()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Register Animals</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="onCLickRegisterAll()" [strong]="true">Register</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+
+      <ion-toolbar>
+        <ion-item lines="none">
+          <input type="file" (change)="handleFileInput($event.target.files)">
+        </ion-item>
+        <ion-item lines="none">
+          <ion-note>.csv file only</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-note *ngIf="error != ''">{{error}}</ion-note>
+        </ion-item>
+      </ion-toolbar>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-content class="custom-content" [scrollEvents]="true">
+
+  <div style="width: 100%; display: flex; align-items: center;
+  justify-content: center;" *ngIf="isLoading">
+    <ion-spinner name="circular" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading" class="table-container">
+
+    <table id="myTable" class="table">
+
+      <ion-grid>
+        <ion-row>
+          <ion-col sizeLg="4">
+
+            <ion-toolbar>
+              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+              </ion-searchbar>
+            </ion-toolbar>
+          </ion-col>
+
+          <ion-col>
+
+            <ion-toolbar>
+              <ion-icon slot="start" name="filter"></ion-icon>
+              <ion-breadcrumbs>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 7" (click)="setRange(7)">
+                  Last 7 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 30" (click)="setRange(30)">
+                  Last 30 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 60" (click)="setRange(60)">
+                  Last 60 Days
+                </ion-breadcrumb>
+              </ion-breadcrumbs>
+            </ion-toolbar>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <caption *ngIf="results.length > 0">List of Animals</caption>
+      <caption *ngIf="results.length == 0">
+        {{'No Animal Available'| translate}}</caption>
+      <thead>
+
+        <tr>
+          <th scope="col" (click)="sortTable(0)"
+            [ngClass]="{'sort-asc': sortOrders[0] === 'asc', 'sort-desc': sortOrders[0] === 'desc'}">
+            {{'Animal Name' | translate}}
+          </th>
+          <th scope="col" (click)="sortTable(1)"
+            [ngClass]="{'sort-asc': sortOrders[1] === 'asc', 'sort-desc': sortOrders[1] === 'desc'}">{{'Collar No.'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(2)"
+            [ngClass]="{'sort-asc': sortOrders[2] === 'asc', 'sort-desc': sortOrders[2] === 'desc'}">{{'Farm Name'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(3)"
+            [ngClass]="{'sort-asc': sortOrders[3] === 'asc', 'sort-desc': sortOrders[3] === 'desc'}">{{'Reproductive
+            Status'| translate}}</th>
+          <th scope="col" (click)="sortTable(4)"
+            [ngClass]="{'sort-asc': sortOrders[4] === 'asc', 'sort-desc': sortOrders[4] === 'desc'}">{{'Last Heat'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(5)"
+            [ngClass]="{'sort-asc': sortOrders[5] === 'asc', 'sort-desc': sortOrders[5] === 'desc'}">{{'Last
+            Insemination'| translate}}
+          </th>
+          <th scope="col" (click)="sortTable(6)"
+            [ngClass]="{'sort-asc': sortOrders[6] === 'asc', 'sort-desc': sortOrders[6] === 'desc'}">{{'Last Calving'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(7)"
+            [ngClass]="{'sort-asc': sortOrders[7] === 'asc', 'sort-desc': sortOrders[7] === 'desc'}">{{'Heat Status'|
+            translate}}</th>
+          <th scope="col" (click)="sortTable(8)"
+            [ngClass]="{'sort-asc': sortOrders[8] === 'asc', 'sort-desc': sortOrders[8] === 'desc'}">{{'Health
+            Status'| translate}}
+          </th>
+          <th scope="col" (click)="sortTable(9)"
+            [ngClass]="{'sort-asc': sortOrders[9] === 'asc', 'sort-desc': sortOrders[9] === 'desc'}">{{'Lactation
+            Status'| translate}}
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let animal of results">
+
+          <td> <a [routerLink]="['/', 'farm', 'dashboard','charts', animal.collar.name]"
+              routerLinkActive="router-link-active">{{animal.name}}</a> </td>
+          <td> <a> {{animal.collar?.name}} </a></td>
+          <td>{{animal.farm?.name}}</td>
+          <td>
+            <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalReproductiveStatus(animal.id)">
+              {{daysSince(getAnimalReproductiveStatus(animal.id).eventDateTime | date)+" days ago" }}
+            </p>
+          </td>
+          <td>
+            <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalHeatStrength(animal.id)">
+              {{daysSince(getAnimalHeatStrength(animal.id).detectedAt | date)+" days ago" }}
+            </p>
+          </td>
+          <td>
+            <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalInsemination(animal.id)">
+              {{daysSince(getAnimalInsemination(animal.id).eventDateTime | date)+" days ago" }}
+            </p>
+          </td>
+          <td>
+            <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalCalving(animal.id)">
+              {{daysSince(getAnimalCalving(animal.id).eventDateTime | date)+" days ago" }}
+            </p>
+          </td>
+          <td style="vertical-align: middle !important;">
+            <span [ngClass]="{'heat-label': getAnimalHeatStrength(animal.id).heatStrength}">
+              <p class="ion-text-uppercase ion-text-center">
+                {{getAnimalHeatStrength(animal.id) ? "Heat Intensity: "+getAnimalHeatStrength(animal.id).heatStrength :
+                " "}}
+                <ion-icon *ngIf="getAnimalHeatStrength(animal.id).heatStrength" name="flame"></ion-icon>
+              </p>
+              <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalHeatStrength(animal.id)">
+                {{getAnimalHeatStrength(animal.id).detectedAt | date: 'MMM d, y, h:mm a' }}
+              </p>
+            </span>
+          </td>
+          <td style="vertical-align: middle !important;">
+            <span [ngClass]="{'health-label': getAnimalHealthIndex(animal.id).healthIndex}">
+              <p class="ion-text-uppercase ion-text-center">
+                {{getAnimalHealthIndex(animal.id) ? "Health Index: "+getAnimalHealthIndex(animal.id).healthIndex : ""}}
+                <ion-icon *ngIf="getAnimalHealthIndex(animal.id).healthIndex" name="medkit"></ion-icon>
+              </p>
+              <p class="ion-text-uppercase ion-text-center" *ngIf="getAnimalHealthIndex(animal.id)">
+                {{getAnimalHealthIndex(animal.id).detectedAt | date: 'MMM d, y, h:mm a' }}
+              </p>
+            </span>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</ion-content>

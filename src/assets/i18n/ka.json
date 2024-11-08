@@ -14,6 +14,10 @@
   "Drying": "ಒಣ ಪ್ರಾಣಿಗಳು",
   "Calving": "ಕರು ಹಾಕುವುದು",
   "Milking": "ಹಾಲುಕರೆಯುವ ದನ",
+  "Inseminations": "ಇನ್ಸೆಮಿನೇಷನ್ಸ್",
+  "Activities": "ಚಟುವಟಿಕೆಗಳು",
+  "Fertility Ratio": "ಫಲವತ್ತತೆ ಅನುಪಾತ",
+  "Installations":"ಅನುಸ್ಥಾಪನೆಗಳು",
 
   "Language": "ಭಾಷೆ",
   "Select": "ಆಯ್ಕೆ",
@@ -77,9 +81,11 @@
 
   "Search Animals":"ಪ್ರಾಣಿಗಳನ್ನು ಹುಡುಕಿ",
   
+  "Generate Report": "ವರದಿ ಪಡೆಯಿರಿ",
   "Animals":"ಜಾನುವಾರು",
   "Total Animals":"ಒಟ್ಟು ಪ್ರಾಣಿಗಳು",
-  "Animal No.": "ಪ್ರಾಣಿ ಸಂಖ್ಯೆ",
+  "Owner Name": "ಮಾಲೀಕರ ಹೆಸರು",
+  "Animal Name": "ಪ್ರಾಣಿಯ ಹೆಸರು",
   "Collar No.": "ಕಾಲರ್ ಸಂಖ್ಯೆ",
   "Reproductive Status": "ಪುನರುತ್ಪಾದನಾ ಸ್ಥಿತಿ",
   "Last Heat": "ಕೊನೆಯ ಉಷ್ಣತೆ",
@@ -122,5 +128,12 @@
   "Collar Assigned": "ಕಾಲರ್ ನಿಯೋಜಿಸಲಾಗಿದೆ",
   "Not Assigned":"ಕಾಲರ್ ನಿಯೋಜಿಸಲಾಗಿಲ್ಲ",
   "Collar Not in Use":"ಕಾಲರ್ ಬಳಕೆಯಲ್ಲಿಲ್ಲ",
-  "No installation Available":"ಯಾವುದೇ ಅನುಸ್ಥಾಪನೆಯು ಲಭ್ಯವಿಲ್ಲ"
+  "No installation Available":"ಯಾವುದೇ ಅನುಸ್ಥಾಪನೆಯು ಲಭ್ಯವಿಲ್ಲ",
+
+  "Insemination Date": "ಗರ್ಭಧಾರಣೆಯ ದಿನಾಂಕ",
+  "Process of Insemination": "ಗರ್ಭಧಾರಣೆಯ ಪ್ರಕ್ರಿಯೆ",
+  "Origin of Semen": "ಗರ್ಭಧಾರಣೆಯ ಮೂಲ",
+  "Insemination Type": "ಗರ್ಭಧಾರಣೆಯ ವಿಧ",
+  "Inseminator": "ಇನ್ಸೆಮಿನೇಟರ್"
+
 }

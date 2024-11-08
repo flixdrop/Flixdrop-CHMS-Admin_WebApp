@@ -111,35 +111,6 @@
             }
         }
 
-
-        // .communication-section{
-        //     margin: 25px 0 10px 0 !important;
-        //     width: 100% !important;
-        //     height: 50px;
-        //     background: rgba(0, 0, 0, 0.10);
-        //     border-radius: 2.5px;
-
-        //     display: flex;
-        //     align-items: center;
-        //     justify-content: center;
-
-        //     ion-label{
-        //         display: flex;
-        //         align-items: center;
-        //         justify-content: center;
-        //         font-weight: bold;
-        //         font-size: medium;
-        //         font-weight: bold;
-        //         font-size: large;
-        //         font-style: oblique;
-        //         color: orangered;
-        //         text-decoration: 2px solid orangered underline;
-        //         text-underline-offset: 5px;
-        //         word-spacing: 5px;
-        //     }
-
-        // }
-
         .status-select {
             margin: 25px 0 10px 0 !important;
             width: 100% !important;
@@ -374,71 +345,6 @@ ion-modal {
         background-color: white !important;
     }
 }
-
-// .status-label {
-//     font-size: small;
-//     color: rgb(50, 50, 50);
-// }
-
-// .input-error {
-//     width: 100%;
-//     background: white;
-//     color: #802040;
-//     border: 2px solid rgba(0, 0, 0, 0.10);
-//     border-radius: 0 50px 50px 50px;
-//     padding: 10px;
-// }
-
-// ion-toggle {
-//     width: 2rem !important;
-//     height: 2rem !important;
-//     margin: 0 2rem !important;
-//     --background: #802040;
-//     --background-checked: #208040 !important;
-//     --handle-background: silver;
-//     --handle-background-checked: silver;
-// }
-
-
-
-// .accordian-group {
-//     .accordian {
-//         .header-item {
-//             border: none !important;
-//             background: whitesmoke !important;
-//             height: 50px !important;
-//         }
-
-//         border-bottom: 2px solid rgba(0, 0, 0, 0.10);
-
-//         ion-item {
-//             border: none !important;
-
-//             p {
-//                 font-size: small;
-//                 color: rgb(50, 50, 50);
-//             }
-//         }
-
-//         ion-list {
-//             background: transparent !important;
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-
-//             ion-item {
-//                 display: flex;
-//                 align-items: center;
-//                 justify-content: center;
-//                 width: 100% !important;
-//                 height: 100px;
-//                 margin-top: 10px !important;
-//                 background: white;
-//             }
-
-//         }
-//     }
-// }
 
 .custom-footer-1 {
     .custom-div-1{

@@ -1,18 +1,17 @@
-<ion-header [@slideUp]="isVisible ? 'in' : 'out'" class="custom-header-1">
-    <app-navigation></app-navigation>
-</ion-header>
+<app-navigation [@slideUp]="isVisible ? 'in' : 'out'"></app-navigation>
 
 <ion-content id="main" [scrollEvents]="true" (ionScrollStart)="handleScrollStart()" (ionScrollEnd)="handleScrollEnd()"
-(ionScroll)="handleScroll($any($event))">
-    <ion-router-outlet></ion-router-outlet>
+  (ionScroll)="handleScroll($any($event))">
+  <ion-router-outlet></ion-router-outlet>
 </ion-content>
 
 <ion-footer [@slideDown]="isVisible ? 'in' : 'out'">
-    <div class="mask container-fluid" style="background-color: transparent; position: fixed; bottom: 0;">
-        <div class="d-flex flex-column justify-content-center align-items-start p-2 gap-3">
-          <img style="height: 25px; width: 25px; border-radius: 5px;" src="../../assets/images/fd.png" alt="fd-icon">
-          <p class="text-white">&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. </p>
-        </div>
-      </div>
+  <div class="mask container-fluid" style="background-color: #252525;
+	background: #252525;
+	--background: #252525;">
+    <div class="d-flex flex-column justify-content-center align-items-start p-2">
+      <img style="height: 24px; width: 24px; border-radius: 4px;" src="../../assets/images/fd.png" alt="fd-icon">
+      <p style="padding: 0 !important; margin: 0 !important;">&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. <span style="color: gold !important;"> Developed by flixdrop&#64;2023 </span> </p>
+    </div>
+  </div>
 </ion-footer>
-                        

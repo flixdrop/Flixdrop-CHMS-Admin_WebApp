@@ -1,45 +1,63 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { HeatsComponent } from './heats/heats.component';
+import { FertilityRatioComponent } from './fertilityratio/fertilityratio.component';
+import { HealthsComponent } from './healths/healths.component';
+import { InseminationsComponent } from './inseminations/inseminations.component';
+import { InstallationsComponent } from './installations/installations.component';
+import { AnimalsComponent } from './animals/animals.component';
+import { FarmsComponent } from './farms/farms.component';
+import { ChartsComponent } from './charts/charts.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 const routes: Routes = [
+  {
+    path: '', 
+    redirectTo: '',
+    pathMatch: 'full',
+  },
   {
     path: '',
     component: HomeComponent
   },
-   {
-    path: 'animal-details',
-    loadChildren: () => import('./animal_details/animal-details.module').then( m => m.AnimalDetailsModule),
+  {
+    path: 'animals',
+    component: AnimalsComponent,
   },
   {
-    path: 'farm-details',
-    loadChildren: () => import('./farm_details/farm-details.module').then( m => m.FarmDetailsModule)
+    path: 'farms',
+    component: FarmsComponent,
   },
   {
-    path: 'heat-details',
-    loadChildren: () => import('./heat_details/heat-details.module').then(m => m.HeatDetailsModule)
+    path: 'heats',
+    component: HeatsComponent,
   },
   {
-    path: 'illness-details',
-    loadChildren: () => import('./illness_details/illness-details.module').then(m => m.IllnessDetailsModule)
+    path: 'healths',
+    component: HealthsComponent,
   },
   {
-    path: 'installation-details',
-    loadChildren: () => import('./installation_details/installation-details.module').then(m => m.InstallationDetailsModule)
+    path: 'installations',
+    component: InstallationsComponent,
   },
   {
-    path: 'heat-pregnant-details',
-    loadChildren: () => import('./heat_pregnant_details/heat-pregnant-details.module').then(m => m.HeatPregnantDetailsModule)
+    path: 'fertilityratio',
+    component: FertilityRatioComponent,
   },
   {
-    path: 'insemination-details',
-    loadChildren: () => import('./insemination_details/insemination-details.module').then(m => m.InseminationDetailsModule)
+    path: 'inseminations',
+    component: InseminationsComponent,
   },
 
   {
-    path: '',
-    redirectTo: '/landing/navs/home',
-    pathMatch: 'full'
+    path: 'activities',
+    component: ActivitiesComponent,
+  },
+
+  {
+    path: 'charts/:animal',
+    component: ChartsComponent,
   }
 ];
 

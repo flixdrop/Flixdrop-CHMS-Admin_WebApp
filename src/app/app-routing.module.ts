@@ -2,26 +2,31 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'landing', pathMatch: 'full'
+    path: '',
+    redirectTo: 'farm',
+    pathMatch: 'full',
   },
   {
-    path: 'landing',
-    loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
-    // canLoad: [AuthGuardService]
-    canActivate: [AuthGuardService]
+    path: 'farm',
+    loadChildren: () =>
+      import('./landing/landing.module').then((m) => m.LandingModule),
+    canActivate: [AuthGuardService], 
   },
   {
     path: 'default-page',
-    loadChildren: () => import('./default-page/default-page.module').then(m => m.DefaultPageModule),
+    loadChildren: () =>
+      import('./default-page/default-page.module').then((m) => m.DefaultPageModule),
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+    component: LoginComponent,
   }
 ];
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],

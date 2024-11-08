@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, tap } from "rxjs";
-import { User } from "src/app/model/user.model";
+import { User } from "src/app/models/user.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Router } from "@angular/router";
+import { UserService } from "../user/user.service";
 
 interface AuthResponseData {
   userId: string;
@@ -23,7 +24,7 @@ export class AuthService {
   private user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
   get authenticatedUser() {
     return this.user.asObservable();
@@ -140,6 +141,7 @@ export class AuthService {
   }
 
   autoLogin() {
+    this.userService.setFarmId('All Farms');
     const userData: {
       id: string;
       email: string;
@@ -175,11 +177,14 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  logout() {
+  async logout() {
     this.user.next(null);
+    this.userService.setFarmId('All Farms');
+    this.userService.setAdminId('All Admins');
     localStorage.removeItem("userData");
     localStorage.removeItem("isUserSaved");
     localStorage.removeItem("farm");
+    localStorage.removeItem("selected_admin");
     localStorage.removeItem("firstTimeOpen");
 
     localStorage.clear();
@@ -188,6 +193,10 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-    this.router.navigate(["/login"]);
+
+    this.router.navigateByUrl('/login', { replaceUrl: true }).then(() => {
+      window.location.reload();
+    });
+
   }
 }
