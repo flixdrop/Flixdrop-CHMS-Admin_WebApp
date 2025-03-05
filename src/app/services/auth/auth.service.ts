@@ -24,7 +24,7 @@ export class AuthService {
   private user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
   get authenticatedUser() {
     return this.user.asObservable();
@@ -137,7 +137,7 @@ export class AuthService {
     const user = new User(userId, email, role, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem("userData", JSON.stringify(user));
+    localStorage.setItem("Authenticated_User", JSON.stringify(user));
   }
 
   autoLogin() {
@@ -148,7 +148,7 @@ export class AuthService {
       role: string;
       _token: string;
       _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem("userData"));
+    } = JSON.parse(localStorage.getItem("Authenticated_User"));
     if (!userData) {
       return;
     }
@@ -179,16 +179,17 @@ export class AuthService {
 
   async logout() {
     this.user.next(null);
-    this.userService.setFarmId('All Farms');
-    this.userService.setAdminId('All Admins');
-    localStorage.removeItem("userData");
+    this.userService.setFarmId(null);
+    this.userService.setAdminId(null);
+
+    localStorage.removeItem("Authenticated_User");
     localStorage.removeItem("isUserSaved");
     localStorage.removeItem("farm");
-    localStorage.removeItem("selected_admin");
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("farmId");
     localStorage.removeItem("firstTimeOpen");
-
     localStorage.clear();
-    
+
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -197,6 +198,5 @@ export class AuthService {
     this.router.navigateByUrl('/login', { replaceUrl: true }).then(() => {
       window.location.reload();
     });
-
   }
 }

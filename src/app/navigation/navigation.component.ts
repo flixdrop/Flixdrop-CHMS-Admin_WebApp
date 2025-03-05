@@ -32,23 +32,22 @@ export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild("searchModal") searchModal: IonModal | any;
   @ViewChild("searchbar", { static: false }) searchbar: IonSearchbar | any;
 
-  fetchUserDataSub: Subscription;
-  userDataSub: Subscription;
-  getAllAnimalsSub: Subscription;
-  getFarmAnimalsSub: Subscription;
+  fetchUserDataSub: Subscription | undefined;
+  userDataSub: Subscription | undefined;
+  getAllAnimalsSub: Subscription | undefined;
+  getFarmAnimalsSub: Subscription | undefined;
   results: any[] = [];
   animals: any[] = [];
   farms: any[] = [];
   admins: any[] = [];
 
-  // farm = "All Farms";
   sortOrders = {};
   searchToggle: boolean = false;
   isLoading: boolean = false;
   language: string = "en";
-  typeOfUser: string = "";
-  selectedAdmin = "All Admin";
-  selectedFarm = "All Farms";
+  typeOfUser: string | undefined;
+  selectedAdmin: string | undefined;
+  selectedFarm: string | undefined;
 
   // isHandset$: Observable<boolean> = this.breakpointObserver
   //   .observe(Breakpoints.Handset)
@@ -77,306 +76,208 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.language = localStorage.getItem("language") || "en";
   }
 
+  // ngOnInit(): void {
+  //   this.isLoading = true;
+  //   this.userDataSub = this.authService.authenticatedUser.subscribe((user) => {
+  //     if (user) {
+  //       this.typeOfUser = user['role'];
+  //       this.loadOrganizationData(user['id']);
+  //     } else {
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+
+  // ngOnDestroy(): void {
+  //   if (this.userDataSub) {
+  //     this.userDataSub.unsubscribe();
+  //   }
+  //   if (this.fetchUserDataSub) {
+  //     this.fetchUserDataSub.unsubscribe();
+  //   }
+  // }
+
+  // private loadOrganizationData(userId: string): void {
+  //   this.fetchUserDataSub = this.userService.fetchOrganizationDocuments(userId).subscribe((data) => {
+  //     if (data) {
+  //       this.farms = data.farms;
+  //       this.admins = this.extractUniqueAdmins(data.farms);
+  //       this.restoreAdminId(); // Restore adminId before setting initial selections.
+  //       this.setInitialSelections();
+  //       this.handleUserRoles(userId);
+  //     }
+  //     this.isLoading = false;
+  //     console.log('All Admins: ', this.admins);
+  //     console.log('All Farms: ', this.farms);
+  //   });
+  // }
+
+  // private extractUniqueAdmins(farms: any[]): any[] {
+  //   return Array.from(
+  //     new Map(
+  //       farms.map((farm) => [
+  //         farm.organization.parentOrganization.id,
+  //         farm.organization.parentOrganization,
+  //       ])
+  //     ).values()
+  //   );
+  // }
+
+  // private setInitialSelections(): void {
+  //   if (this.farms.length > 0) {
+  //     this.selectedFarm = this.farms[0]?.name || 'All Farms';
+  //     this.userService.setFarmId(this.farms[0]?.id || 'All Farms');
+  //   }
+
+  //   if (this.admins.length > 0 && !this.selectedAdmin) {
+  //     this.selectedAdmin = this.admins[0]?.name;
+  //     this.userService.setAdminId(this.admins[0]?.user?.id);
+  //     localStorage.setItem('adminId', this.admins[0]?.user?.id);
+  //   }
+  // }
+
+  // private handleUserRoles(userId: string): void {
+  //   if (this.typeOfUser === 'SUPER_ADMIN' && this.admins.length > 0) {
+  //     this.fetchUserDataSub = this.userService
+  //       .fetchOrganizationDocuments(this.admins[0]?.user?.id)
+  //       .subscribe((superAdminData) => {
+  //         if (superAdminData) {
+  //           this.selectedFarm = 'All Farms';
+  //           this.userService.setFarmId('All Farms');
+  //           this.farms = superAdminData.farms;
+  //         }
+  //       });
+  //   }
+
+  //   if (this.typeOfUser === 'USER') {
+  //     this.fetchUserDataSub = this.userService.fetchOrganizationDocuments(userId).subscribe((userData) => {
+  //       if (userData) {
+  //         this.selectedFarm = 'All Farms';
+  //         this.userService.setFarmId('All Farms');
+  //         this.farms = userData.farms;
+  //       }
+  //     });
+  //   }
+  // }
+
+  // private restoreAdminId(): void {
+  //   const storedAdminId = localStorage.getItem('adminId');
+  //   if (storedAdminId) {
+  //     const foundAdmin = this.admins.find((admin) => admin?.user?.id === storedAdminId);
+  //     if (foundAdmin) {
+  //       this.selectedAdmin = foundAdmin.name;
+  //       this.userService.setAdminId(storedAdminId);
+  //     } else {
+  //       localStorage.removeItem('adminId'); // Remove invalid adminId from localStorage.
+  //     }
+  //   }
+  // }
+
+
+
+
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.userDataSub = this.authService.authenticatedUser.subscribe((user) => {
+      if (user) {
+        this.typeOfUser = user['role'];
+        this.loadOrganizationData(user['id']);
+      } else {
+        this.isLoading = false;
+      }
+    });
+  }
+
   ngOnDestroy(): void {
-    if (this.getFarmAnimalsSub) {
-      this.getFarmAnimalsSub.unsubscribe();
-    }
-    if (this.getAllAnimalsSub) {
-      this.getAllAnimalsSub.unsubscribe();
-    }
     if (this.userDataSub) {
       this.userDataSub.unsubscribe();
     }
     if (this.fetchUserDataSub) {
       this.fetchUserDataSub.unsubscribe();
     }
-
-    this.typeOfUser = "";
-    this.selectedAdmin = "";
-    this.selectedFarm = "";
-    this.results = [];
-    this.animals = [];
-    this.farms = [];
-    this.admins = [];
   }
 
-  // ionViewWillEnter() {
-  //   this.typeOfUser = "";
-  //   this.selectedAdmin = "";
-  //   this.selectedFarm = "";
-  //   this.results = [];
-  //   this.animals = [];
-  //   this.farms = [];
-  //   this.admins = [];
-  //   let userId;
-  //   this.isLoading = true;
-  //   this.authService.authenticatedUser.subscribe((user) => {
-  //     if (user) {
-  //       userId = user["id"];
-  //       this.isLoading = false;
-  //     }
-  //   });
-
-  //   this.isLoading = true;
-  //   if (!this.fetchUserDataSub) {
-  //     this.fetchUserDataSub = this.userService
-  //       .fetchOrganizationDocuments(userId)
-  //       .subscribe((data) => {
-  //         if (data) {
-  //           this.isLoading = false;
-  //         }
-  //       });
-  //   }
-  // }
-
-  // ngOnInit(): void {
-  //   let userId;
-  //   let typeOfUser;
-  //   this.isLoading = true;
-  //   if (!this.userDataSub) {
-  //     this.userDataSub = this.authService.authenticatedUser.subscribe(
-  //       (user) => {
-  //         if (user) {
-  //           userId = user["id"];
-  //           typeOfUser = user["role"];
-  //           this.typeOfUser = user.role;
-  //           this.isLoading = false;
-  //         }
-  //       }
-  //     );
-  //   }
-
-  //   this.isLoading = true;
-  //   if (!this.fetchUserDataSub) {
-  //     this.fetchUserDataSub = this.userService
-  //       .fetchOrganizationDocuments(userId)
-  //       .subscribe((userData) => {
-  //         if (userData) {
-  //           this.farms = userData.farms;
-  //           this.selectedFarm = "All Farms";
-  //           this.userService.setFarmId(`All Farms`);
-  //           const uniqueParentOrganizations = Array.from(
-  //             new Map(
-  //               userData.farms.map((farm) => [
-  //                 farm.organization.parentOrganization.id,
-  //                 farm.organization.parentOrganization,
-  //               ])
-  //             ).values()
-  //           );
-  //           this.admins = uniqueParentOrganizations.reverse();
-
-  //           if(typeOfUser == "SUPER_ADMIN" && typeOfUser !== "ADMIN" || "USER"){
-  //             this.fetchUserDataSub = this.userService
-  //             .fetchOrganizationDocuments(this.admins[0].user.id)
-  //             .subscribe((superAdminData) => {
-  //               if (superAdminData) {
-  //                 this.selectedFarm = "All Farms";
-  //                 this.userService.setFarmId(`All Farms`);
-
-  //                 this.selectedAdmin = this.admins[0].user.name;
-  //                 localStorage.setItem("selected_admin", this.admins[0].user.name);
-  //                 this.userService.setAdminId(`${this.admins[0].user.id}`);
-  //                 this.farms = superAdminData.farms;
-
-  //                 this.isLoading = false;
-  //               }
-  //             });
-  //           }
-
-  //           // if(typeOfUser !== "SUPER_ADMIN"){
-  //           //   this.farms = userData.farms;
-  //           //   this.selectedFarm = "All Farms";
-  //           //   this.userService.setFarmId(`All Farms`);
-  //           // }
-  //         }
-
-  //         // if(typeOfUser === "SUPER_ADMIN"){
-  //         //   this.fetchUserDataSub = this.userService
-  //         //   .fetchOrganizationDocuments(this.admins[0].user.id)
-  //         //   .subscribe((data) => {
-  //         //     if (data) {
-  //         //       this.selectedFarm = "All Farms";
-  //         //       this.userService.setFarmId(`All Farms`);
-
-  //         //       this.farms = data.farms;
-  //         //       this.selectedAdmin = this.admins[0].user.name;
-  //         //       localStorage.setItem("selected_admin", this.admins[0].user.name);
-  //         //       this.userService.setAdminId(`${this.admins[0].user.id}`);
-  //         //       this.isLoading = false;
-  //         //     }
-  //         //   });
-  //         // }
-  //       });
-
-  //     // if(this.admins && typeOfUser === "SUPER_ADMIN"){
-
-  //     //   this.fetchUserDataSub = this.userService
-  //     //   .fetchOrganizationDocuments(this.admins[0].user.id)
-  //     //   .subscribe((data) => {
-  //     //     if (data) {
-  //     //       this.selectedFarm = "All Farms";
-  //     //       this.userService.setFarmId(`All Farms`);
-
-  //     //       this.farms = data.farms;
-  //     //       this.selectedAdmin = this.admins[0].user.name;
-  //     //       localStorage.setItem("selected_admin", this.admins[0].user.name);
-  //     //       this.userService.setAdminId(`${this.admins[0].user.id}`);
-  //     //       this.isLoading = false;
-  //     //     }
-  //     //   });
-  //     // }
-  //   }
-  // }
-
-  ionViewWillEnter() {
-    this.typeOfUser = "";
-    this.selectedAdmin = "";
-    this.selectedFarm = "";
-    this.results = [];
-    this.animals = [];
-    this.farms = [];
-    this.admins = [];
-    let userId;
-    this.isLoading = true;
-
-    // Fetch authenticated user
-    this.authService.authenticatedUser.subscribe((user) => {
-      if (user) {
-        userId = user["id"];
+  private loadOrganizationData(userId: string): void {
+    this.fetchUserDataSub = this.userService.fetchOrganizationDocuments(userId).subscribe(
+      (data) => {
+        if (data) {
+          this.farms = data.farms;
+          this.admins = this.extractUniqueAdmins(data.farms);
+          this.setInitialSelections();
+          this.handleUserRoles(userId);
+        }
+        this.isLoading = false;
+        console.log('All Admins: ', this.admins);
+        console.log('All Farms: ', this.farms);
+      },
+      (error) => {
+        console.error('Error loading organization data:', error);
         this.isLoading = false;
       }
-    });
+    );
+  }
 
-    // Fetch organization documents (farms and admins)
-    if (!this.fetchUserDataSub) {
-      this.fetchUserDataSub = this.userService
-        .fetchOrganizationDocuments(userId)
-        .subscribe((data) => {
-          if (data) {
-            this.isLoading = false;
+  private extractUniqueAdmins(farms: any[]): any[] {
+    return Array.from(
+      new Map(
+        farms.map((farm) => [
+          farm.organization.parentOrganization.id,
+          farm.organization.parentOrganization,
+        ])
+      ).values()
+    );
+  }
 
-            // Set farms and default selection
-            this.farms = data.farms;
-            if (this.farms.length > 0) {
-              this.selectedFarm = this.farms[0]?.name || "All Farms"; // Set the first farm
-              this.userService.setFarmId(this.farms[0]?.id || "All Farms"); // Set farmId
-            }
+  private setInitialSelections(): void {
+    if (this.farms.length > 0) {
+      this.setFarmSelection(this.farms[0]?.id || 'All Farms', this.farms[0]?.name || 'All Farms');
+    }
 
-            // Set unique admins
-            const uniqueParentOrganizations = Array.from(
-              new Map(
-                data.farms.map((farm) => [
-                  farm.organization.parentOrganization.id,
-                  farm.organization.parentOrganization,
-                ])
-              ).values()
-            );
-            this.admins = uniqueParentOrganizations;
+    const storedAdminId = this.userService.getStoredAdminId();
+    if (this.admins.length > 0) {
+      const initialAdmin = storedAdminId
+        ? this.admins.find((admin) => admin?.user?.id === storedAdminId)
+        : this.admins[0];
 
-            // Set first admin if available
-            if (this.admins.length > 0) {
-              this.selectedAdmin = this.admins[0]?.name; // Set the first admin
-              this.userService.setAdminId(this.admins[0]?.user?.id); // Set adminId
-            }
-
-            // // Handle SUPER_ADMIN case
-            if (this.typeOfUser === "SUPER_ADMIN") {
-              this.fetchUserDataSub = this.userService
-                .fetchOrganizationDocuments(this.admins[0]?.user?.id)
-                .subscribe((superAdminData) => {
-                  if (superAdminData) {
-
-                    this.selectedFarm = "All Farms";
-                    this.userService.setFarmId("All Farms");
-
-                    // this.farms = superAdminData.farms.filter((farm) => {
-                    //   farm.organization.user.id === this.admins[0].id 
-                    // });
-
-                    this.farms = superAdminData.farms;
-        
-                    this.isLoading = false;
-                  }
-                });
-            }
-          }
-
-            // Handle SUPER_ADMIN case
-            if (this.typeOfUser === "USER") {
-              this.fetchUserDataSub = this.userService
-                .fetchOrganizationDocuments(userId)
-                .subscribe((superAdminData) => {
-                  if (superAdminData) {
-                    this.selectedFarm = "All Farms";
-                    this.userService.setFarmId("All Farms");
-                    this.farms = superAdminData.farms;
-                    this.isLoading = false;
-                  }
-                });
-            }
-
-        });
+      if (initialAdmin) {
+        this.setAdminSelection(initialAdmin.user.id, initialAdmin.name);
+      }
     }
   }
 
-  ngOnInit(): void {
-    let userId;
-    this.isLoading = true;
-
-    // Fetch authenticated user and user role
-    if (!this.userDataSub) {
-      this.userDataSub = this.authService.authenticatedUser.subscribe(
-        (user) => {
-          if (user) {
-            userId = user["id"];
-            this.typeOfUser = user["role"];
-            this.isLoading = false;
+  private handleUserRoles(userId: string): void {
+    if (this.typeOfUser === 'SUPER_ADMIN' && this.admins.length > 0) {
+      this.fetchUserDataSub = this.userService
+        .fetchOrganizationDocuments(this.admins[0]?.user?.id)
+        .subscribe((superAdminData) => {
+          if (superAdminData) {
+            this.setFarmSelection('All Farms', 'All Farms');
+            this.farms = superAdminData.farms;
           }
+        });
+    } else if (this.typeOfUser === 'USER') {
+      this.fetchUserDataSub = this.userService.fetchOrganizationDocuments(userId).subscribe((userData) => {
+        if (userData) {
+          this.setFarmSelection('All Farms', 'All Farms');
+          this.farms = userData.farms;
         }
-      );
-    }
-
-    // Fetch organization documents as in ionViewWillEnter (to make sure data loads properly)
-    if (!this.fetchUserDataSub) {
-      this.fetchUserDataSub = this.userService
-        .fetchOrganizationDocuments(userId)
-        .subscribe((userData) => {
-          if (userData) {
-            // this.farms = userData.farms;
-
-            // this.farms = userData.farms.filter((farm) => {
-            //   console.log('User ID;', farm.organization.parentOrganization.id, this.admins[0]);
-            //   farm.organization.parentOrganization.id === this.admins[0]?.user?.id
-            // });
-
-            this.selectedFarm = "All Farms";
-            this.userService.setFarmId("All Farms");
-
-            const uniqueParentOrganizations = Array.from(
-              new Map(
-                userData.farms.map((farm) => [
-                  farm.organization.parentOrganization.id,
-                  farm.organization.parentOrganization,
-                ])
-              ).values()
-            );
-            this.admins = uniqueParentOrganizations;
-
-            // Select first admin if available
-            if (this.admins.length > 0) {
-              this.selectedAdmin = this.admins[0]?.name;
-              this.userService.setAdminId(this.admins[0]?.user?.id);
-
-              this.farms = userData.farms.filter((farm) => {
-                return farm?.organization?.parentOrganization?.user?.id === this.admins[0]?.user?.id
-              });
-
-            }
-          }
-        });
+      });
     }
   }
 
+  // adminChanged(admin: any): void {
+    // this.setAdminSelection(admin.user.id, admin.name);
+  // }
+
+  private setFarmSelection(farmId: string, farmName: string): void {
+    this.selectedFarm = farmName;
+    this.userService.setFarmId(farmId);
+  }
+
+  private setAdminSelection(adminId: string, adminName: string): void {
+    this.selectedAdmin = adminName;
+    this.userService.setAdminId(adminId);
+  }
 
   async onClickLogout() {
     await this.authService.logout();
@@ -497,11 +398,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
     if (selectedFarm === "All Farms") {
       this.selectedFarm = "All Farms";
       this.userService.setFarmId("All Farms");
+      // localStorage.setItem('farmId', "All Farms");
       console.log("Farm Selected: All Farms");
     } else {
       const { id: farmId, name: farmName } = selectedFarm;
       this.selectedFarm = farmName;
       this.userService.setFarmId(farmId);
+      // localStorage.setItem('farmId', farmId);
       console.log("Farm Selected:", farmName);
     }
 
@@ -515,8 +418,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     const adminId = selectedAdmin.user.id;
 
     this.selectedAdmin = selectedAdmin.name;
-    this.userService.setAdminId(adminId);
-    localStorage.setItem("selected_admin", adminId);
+
+    this.setAdminSelection(selectedAdmin.user.id, selectedAdmin.name);
 
     this.fetchUserDataSub = this.userService
       .fetchOrganizationDocuments(adminId)
@@ -531,4 +434,48 @@ export class NavigationComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       });
   }
+
+
+
+  // onSelectFarm(event: CustomEvent): void {
+  //   this.isLoading = true;
+  //   const selectedFarm = event.detail.value;
+  
+  //   if (selectedFarm === "All Farms") {
+  //     this.userService.setFarmId("All Farms");
+  //   } else {
+  //     this.userService.setFarmId(selectedFarm);
+  //   }
+  
+  //   this.isLoading = false;
+  // }
+  
+  // onSelectAdmin(event: CustomEvent): void {
+  //   this.isLoading = true;
+  //   const selectedAdmin = event.detail.value;
+  //   const adminId = selectedAdmin.user.id;
+  
+  //   this.userService.setAdminId(adminId);
+  
+  //   if (this.fetchUserDataSub) {
+  //     this.fetchUserDataSub.unsubscribe(); // Unsubscribe previous subscription
+  //   }
+  
+  //   this.fetchUserDataSub = this.userService
+  //     .fetchOrganizationDocuments(adminId)
+  //     .subscribe(
+  //       (data) => {
+  //         if (data) {
+  //           this.farms = data.farms;
+  //           this.userService.setFarmId("All Farms");
+  //         }
+  //         this.isLoading = false;
+  //       },
+  //       (error) => {
+  //         console.error("Error fetching organization documents:", error);
+  //         this.isLoading = false;
+  //       }
+  //     );
+  // }
+
 }

@@ -17,7 +17,7 @@ export const environment = {
     // apiUrl: "http://49.205.217.167:9041/graphql"
     
      /** Connect with Oracle Server Express Server using this API */
-    // apiUrl: "https://chms.flixdrop.com/graphql"
+    apiUrl: "https://chms.flixdrop.com/graphql"
 
     /** Connect with Oracle Server Express Server using this API */
     // apiUrl: "https://chms.flixdrop.com/api/v1"
@@ -29,7 +29,7 @@ export const environment = {
     // apiUrl: "http://localhost:9000/api/v1"
 
     /** Connect with Local Computer Server Apollo Server using this API */
-    apiUrl: "http://localhost:9000/graphql"
+    // apiUrl: "http://localhost:9000/graphql"
   }
 };
 

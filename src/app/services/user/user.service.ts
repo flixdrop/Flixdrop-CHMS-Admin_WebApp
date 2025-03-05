@@ -16,20 +16,44 @@ import { environment } from "src/environments/environment";
 export class UserService {
   private _userData: any = new BehaviorSubject<any>([]);
 
-  private adminIdSubject = new BehaviorSubject<string>("All Admins");
-  adminId$ = this.adminIdSubject.asObservable();
+  // private adminIdSubject = new BehaviorSubject<string>("All Admins");
+  // adminId$ = this.adminIdSubject.asObservable();
 
-  private farmIdSubject = new BehaviorSubject<string>("All Farms");
+  // private farmIdSubject = new BehaviorSubject<string>("All Farms");
+  // farmId$ = this.farmIdSubject.asObservable();
+
+
+  private adminIdSubject = new BehaviorSubject<string>(this.getStoredAdminId() || 'All Admins');
+  adminId$ = this.adminIdSubject.asObservable();
+  private farmIdSubject = new BehaviorSubject<string>(this.getStoredFarmId() || 'All Farms');
   farmId$ = this.farmIdSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get userData() {
     return this._userData.asObservable();
   }
 
+  // setAdminId(adminId: string) {
+  //   this.adminIdSubject.next(adminId);
+  // }
+
+  // getAdminId() {
+  //   return this.adminIdSubject.getValue();
+  // }
+
+  // setFarmId(farmId: string) {
+  //   this.farmIdSubject.next(farmId);
+  // }
+
+  // getFarmId() {
+  //   return this.farmIdSubject.getValue();
+  // }
+
+ 
   setAdminId(adminId: string) {
     this.adminIdSubject.next(adminId);
+    localStorage.setItem('adminId', adminId);
   }
 
   getAdminId() {
@@ -38,11 +62,21 @@ export class UserService {
 
   setFarmId(farmId: string) {
     this.farmIdSubject.next(farmId);
+    localStorage.setItem('farmId', farmId);
   }
 
   getFarmId() {
     return this.farmIdSubject.getValue();
   }
+
+  public getStoredAdminId(): string | null {
+    return localStorage.getItem('adminId');
+  }
+
+  public getStoredFarmId(): string | null {
+    return localStorage.getItem('farmId');
+  }
+
 
   fetchOrganizationDocuments(userId: string): Observable<any> {
     const requestBody = {
@@ -372,6 +406,10 @@ export class UserService {
             resData["data"] &&
             resData["data"]["fetchOrganizationDocuments"]
           ) {
+
+            console.log('userId: ', userId);
+            console.log('Fetch Call: ', resData['data']['fetchOrganizationDocuments']);
+
             return resData["data"]["fetchOrganizationDocuments"];
           } else {
             return [];
