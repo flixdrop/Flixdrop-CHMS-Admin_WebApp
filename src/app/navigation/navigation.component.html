@@ -16,12 +16,26 @@
         </ion-select>
       </ion-item>
 
-      <ion-item button [disabled]="isLoading">
+      <!-- <ion-item button [disabled]="isLoading">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
         <ion-select [disabled]="isLoading" interface="popover" label="{{'Farm' | translate}}"
           (ionChange)="onSelectFarm($event)" selectedText={{selectedFarm}}>
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{farm?.name}}</ion-select-option>
+        </ion-select>
+      </ion-item> -->
+
+      <ion-item button [disabled]="isLoading">
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
+        <ion-select
+          [disabled]="isLoading"
+          interface="popover"
+          label="{{ 'Farm' | translate }}"
+          (ionChange)="onSelectFarm($event)"
+          [selectedText]="selectedFarm"
+        >
+          <!-- <ion-select-option value="All Farms">All Farms</ion-select-option> -->
+          <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>
       </ion-item>
 

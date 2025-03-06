@@ -16,41 +16,20 @@ import { environment } from "src/environments/environment";
 export class UserService {
   private _userData: any = new BehaviorSubject<any>([]);
 
-  // private adminIdSubject = new BehaviorSubject<string>("All Admins");
-  // adminId$ = this.adminIdSubject.asObservable();
-
-  // private farmIdSubject = new BehaviorSubject<string>("All Farms");
-  // farmId$ = this.farmIdSubject.asObservable();
-
-
-  private adminIdSubject = new BehaviorSubject<string>(this.getStoredAdminId() || 'All Admins');
-  adminId$ = this.adminIdSubject.asObservable();
-  private farmIdSubject = new BehaviorSubject<string>(this.getStoredFarmId() || 'All Farms');
-  farmId$ = this.farmIdSubject.asObservable();
-
-  constructor(private http: HttpClient) { }
-
   get userData() {
     return this._userData.asObservable();
   }
 
-  // setAdminId(adminId: string) {
-  //   this.adminIdSubject.next(adminId);
-  // }
+  
+  private adminIdSubject = new BehaviorSubject<string>(this.getStoredAdminId() || 'All Admins');
+  adminId$ = this.adminIdSubject.asObservable();
+  
+  private farmIdSubject = new BehaviorSubject<string>(this.getStoredFarmId() || 'All Farms');
+  farmId$ = this.farmIdSubject.asObservable();
+  
+  constructor(private http: HttpClient) { }
 
-  // getAdminId() {
-  //   return this.adminIdSubject.getValue();
-  // }
 
-  // setFarmId(farmId: string) {
-  //   this.farmIdSubject.next(farmId);
-  // }
-
-  // getFarmId() {
-  //   return this.farmIdSubject.getValue();
-  // }
-
- 
   setAdminId(adminId: string) {
     this.adminIdSubject.next(adminId);
     localStorage.setItem('adminId', adminId);
@@ -58,11 +37,6 @@ export class UserService {
 
   getAdminId() {
     return this.adminIdSubject.getValue();
-  }
-
-  setFarmId(farmId: string) {
-    this.farmIdSubject.next(farmId);
-    localStorage.setItem('farmId', farmId);
   }
 
   getFarmId() {
@@ -73,10 +47,17 @@ export class UserService {
     return localStorage.getItem('adminId');
   }
 
-  public getStoredFarmId(): string | null {
-    return localStorage.getItem('farmId');
-  }
+setFarmId(farmId: string) {
+  console.log('UserService - Setting Farm Id:', farmId);
+  this.farmIdSubject.next(farmId);
+  localStorage.setItem('farmId', farmId);
+}
 
+getStoredFarmId(): string | null {
+  const storedFarmId = localStorage.getItem('farmId');
+  console.log('UserService - Getting Stored Farm Id:', storedFarmId);
+  return storedFarmId;
+}
 
   fetchOrganizationDocuments(userId: string): Observable<any> {
     const requestBody = {

@@ -97,7 +97,11 @@ export class HomeComponent implements OnDestroy {
           });
       }
       this.isLoading = false;
-    });
+    },
+    (error) => {
+      console.error("Error with translations: ", error);
+  }
+  );
   }
 
   handleAuthenticatedUser(userId: string, role: string) {
@@ -148,7 +152,12 @@ export class HomeComponent implements OnDestroy {
           this.createCharts();
         }
         this.isLoading = false;
-      });
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+        this.isLoading = false;
+      }
+    );
   }
 
   updateAlertItems(farmId: string) {

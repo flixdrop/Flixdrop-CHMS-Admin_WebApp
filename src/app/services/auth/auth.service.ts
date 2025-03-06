@@ -141,7 +141,7 @@ export class AuthService {
   }
 
   autoLogin() {
-    this.userService.setFarmId('All Farms');
+    // this.userService.setFarmId('All Farms');
     const userData: {
       id: string;
       email: string;
@@ -179,24 +179,22 @@ export class AuthService {
 
   async logout() {
     this.user.next(null);
-    this.userService.setFarmId(null);
-    this.userService.setAdminId(null);
-
+  
     localStorage.removeItem("Authenticated_User");
     localStorage.removeItem("isUserSaved");
     localStorage.removeItem("farm");
     localStorage.removeItem("adminId");
     localStorage.removeItem("farmId");
     localStorage.removeItem("firstTimeOpen");
-    localStorage.clear();
-
+  
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-
+  
     this.router.navigateByUrl('/login', { replaceUrl: true }).then(() => {
       window.location.reload();
     });
   }
+
 }

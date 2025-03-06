@@ -104,10 +104,10 @@ export class HeatsComponent implements OnInit, OnDestroy {
     }
 
     // Load farmId from local storage on component initialization
-    const storedFarmId = localStorage.getItem('farmId');
-    if (storedFarmId) {
-      this.userService.setFarmId(storedFarmId); // Set the farmId in your service
-    }
+    // const storedFarmId = localStorage.getItem('farmId');
+    // if (storedFarmId) {
+    //   this.userService.setFarmId(storedFarmId); // Set the farmId in your service
+    // }
 
     this.maxDate = new Date().toISOString().split("T")[0];
     this.toDate = new Date().toISOString();
