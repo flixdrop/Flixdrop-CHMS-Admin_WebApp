@@ -7,54 +7,25 @@
 
 
     <ion-buttons slot="start">
-      <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button
-        [disabled]="isLoading" style="margin-right: 8px !important;">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle"></ion-icon>
-        <ion-select [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
+
+      <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;"
+        color="dark">
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="light"></ion-icon>
+        <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
           (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
 
-      <!-- <ion-item button [disabled]="isLoading">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
-        <ion-select [disabled]="isLoading" interface="popover" label="{{'Farm' | translate}}"
-          (ionChange)="onSelectFarm($event)" selectedText={{selectedFarm}}>
+      <ion-item color="dark" button [disabled]="isLoading">
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"
+          color="light"></ion-icon>
+        <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
+          (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm">
           <ion-select-option value="All Farms">All Farms</ion-select-option>
-          <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{farm?.name}}</ion-select-option>
-        </ion-select>
-      </ion-item> -->
-
-      <ion-item button [disabled]="isLoading">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
-        <ion-select
-          [disabled]="isLoading"
-          interface="popover"
-          label="{{ 'Farm' | translate }}"
-          (ionChange)="onSelectFarm($event)"
-          [selectedText]="selectedFarm"
-        >
-          <!-- <ion-select-option value="All Farms">All Farms</ion-select-option> -->
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>
       </ion-item>
-
-      <!-- <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle"></ion-icon>
-        <ion-select [disabled]="isLoading" interface="popover" label="{{ 'Admin' | translate }}"
-          (ionChange)="onSelectAdmin($event)" [value]="selectedAdmin">
-          <ion-select-option [value]="admin.user.id" *ngFor="let admin of admins;">{{ admin?.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      
-      <ion-item button [disabled]="isLoading">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
-        <ion-select [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
-          (ionChange)="onSelectFarm($event)" [value]="selectedFarm">
-          <ion-select-option value="All Farms">All Farms</ion-select-option>
-          <ion-select-option [value]="farm.id" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
-        </ion-select>
-      </ion-item> -->
     </ion-buttons>
 
     <ion-buttons slot="end">
@@ -67,11 +38,10 @@
         <ion-label class="button-label">{{'Search Animals' | translate}}</ion-label>
         <ion-icon name="search" color="medium"></ion-icon>
       </ion-button>
-      <ion-button size="small"
-      expand="block" size="small" fill="clear" id="language" (click)="onClickLanguage()">
-      <ion-label class="button-label">{{language | translate}}</ion-label>
-      <ion-icon name="language" color="medium"></ion-icon>
-    </ion-button>
+      <ion-button size="small" expand="block" size="small" fill="clear" id="language" (click)="onClickLanguage()">
+        <ion-label class="button-label">{{language | translate}}</ion-label>
+        <ion-icon name="language" color="medium"></ion-icon>
+      </ion-button>
       <ion-button id="all" expand="block" fill="clear" size="small">
         <ion-label class="button-label">{{'All' | translate}}</ion-label>
         <ion-icon name="chevron-down" color="medium"></ion-icon>

@@ -2,7 +2,7 @@
 
   <div style="width: 100%; display: flex; align-items: center;
         justify-content: center;" *ngIf="isLoading">
-          <ion-spinner name="circular" color="primary"></ion-spinner>
+    <ion-spinner name="circular" color="primary"></ion-spinner>
   </div>
 
   <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
@@ -69,7 +69,8 @@
         <!-- Chat Messages -->
         <div *ngFor="let message of messages">
           <p [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">
-            <label [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">{{ message.sender === 'user' ? 'You' : 'AI' }}:</label><br /> 
+            <label [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">{{
+              message.sender === 'user' ? 'You' : 'AI' }}:</label><br />
             {{ message.content }}
           </p>
         </div>
@@ -96,9 +97,7 @@
   <div *ngIf="!isLoading" class="div-1 container-fluid">
     <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
       routerLinkActive="router-link-active">
-      <div class="div-1-1-1">
-        <img src="{{item.icon}}"/>
-      </div>
+      <img src="{{item.icon}}" />
       <div class="div-1-1-2">
         <div>
           <h1 class="value counter">{{ item.value }}</h1>

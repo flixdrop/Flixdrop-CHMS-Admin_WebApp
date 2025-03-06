@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { UserService } from "src/app/services/user/user.service";
-import { Subscription } from "rxjs";
+import { combineLatest, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
@@ -18,132 +18,131 @@ import { SortTableService } from "src/app/services/sort-table/sort-table.service
 })
 export class HeatsComponent implements OnInit, OnDestroy {
 
-  private fetchUserDataSub: Subscription;
-  private userDataSub: Subscription;
-  private farmIdSubscription: Subscription;
+  private userDataSub: Subscription | undefined;
+    private farmIdSubscription: Subscription | undefined;
+    private subscriptions: Subscription = new Subscription(); // Use a single Subscription
   
-  results: any[] = [];
-  heatEvents: any[] = [];
-  sortOrders = {};
+    results: any[] = [];
+    heatEvents: any[] = [];
+    sortOrders = {};
   
-  fromDate: string;
-  toDate: string;
-  maxDate: string;
-  isLoading: boolean = false;
-
-  constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private inputHandlerService: InputHandlerService,
-    private sortHandlerService: SortTableService,
-  ) {}
-
-  ngOnDestroy() {
-    if (this.userDataSub) {
-      this.userDataSub.unsubscribe();
+    fromDate: string;
+    toDate: string;
+    maxDate: string;
+    isLoading: boolean = false;
+  
+    constructor(
+      private userService: UserService,
+      private inputHandlerService: InputHandlerService,
+      private sortHandlerService: SortTableService
+    ) {
+      this.maxDate = new Date().toISOString().split('T')[0];
+      this.toDate = new Date().toISOString();
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      this.fromDate = thirtyDaysAgo.toISOString().split('T')[0];
     }
-    if (this.fetchUserDataSub) {
-      this.fetchUserDataSub.unsubscribe();
+  
+    ngOnInit() {
+      console.log('Health Page ngOnInit'); // Log the data
+      this.subscribeToData();
+      this.subscribeToFarmId();
     }
-    if (this.farmIdSubscription) {
-      this.farmIdSubscription.unsubscribe();
-    }
-  }
-
-  ionViewWillEnter() {
-    let userId;
-    this.isLoading = true;
-    this.authService.authenticatedUser.subscribe((user) => {
-      if (user) {
-        userId = user["id"];
-        this.isLoading = false;
+  
+    ngOnDestroy() {
+      this.subscriptions.unsubscribe(); // Unsubscribe all subscriptions
+      if (this.farmIdSubscription) {
+        this.farmIdSubscription.unsubscribe();
       }
-    });
-
-    this.isLoading = true;
-    if (!this.fetchUserDataSub) {
-      this.fetchUserDataSub = this.userService
-        .fetchOrganizationDocuments(userId)
-        .subscribe((data) => {
-          if (data) {
+      if (this.userDataSub) {
+        this.userDataSub.unsubscribe();
+      }
+    }
+  
+    subscribeToFarmId() {
+      this.farmIdSubscription = this.userService.farmId$.subscribe(
+        (farmId) => {
+          console.log('Farm Id at Health Page:', farmId);
+          this.filterEvents();
+        },
+        (error) => {
+          console.error('Error subscribing to farmId:', error);
+        }
+      );
+    }
+  
+    subscribeToData() {
+      this.isLoading = true;
+      this.subscriptions.add(
+        combineLatest([this.userService.adminId$, this.userService.farmId$]).subscribe(
+          ([adminId, farmId]) => {
+            console.log('Health Page - Admin Id:', adminId, 'Farm Id:', farmId);
+            this.loadData(adminId);
+          },
+          (error) => {
+            console.error('Error in combineLatest:', error);
             this.isLoading = false;
           }
-        });
-    }
-  }
-
-  ngOnInit() {
-    this.isLoading = true;
-    if (!this.userDataSub) {
-      this.userDataSub = this.userService.userData.subscribe((data) => {
-        if (data) {
-          this.heatEvents = data["heatEvents"];
-          this.isLoading = false;
-        }
-      });
-    }
-
-    this.isLoading = true;
-    if (!this.farmIdSubscription) {
-      this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
-        if(farmId){
-          console.log('Farm Id at Heat Page :', farmId);
-           // Store farmId in local storage
-          //  localStorage.setItem('farmId', farmId);
-
-          this.heatEvents =
-          farmId === "All Farms"
-          ? this.heatEvents
-          : this.heatEvents.filter(
-            (event) => event?.animal.farm.id === farmId
-          );
-          this.filterEvents();
-          this.isLoading = false;
-        }
-        });
-    }
-
-    // Load farmId from local storage on component initialization
-    // const storedFarmId = localStorage.getItem('farmId');
-    // if (storedFarmId) {
-    //   this.userService.setFarmId(storedFarmId); // Set the farmId in your service
-    // }
-
-    this.maxDate = new Date().toISOString().split("T")[0];
-    this.toDate = new Date().toISOString();
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    this.fromDate = thirtyDaysAgo.toISOString().split("T")[0];
-    this.filterEvents();
-  }
-
-  filterEvents() {
-    const from = new Date(this.fromDate).getTime();
-    const to = new Date(this.toDate).getTime();
-    this.results = this.heatEvents
-      .filter((event) => {
-        const startedAtTime = new Date(event?.detectedAt).getTime();
-        return startedAtTime >= from && startedAtTime <= to;
-      })
-      .sort(
-        (a: any, b: any) =>
-          new Date(b.detectedAt).getTime() - new Date(a.detectedAt).getTime()
+        )
       );
-  }
-
-  async handleInput(event: any) {
-    this.isLoading = true;
-    const value = event.detail.value;
-    this.results = this.inputHandlerService.handleInput(value, this.heatEvents);
-    this.isLoading = false;
-  }
-
-  sortTable(columnIndex: number): void {
-    this.sortOrders = this.sortHandlerService.sortTable(
-      columnIndex,
-      "myTable",
-      this.sortOrders
-    );
-  }
+    }
+  
+    loadData(adminId: string) {
+      this.subscriptions.add(
+        this.userService.fetchOrganizationDocuments(adminId).subscribe(
+          (data) => {
+            this.heatEvents = data["heatEvents"];
+            this.filterEvents();
+            this.isLoading = false;
+          },
+          (error) => {
+            console.error('Error loading health data:', error);
+            this.isLoading = false;
+          }
+        )
+      );
+    }
+  
+    filterEvents() {
+      const farmId = this.userService.getFarmId();
+      const from = new Date(this.fromDate).getTime();
+      const to = new Date(this.toDate).getTime();
+    
+      if (farmId && farmId !== 'All Farms' && this.heatEvents) {
+        this.results = this.heatEvents
+          .filter((event) => {
+            const startedAtTime = new Date(event?.detectedAt).getTime();
+            return event?.animal?.farm?.id === farmId && startedAtTime >= from && startedAtTime <= to;
+          })
+          .sort((a: any, b: any) => new Date(b.detectedAt).getTime() - new Date(a.detectedAt).getTime());
+      } else if (farmId === 'All Farms' && this.heatEvents) {
+        this.results = this.heatEvents
+          .filter((event) => {
+            const startedAtTime = new Date(event?.detectedAt).getTime();
+            return startedAtTime >= from && startedAtTime <= to;
+          })
+          .sort((a: any, b: any) => new Date(b.detectedAt).getTime() - new Date(a.detectedAt).getTime());
+      }
+    }
+  
+    async handleInput(event: any) {
+      this.isLoading = true;
+      const value = event.detail.value;
+      console.log('Value: ', value);
+      if (value) {
+        this.results = this.inputHandlerService.handleInput(value, this.heatEvents);
+      } else {
+        this.results = [...this.heatEvents]; // Reset results to all events
+      }
+      this.isLoading = false;
+    }
+  
+    sortTable(columnIndex: number): void {
+      this.sortOrders = this.sortHandlerService.sortTable(
+        columnIndex,
+        "myTable",
+        this.sortOrders
+      );
+    }
 
 }

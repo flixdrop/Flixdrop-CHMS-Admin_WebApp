@@ -32,6 +32,8 @@ export class AnimalsComponent implements OnInit, OnDestroy {
   userDataSub: Subscription;
   getAllAnimalsSub: Subscription;
   getFarmAnimalsSub: Subscription;
+  private authUserSubscription: Subscription;
+
   results: any[] = [];
   animals: any[] = [];
 
@@ -68,89 +70,143 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     private actionSheetController: ActionSheetController
   ) {}
 
-  ngOnDestroy() {
-    this.csvdata = [];
-    if (this.getFarmAnimalsSub) {
-      this.getFarmAnimalsSub.unsubscribe();
-    }
-    if (this.getAllAnimalsSub) {
-      this.getAllAnimalsSub.unsubscribe();
-    }
-    if (this.userDataSub) {
-      this.userDataSub.unsubscribe();
-    }
-    if (this.fetchUserDataSub) {
-      this.fetchUserDataSub.unsubscribe();
-    }
-    if (this.farmIdSubscription) {
-      this.farmIdSubscription.unsubscribe();
-    }
-  }
+  // ngOnDestroy() {
+  //   this.csvdata = [];
+  //   if (this.getFarmAnimalsSub) {
+  //     this.getFarmAnimalsSub.unsubscribe();
+  //   }
+  //   if (this.getAllAnimalsSub) {
+  //     this.getAllAnimalsSub.unsubscribe();
+  //   }
+  //   if (this.userDataSub) {
+  //     this.userDataSub.unsubscribe();
+  //   }
+  //   if (this.fetchUserDataSub) {
+  //     this.fetchUserDataSub.unsubscribe();
+  //   }
+  //   if (this.farmIdSubscription) {
+  //     this.farmIdSubscription.unsubscribe();
+  //   }
+  // }
+
+  // ionViewWillEnter() {
+  //   let userId;
+  //   this.isLoading = true;
+  //   this.authService.authenticatedUser.subscribe((user) => {
+  //     if (user) {
+  //       userId = user["id"];
+  //       this.isLoading = false;
+  //     }
+  //   });
+
+  //   this.isLoading = true;
+  //   if (!this.fetchUserDataSub) {
+  //     this.fetchUserDataSub = this.userService
+  //       .fetchOrganizationDocuments(userId)
+  //       .subscribe((data) => {
+  //         if (data) {
+  //           this.isLoading = false;
+  //         }
+  //       });
+  //   }
+  // }
+
+  // ngOnInit() {
+  //   this.isLoading = true;
+  //   if (!this.userDataSub) {
+  //     this.userDataSub = this.userService.userData.subscribe((data) => {
+  //       if (data) {
+  //         this.animals = data["animals"] || [];
+  //         this.healthEvents = data["healthEvents"] || [];
+  //         this.heatEvents = data["heatEvents"] || [];
+  //         this.inseminations = data["inseminations"] || [];
+  //         this.pregnantEvents = data["pregnancy_checks"] || [];
+  //         this.calvedEvents = data["calvedEvents"] || [];
+  //         this.milkings = data["milking"];
+
+  //         this.isLoading = false;
+  //       }
+  //     });
+  //   }
+
+  //   this.isLoading = true;
+  //   if (!this.farmIdSubscription) {
+  //     this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
+  //       if (farmId) {
+  //         this.results =
+  //           farmId === "All Farms"
+  //             ? this.animals
+  //             : this.animals.filter((animal) => animal.farm.id === farmId);
+  //         this.setRange(7);
+  //         this.isLoading = false;
+  //       }
+  //     });
+  //   }
+  // }
+
+  // async handleInput(event: any) {
+  //   this.isLoading = true;
+  //   const value = event.detail.value;
+  //   this.results = this.inputHandlerService.handleInput(value, this.animals);
+  //   this.isLoading = false;
+  // }
+
 
   ionViewWillEnter() {
-    let userId;
     this.isLoading = true;
-    this.authService.authenticatedUser.subscribe((user) => {
+    this.authUserSubscription = this.authService.authenticatedUser.subscribe((user) => {
       if (user) {
-        userId = user["id"];
+        this.userService.fetchOrganizationDocuments(user['id']).subscribe(
+          () => {
+            this.isLoading = false;
+          },
+          (error) => {
+            console.error('Error fetching organization documents:', error);
+            this.isLoading = false;
+          }
+        );
+      } else {
         this.isLoading = false;
       }
     });
-
-    this.isLoading = true;
-    if (!this.fetchUserDataSub) {
-      this.fetchUserDataSub = this.userService
-        .fetchOrganizationDocuments(userId)
-        .subscribe((data) => {
-          if (data) {
-            this.isLoading = false;
-          }
-        });
-    }
   }
 
   ngOnInit() {
     this.isLoading = true;
-    if (!this.userDataSub) {
-      this.userDataSub = this.userService.userData.subscribe((data) => {
-        if (data) {
-          this.animals = data["animals"] || [];
-          this.healthEvents = data["healthEvents"] || [];
-          this.heatEvents = data["heatEvents"] || [];
-          this.inseminations = data["inseminations"] || [];
-          this.pregnantEvents = data["pregnancy_checks"] || [];
-          this.calvedEvents = data["calvedEvents"] || [];
-          this.milkings = data["milking"] ;
+    this.userDataSub = this.userService.userData.subscribe((data) => {
+      if (data) {
+        this.animals = data['animals'] || [];
+        this.healthEvents = data['healthEvents'] || [];
+        this.heatEvents = data['heatEvents'] || [];
+        this.inseminations = data['inseminations'] || [];
+        this.pregnantEvents = data['pregnancy_checks'] || [];
+        this.calvedEvents = data['calvedEvents'] || [];
+        this.milkings = data['milking'];
 
-          this.isLoading = false;
-        }
-      });
+        this.isLoading = false;
+      }
+    });
+
+    this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
+      if (farmId) {
+        this.results =
+          farmId === 'All Farms'
+            ? this.animals
+            : this.animals.filter((animal) => animal.farm.id === farmId);
+        this.setRange(7);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userDataSub) {
+      this.userDataSub.unsubscribe();
     }
-
-    this.isLoading = true;
-    if (!this.farmIdSubscription) {
-      this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
-        if(farmId){
-
-          // // Store farmId in local storage
-          // localStorage.setItem('farmId', farmId);
-
-          // // Load farmId from local storage on component initialization
-          // const storedFarmId = localStorage.getItem('farmId');
-          // if (storedFarmId) {
-          //   this.userService.setFarmId(storedFarmId); // Set the farmId in your service
-          // }
-
-          this.results =
-          farmId === "All Farms"
-          ? this.animals
-          : this.animals.filter(
-            (animal) => animal.farm.id === farmId
-          );
-          this.setRange(7);
-          this.isLoading = false;
-        }
-        });
+    if (this.farmIdSubscription) {
+      this.farmIdSubscription.unsubscribe();
+    }
+    if (this.authUserSubscription) {
+      this.authUserSubscription.unsubscribe();
     }
   }
 
@@ -177,13 +233,14 @@ export class AnimalsComponent implements OnInit, OnDestroy {
       return 0;
     }
     const latestElement = filteredElements.reduce((prev, current) => {
-      return new Date(current.detectedAt || '1970-01-01') > new Date(prev.detectedAt || '1970-01-01')
+      return new Date(current.detectedAt || "1970-01-01") >
+        new Date(prev.detectedAt || "1970-01-01")
         ? current
         : prev;
     });
     return latestElement;
   }
-  
+
   getAnimalHeatStrength(animalId: string) {
     const filteredElements = this.heatEvents.filter(
       (element) => element?.animal?.id === animalId
@@ -192,7 +249,8 @@ export class AnimalsComponent implements OnInit, OnDestroy {
       return 0;
     }
     const latestElement = filteredElements.reduce((prev, current) => {
-      return new Date(current.detectedAt || '1970-01-01') > new Date(prev.detectedAt || '1970-01-01')
+      return new Date(current.detectedAt || "1970-01-01") >
+        new Date(prev.detectedAt || "1970-01-01")
         ? current
         : prev;
     });
@@ -333,7 +391,7 @@ export class AnimalsComponent implements OnInit, OnDestroy {
 
       this.isLoading = true;
       this.authService.authenticatedUser.subscribe((user) => {
-       this.userDataSub = this.userService
+        this.userDataSub = this.userService
           .fetchOrganizationDocuments(user["id"])
           .subscribe((data: any) => {
             if (data) {
@@ -378,7 +436,7 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     this.endDate = new Date(now).toLocaleDateString("en-GB", options);
 
     return events.filter((event) => {
-      const eventTime = new Date(event?.eventDateTime).getTime(); 
+      const eventTime = new Date(event?.eventDateTime).getTime();
       return now - eventTime <= rangeInMs;
     });
   }
@@ -440,8 +498,8 @@ export class AnimalsComponent implements OnInit, OnDestroy {
 
   generatePDF() {
     const doc = new jsPDF();
-    const logo = "../../../../assets/images/chms-logo.png"; 
-    doc.addImage(logo, "PNG", 10, 10, 60, 20); 
+    const logo = "../../../../assets/images/chms-logo.png";
+    doc.addImage(logo, "PNG", 10, 10, 60, 20);
     const title = `${this.selectedFarm} Cattle Management Report (${this.startDate} - ${this.endDate})`;
     doc.setFontSize(14);
     doc.text(title, 10, 40);
@@ -476,7 +534,6 @@ export class AnimalsComponent implements OnInit, OnDestroy {
         .filter((milking) => milking.animal.id == animal.id)
         .reduce((total, milking) => total + milking.totalMilk, 0) + " Ltrs",
     ]);
-
 
     const totalHeat = this.heatEvents.filter((event) =>
       this.results.some((animal) => animal.id == event.animal.id)
@@ -548,5 +605,4 @@ export class AnimalsComponent implements OnInit, OnDestroy {
       `${this.selectedFarm} Cattle Management Report (${this.startDate} - ${this.endDate}).pdf`
     );
   }
-
 }
