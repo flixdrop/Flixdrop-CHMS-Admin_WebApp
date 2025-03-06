@@ -11,7 +11,7 @@
         [disabled]="isLoading" style="margin-right: 8px !important;">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle"></ion-icon>
         <ion-select [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
-          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}" [value]="admins[0]">
+          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -24,6 +24,23 @@
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{farm?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
+
+      <!-- <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;">
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle"></ion-icon>
+        <ion-select [disabled]="isLoading" interface="popover" label="{{ 'Admin' | translate }}"
+          (ionChange)="onSelectAdmin($event)" [value]="selectedAdmin">
+          <ion-select-option [value]="admin.user.id" *ngFor="let admin of admins;">{{ admin?.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item button [disabled]="isLoading">
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"></ion-icon>
+        <ion-select [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
+          (ionChange)="onSelectFarm($event)" [value]="selectedFarm">
+          <ion-select-option value="All Farms">All Farms</ion-select-option>
+          <ion-select-option [value]="farm.id" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
+        </ion-select>
+      </ion-item> -->
     </ion-buttons>
 
     <ion-buttons slot="end">

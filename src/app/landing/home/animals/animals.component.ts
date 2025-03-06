@@ -87,137 +87,6 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ionViewWillEnter() {
-  //   this.isLoading = true;
-  //   this.authService.authenticatedUser.subscribe((user) => {
-  //     this.typeOfUser = user["role"];
-  //     this.userService
-  //       .fetchOrganizationDocuments(user["id"])
-  //       .subscribe((data: any) => {
-  //         if (data) {
-  //           this.isLoading = false;
-  //         }
-  //       });
-  //   });
-  // }
-
-  // ngOnInit() {
-    // this.setRange(7);
-  //   this.userDataSub = this.userService.userData.subscribe((data) => {
-  //     if (data) {
-  //       // This assumes userData contains farms and animals initially
-  //       if (!this.farmIdSubscription) {
-  //         this.farmIdSubscription = this.userService.farmId$.subscribe(
-  //           (farmId) => {
-  //             this.farmId = farmId;
-  //             // this.updateAnimals(data.animals);
-
-  //             if (this.farmId) {
-  //               if (this.farmId == "All Famrs") {
-  //                 this.selectedFarm = "All Farms";
-  //                 this.animals = data.animals;
-  //                 this.results = data.animals;
-  //                 this.heatEvents = data.heatEvents;
-  //                 this.inseminations = data.inseminations;
-  //                 this.pregnantEvents = data.pregnancy_checks;
-  //                 this.healthEvents = data.healthEvents;
-  //                 this.milkings = data.milking;
-  //               } else {
-  //                 this.selectedFarm = data.farms.find((farm) => {
-  //                   return farm.id == this.farmId;
-  //                 }).name;
-  //                 this.animals = data.animals.filter((animal) => {
-  //                   return animal.farm.id == this.farmId;
-  //                 });
-  //                 this.results = data.animals.filter((animal) => {
-  //                   return animal.farm.id == this.farmId;
-  //                 });
-  //                 this.heatEvents = data.heatEvents.filter((event) => {
-  //                   return event.animal.farm.id == this.farmId;
-  //                 });
-  //                 this.inseminations = data.inseminations.filter((event) => {
-  //                   return event.animal.farm.id == this.farmId;
-  //                 });
-  //                 this.pregnantEvents = data.pregnancy_checks.filter(
-  //                   (event) => {
-  //                     return event.animal.farm.id == this.farmId;
-  //                   }
-  //                 );
-  //                 this.healthEvents = data.healthEvents.filter((event) => {
-  //                   return event.animal.farm.id == this.farmId;
-  //                 });
-  //                 this.milkings = data.milking.filter((event) => {
-  //                   return event.animal.farm.id == this.farmId;
-  //                 });
-  //               }
-  //             } else {
-  //               this.selectedFarm = "";
-  //               this.animals = [];
-  //               this.results = [];
-  //               this.heatEvents = [];
-  //               this.inseminations = [];
-  //               this.pregnantEvents = [];
-  //               this.healthEvents = [];
-  //               this.milkings = [];
-  //             }
-  //             console.log("Farm ID updated:", farmId);
-  //           }
-  //         );
-  //       }
-
-  //       // Initial animals update based on current farmId
-  //       // this.updateAnimals(data.animals);
-
-  //       if (this.farmId) {
-  //         if (this.farmId == "All Farms") {
-  //           this.selectedFarm = "All Farms";
-  //           this.animals = data.animals;
-  //           this.results = data.animals;
-  //           this.heatEvents = data.heatEvents;
-  //           this.inseminations = data.inseminations;
-  //           this.pregnantEvents = data.pregnancy_checks;
-  //           this.healthEvents = data.healthEvents;
-  //           this.milkings = data.milking;
-  //         } else {
-  //           this.selectedFarm = data.farms.find((farm) => {
-  //             return farm.id == this.farmId;
-  //           }).name;
-  //           this.animals = data.animals.filter((animal) => {
-  //             return animal.farm.id == this.farmId;
-  //           });
-  //           this.results = data.animals.filter((animal) => {
-  //             return animal.farm.id == this.farmId;
-  //           });
-  //           this.heatEvents = data.heatEvents.filter((event) => {
-  //             return event.animal.farm.id == this.farmId;
-  //           });
-  //           this.inseminations = data.inseminations.filter((event) => {
-  //             return event.animal.farm.id == this.farmId;
-  //           });
-  //           this.pregnantEvents = data.pregnancy_checks.filter((event) => {
-  //             return event.animal.farm.id == this.farmId;
-  //           });
-  //           this.healthEvents = data.healthEvents.filter((event) => {
-  //             return event.animal.farm.id == this.farmId;
-  //           });
-  //           this.milkings = data.milking.filter((event) => {
-  //             return event.animal.farm.id == this.farmId;
-  //           });
-  //         }
-  //       } else {
-  //         this.selectedFarm = "";
-  //         this.animals = [];
-  //         this.results = [];
-  //         this.heatEvents = [];
-  //         this.inseminations = [];
-  //         this.pregnantEvents = [];
-  //         this.healthEvents = [];
-  //         this.milkings = [];
-  //       }
-  //     }
-  //   });
-  // }
-
   ionViewWillEnter() {
     let userId;
     this.isLoading = true;
@@ -245,13 +114,13 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     if (!this.userDataSub) {
       this.userDataSub = this.userService.userData.subscribe((data) => {
         if (data) {
-          this.animals = data["animals"];
-          this.healthEvents = data["healthEvents"];
-          this.heatEvents = data["heatEvents"];
-          this.inseminations = data["inseminations"];
-          this.pregnantEvents = data["pregnancy_checks"];
-          this.calvedEvents = data["calvedEvents"];
-          this.milkings = data["milking"];
+          this.animals = data["animals"] || [];
+          this.healthEvents = data["healthEvents"] || [];
+          this.heatEvents = data["heatEvents"] || [];
+          this.inseminations = data["inseminations"] || [];
+          this.pregnantEvents = data["pregnancy_checks"] || [];
+          this.calvedEvents = data["calvedEvents"] || [];
+          this.milkings = data["milking"] ;
 
           this.isLoading = false;
         }
@@ -262,6 +131,16 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     if (!this.farmIdSubscription) {
       this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
         if(farmId){
+
+          // // Store farmId in local storage
+          // localStorage.setItem('farmId', farmId);
+
+          // // Load farmId from local storage on component initialization
+          // const storedFarmId = localStorage.getItem('farmId');
+          // if (storedFarmId) {
+          //   this.userService.setFarmId(storedFarmId); // Set the farmId in your service
+          // }
+
           this.results =
           farmId === "All Farms"
           ? this.animals
@@ -273,29 +152,7 @@ export class AnimalsComponent implements OnInit, OnDestroy {
         }
         });
     }
-    // this.setRange(7);
-
-    // this.maxDate = new Date().toISOString().split("T")[0];
-    // this.toDate = new Date().toISOString();
-    // const thirtyDaysAgo = new Date();
-    // thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    // this.fromDate = thirtyDaysAgo.toISOString().split("T")[0];
-    // this.filterEvents();
   }
-
-  // async filterEvents() {
-  //   const from = new Date(this.fromDate).getTime();
-  //   const to = new Date(this.toDate).getTime();
-  //   this.results = this.healthEvents
-  //     .filter((event) => {
-  //       const startedAtTime = new Date(event?.detectedAt).getTime();
-  //       return startedAtTime >= from && startedAtTime <= to;
-  //     })
-  //     .sort(
-  //       (a: any, b: any) =>
-  //         new Date(b.detectedAt).getTime() - new Date(a.detectedAt).getTime()
-  //     );
-  // }
 
   async handleInput(event: any) {
     this.isLoading = true;

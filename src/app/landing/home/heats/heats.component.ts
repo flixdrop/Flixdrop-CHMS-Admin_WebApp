@@ -88,7 +88,9 @@ export class HeatsComponent implements OnInit, OnDestroy {
       this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
         if(farmId){
           console.log('Farm Id at Heat Page :', farmId);
-          
+           // Store farmId in local storage
+          //  localStorage.setItem('farmId', farmId);
+
           this.heatEvents =
           farmId === "All Farms"
           ? this.heatEvents
@@ -99,6 +101,12 @@ export class HeatsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
         });
+    }
+
+    // Load farmId from local storage on component initialization
+    const storedFarmId = localStorage.getItem('farmId');
+    if (storedFarmId) {
+      this.userService.setFarmId(storedFarmId); // Set the farmId in your service
     }
 
     this.maxDate = new Date().toISOString().split("T")[0];
