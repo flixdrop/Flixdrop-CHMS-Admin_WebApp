@@ -178,19 +178,19 @@ export class HomeComponent implements OnDestroy {
         route: "animals",
       },
 
-      // {
-      //   label: "Activities",
-      //   value:
-      //     farmId === "All Farms"
-      //       ? this.activities.length.toString()
-      //       : this.activities
-      //           .filter((event) => event.animal.farm.id === farmId)
-      //           .length.toString(),
-      //   totalCount: 0,
-      //   icon: "../../../assets/images/Cattle_Icon.png",
-      //   counter: 0,
-      //   route: "activities",
-      // },
+      {
+        label: "Activities",
+        value:
+          farmId === "All Farms"
+            ? this.activities.length.toString()
+            : this.activities
+                .filter((event) => event.animal.farm.id === farmId)
+                .length.toString(),
+        totalCount: 0,
+        icon: "../../../assets/images/Cattle_Icon.png",
+        counter: 0,
+        route: "activities",
+      },
 
       {
         label: "Heat Events",

@@ -231,7 +231,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
         );
     } else {
       // If adminId is 'All Admins', load all farms from initial data.
-      const initialUserData = this.userService.userData.getValue();
+      const initialUserData = this.userService.userData.subscribe();
       if (initialUserData && initialUserData.farms) {
         this.farms = initialUserData.farms;
         console.log("Farms set to initial user data");

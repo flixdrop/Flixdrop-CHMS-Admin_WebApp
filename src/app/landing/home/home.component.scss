@@ -1,7 +1,13 @@
 ion-content {
   .div-1 {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    // grid-template-columns: repeat(6, 1fr);
+    // grid-template-columns: repeat(5, 1fr);
+
+    // grid-template-columns: repeat(5, 1fr);
+
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted minmax for responsiveness */
+
     gap: 1rem;
     margin: 1rem 0;
     padding: 1rem;
@@ -200,7 +206,7 @@ ion-content {
   padding: 1rem !important;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
   ion-content {
     .div-1 {
       grid-template-columns: repeat(3, 1fr);
@@ -212,7 +218,7 @@ ion-content {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   ion-content {
     .div-1 {
       grid-template-columns: 1fr;
