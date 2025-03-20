@@ -194,7 +194,19 @@ export class NavigationComponent implements OnInit, OnDestroy {
             this.farms = superAdminData.farms;
           }
         });
-    } else if (this.typeOfUser === "USER") {
+    } 
+    else if (this.typeOfUser === "ADMIN" && this.admins.length > 0) {
+      this.fetchUserDataSub = this.userService
+        .fetchOrganizationDocuments(this.admins[0]?.user?.id)
+        .subscribe((superAdminData) => {
+          if (superAdminData) {
+            this.setFarmSelection("All Farms", "All Farms");
+            this.farms = superAdminData.farms;
+          }
+        });
+    }
+
+    else if (this.typeOfUser === "USER") {
       this.fetchUserDataSub = this.userService
         .fetchOrganizationDocuments(userId)
         .subscribe((userData) => {
