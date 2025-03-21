@@ -398,6 +398,7 @@ export class HomeComponent implements OnDestroy {
             pointBorderWidth: 0,
             borderRadius: 8,
             pointBackgroundColor:["#ffffff","#ffffff"],
+            // backgroundColor: ["#8fa25f70", "#10779470"],
             backgroundColor: ["#8fa25f70", "#10779470"],
           },
         ],

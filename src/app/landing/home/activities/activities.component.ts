@@ -89,23 +89,26 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     if (!this.userDataSub) {
       this.userDataSub = this.userService.userData.subscribe((data) => {
         if (data) {
-          this.activities = data["activities"].filter((event) => {
-            if (event.type === "Feeding" && +event.value < this.healthyFeedingTimeMin || +event.value > this.healthyFeedingTimeMax) {
-              return event;
-            }
-            if (event.type === "Ruminating" && +event.value < this.healthyRuminatingTimeMin || +event.value > this.healthyRuminatingTimeMax) {
-              return event;
-            }
-            if (event.type === "Standing" && +event.value < this.healthyStandingTimeMin || +event.value > this.healthyStandingTimeMax) {
-              return event;
-            }
-            if (event.type === "Resting" && +event.value < this.healthyRestingTimeMin || +event.value > this.healthyRestingTimeMax) {
-              return event;
-            }
-            if (event.type === "Sleeping" && +event.value < this.healthySleepingTimeMin || +event.value > this.healthySleepingTimeMax) {
-              return event;
-            }
-          }) || [];
+          // this.activities = data["activities"].filter((event) => {
+          //   if (event.type === "Feeding" && +event.value < this.healthyFeedingTimeMin || +event.value > this.healthyFeedingTimeMax) {
+          //     return event;
+          //   }
+          //   if (event.type === "Ruminating" && +event.value < this.healthyRuminatingTimeMin || +event.value > this.healthyRuminatingTimeMax) {
+          //     return event;
+          //   }
+          //   if (event.type === "Standing" && +event.value < this.healthyStandingTimeMin || +event.value > this.healthyStandingTimeMax) {
+          //     return event;
+          //   }
+          //   if (event.type === "Resting" && +event.value < this.healthyRestingTimeMin || +event.value > this.healthyRestingTimeMax) {
+          //     return event;
+          //   }
+          //   if (event.type === "Sleeping" && +event.value < this.healthySleepingTimeMin || +event.value > this.healthySleepingTimeMax) {
+          //     return event;
+          //   }
+          // }) || [];
+
+          this.activities = data["activities"] || [];
+
           console.log("Acivities in Activities Page :", this.activities);
           this.isLoading = false;
         }
