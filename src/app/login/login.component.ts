@@ -118,8 +118,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  // onClickRememberMe(event) {
+  //   this.rememberUser = event.detail.checked;
+  // }
+
   onClickRememberMe(event) {
-    this.rememberUser = event.detail.checked;
+    this.rememberUser = !this.rememberUser;
+    const isUserSaved = event.detail.checked;
+    localStorage.setItem("isUserSaved", JSON.stringify(isUserSaved));
   }
 
   // async onClickSubmit() {

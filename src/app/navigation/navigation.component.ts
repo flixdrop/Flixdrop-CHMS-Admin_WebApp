@@ -1,5 +1,5 @@
 import { Router, RouterModule } from "@angular/router";
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import {
   ActionSheetButton,
@@ -14,6 +14,8 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { register as registerSwiperElements } from "swiper/element/bundle";
+
 @Component({
   selector: "app-navigation",
   standalone: true,
@@ -27,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
   ],
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild("searchModal") searchModal: IonModal | any;
@@ -77,6 +80,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    registerSwiperElements();
+
     this.isLoading = true;
     this.userDataSub = this.authService.authenticatedUser.subscribe((user) => {
       if (user) {

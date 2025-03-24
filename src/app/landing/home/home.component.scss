@@ -1,5 +1,22 @@
 ion-content {
+  background-color: linear-gradient(to right, #30303020 0%, white 100%);
+  background:linear-gradient(to right, #30303020 0%, white 100%);
+  --background: linear-gradient(to right, #30303020 0%, white 100%);
+  
+
+  .home-bg{
+    display: grid;
+    grid-template-columns: 1fr 25%;
+    grid-template-rows: auto;
+    padding: 1rem;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
   .div-1 {
+    // padding: 1rem !important;
+    background: white;
     display: grid;
     // grid-template-columns: repeat(5, 1fr);
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted minmax for responsiveness */
@@ -17,6 +34,7 @@ ion-content {
       padding: 10px;
       align-items: center;
       justify-content: flex-start;
+      // aspect-ratio: 1/2;
       border-radius: 4px;
       background-image: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgba(3, 31, 213, 1) 82.8%, rgba(248, 101, 248, 1) 87.9%);
     
@@ -70,12 +88,15 @@ ion-content {
 
   .div-2 {
     display: grid;
-    grid-template-columns: repeat(2, 25%);
+    // grid-template-columns: repeat(2, 25%);
     grid-template-rows: auto;
     gap: 1rem;
-    padding: 1rem;
+    padding: 4px;
     align-items: stretch;
     justify-items: stretch;
+
+    background: #1e90ff50;
+    border-radius: 4px;
 
     .div-2-1 {
       width: 100% !important;
@@ -84,8 +105,12 @@ ion-content {
       align-self: flex-start;
       width: 100%;
       padding: 1rem !important;
-      border-left: 2px dashed #ddd;
-      background: none;
+      
+      // border-left: 2px dashed #ddd;
+      background: white;
+
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
     }
 
     .div-2-2 {
@@ -98,6 +123,8 @@ ion-content {
       display: flex;
       align-items: center;
       padding: 1rem !important;
+      background: white;
+
     }
   }
 
@@ -196,6 +223,11 @@ ion-content {
 
 @media (max-width: 1200px) {
   ion-content {
+
+    .home-bg{
+      grid-template-columns: 1fr;
+    }
+
     .div-1 {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -208,6 +240,11 @@ ion-content {
 
 @media (max-width: 500px) {
   ion-content {
+
+    .home-bg{
+      grid-template-columns: 1fr;
+    }
+
     .div-1 {
       grid-template-columns: 1fr;
     }

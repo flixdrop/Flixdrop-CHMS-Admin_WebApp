@@ -1,4 +1,7 @@
 <ion-header class="nav-header">
+
+  <div  class="header-bg"> 
+
   <ion-toolbar class="nav-toolbar" color="none">
     <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
       [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
@@ -9,7 +12,7 @@
     <ion-buttons slot="start">
 
       <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;"
-        color="dark">
+        color="none" lines="full">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="light"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
           (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}">
@@ -17,7 +20,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item color="dark" button [disabled]="isLoading">
+      <ion-item color="none" lines="full" button [disabled]="isLoading">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"
           color="light"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
@@ -48,6 +51,41 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+
+    <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+    slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+    coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true" autoplay-delay="2500" autoplay-disable-on-interaction="false">
+    <swiper-slide>
+      <img src=" https://swiperjs.com/demos/images/nature-1.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+    </swiper-slide>
+    <swiper-slide>
+      <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+    </swiper-slide>
+  </swiper-container>
+
+</div>
+
 </ion-header>
 
 <ion-modal class="medium-width-modal" #searchModal trigger="search-animal" [initialBreakpoint]="1"

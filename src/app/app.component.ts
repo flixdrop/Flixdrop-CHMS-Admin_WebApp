@@ -16,7 +16,22 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.autoLogin();
+    // this.authService.autoLogin();
+
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.handleNavigationEnd(event.url);
+    //   }
+    // });
+
+    const isUserSaved = JSON.parse(
+      localStorage.getItem("isUserSaved")
+    );
+
+    if (isUserSaved) {
+      console.log("Auto Signin In ...");
+      this.authService.autoLogin();
+    }
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -26,16 +41,30 @@ export class AppComponent implements OnInit {
   }
 
   private handleNavigationEnd(url: string) {
-    const isAuthenticated = this.authService.authenticatedUser.subscribe(user => {
-      return !!user;
-    });
-    const isLoginPage = url.includes('/login');
-    if(!isAuthenticated){
-      this.router.navigateByUrl('/login');
-    }
-    else if (isAuthenticated && isLoginPage) {
-      this.router.navigateByUrl('/farm');
+    const isAuthenticated = this.authService.authenticatedUser.subscribe(
+      (user) => {
+        return !!user;
+      }
+    );
+    const isLoginPage = url.includes("/login");
+    if (!isAuthenticated) {
+      this.router.navigateByUrl("/login");
+    } else if (isAuthenticated && isLoginPage) {
+      this.router.navigateByUrl("/landing");
     }
   }
+
+  // private handleNavigationEnd(url: string) {
+  //   const isAuthenticated = this.authService.authenticatedUser.subscribe(user => {
+  //     return !!user;
+  //   });
+  //   const isLoginPage = url.includes('/login');
+  //   if(!isAuthenticated){
+  //     this.router.navigateByUrl('/login');
+  //   }
+  //   else if (isAuthenticated && isLoginPage) {
+  //     this.router.navigateByUrl('/farm');
+  //   }
+  // }
 
 }
