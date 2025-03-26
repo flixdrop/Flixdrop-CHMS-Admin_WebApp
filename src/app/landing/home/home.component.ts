@@ -393,13 +393,12 @@ export class HomeComponent implements OnDestroy {
               +this.alertItems.find((item) => item.label == "Health Events")
                 ?.totalCount,
             ],
-            spanGaps: 5,
+            spanGaps: 7,
             borderWidth: 4,
             pointBorderWidth: 0,
-            borderRadius: 8,
+            borderRadius: 7,
             pointBackgroundColor:["#ffffff","#ffffff"],
-            // backgroundColor: ["#8fa25f70", "#10779470"],
-            backgroundColor: ["#8fa25f70", "#10779470"],
+            backgroundColor: ["#FFB200", "#BF3131"],
           },
         ],
       },
@@ -458,7 +457,7 @@ export class HomeComponent implements OnDestroy {
               +this.alertItems.find((item) => item.label == "Heat Events")
                 ?.value,
             ],
-            backgroundColor: "#8fa25f70",
+            backgroundColor: "#FFB200",
           },
           {
             label: `${this.chart2Parameter2}`,
@@ -473,7 +472,7 @@ export class HomeComponent implements OnDestroy {
                 ?.value.toString()
                 .split("/")[1],
             ],
-            backgroundColor: "#f46a9b70",
+            backgroundColor: "#CC2B52",
           },
         ],
       },

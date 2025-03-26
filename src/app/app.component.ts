@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
     if (!isAuthenticated) {
       this.router.navigateByUrl("/login");
     } else if (isAuthenticated && isLoginPage) {
-      this.router.navigateByUrl("/landing");
+      this.router.navigateByUrl("/farm");
     }
   }
 

@@ -8,14 +8,13 @@ ion-content {
     display: grid;
     grid-template-columns: 1fr 25%;
     grid-template-rows: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     gap: 1rem;
     align-items: flex-start;
     justify-content: center;
   }
 
   .div-1 {
-    // padding: 1rem !important;
     background: white;
     display: grid;
     // grid-template-columns: repeat(5, 1fr);
@@ -95,7 +94,7 @@ ion-content {
     align-items: stretch;
     justify-items: stretch;
 
-    background: #1e90ff50;
+    background: #1e90ff25;
     border-radius: 4px;
 
     .div-2-1 {
@@ -105,10 +104,7 @@ ion-content {
       align-self: flex-start;
       width: 100%;
       padding: 1rem !important;
-      
-      // border-left: 2px dashed #ddd;
       background: white;
-
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
     }
