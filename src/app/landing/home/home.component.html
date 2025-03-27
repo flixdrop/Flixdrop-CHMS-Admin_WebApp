@@ -96,8 +96,9 @@
     </ng-template>
   </ion-modal>
 
-  <div *ngIf="!isLoading" class="div-1 container-fluid">
-    <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
+  <div class="box-1">
+    <div *ngIf="!isLoading" class="div-1 container-fluid">
+      <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
       routerLinkActive="router-link-active">
       <img src="{{item.icon}}" />
       <div class="div-1-1-2">
@@ -110,6 +111,20 @@
       </div>
     </div>
   </div>
+  
+  <div *ngIf="!isLoading" >
+    <div>
+      <ion-card>
+        <ion-card-header>
+          <ion-title>Active Events</ion-title>
+        </ion-card-header>
+
+      </ion-card>
+    </div>
+  </div>
+
+</div>
+
 
   <div *ngIf="!isLoading" class="div-2 container-fluid">
     <div class="div-2-1">
@@ -120,6 +135,8 @@
       <canvas class="canvas" #myChart_2></canvas>
     </div>
   </div>
+
+ 
 
 </div>
 

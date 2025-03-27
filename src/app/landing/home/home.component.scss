@@ -7,7 +7,17 @@ ion-content {
   .home-bg{
     display: grid;
     grid-template-columns: 1fr 25%;
-    grid-template-rows: auto;
+    grid-template-rows: auto auto;
+    padding: 0.5rem;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .box-1{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
     padding: 0.5rem;
     gap: 1rem;
     align-items: flex-start;
@@ -33,7 +43,6 @@ ion-content {
       padding: 10px;
       align-items: center;
       justify-content: flex-start;
-      // aspect-ratio: 1/2;
       border-radius: 4px;
       background-image: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgba(3, 31, 213, 1) 82.8%, rgba(248, 101, 248, 1) 87.9%);
     
@@ -87,14 +96,12 @@ ion-content {
 
   .div-2 {
     display: grid;
-    // grid-template-columns: repeat(2, 25%);
     grid-template-rows: auto;
     gap: 1rem;
-    padding: 4px;
+    padding: 1rem;
     align-items: stretch;
     justify-items: stretch;
-
-    background: #1e90ff25;
+    background: #00000025;
     border-radius: 4px;
 
     .div-2-1 {
@@ -244,7 +251,12 @@ ion-content {
     .div-1 {
       grid-template-columns: 1fr;
     }
+  }
+}
 
+
+@media (max-width: 800px) {
+  ion-content {
     .div-2 {
       grid-template-columns: 1fr;
     }

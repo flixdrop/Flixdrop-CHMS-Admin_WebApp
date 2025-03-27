@@ -28,8 +28,8 @@ ion-toolbar {
         font-weight: bold;
         font-size: small !important;
         padding: 0.5rem !important;
-        color: #252525 !important;
-        background-image: linear-gradient(to top, #e6b980 0%, #eacda3 100%);
+        color: white !important;
+        background: #138808;
       }
 
       width: 100% !important;
@@ -49,13 +49,14 @@ ion-toolbar {
         left: auto;
         top: 0;
         z-index: 1;
-        background: #3B2667 !important;
+        background: #ff9933 !important;
+
 
         tr {
-          background: #3B2667 !important;
+          background: #ff9933 !important;
 
           th {
-            background: #3B2667 !important;
+            background: #ff9933 !important;
             vertical-align: middle;
             white-space: nowrap;
             padding: 0.5rem !important;

@@ -10,21 +10,20 @@
 
 
     <ion-buttons slot="start">
-
-      <ion-item *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;"
+      <ion-item class="select-item" *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;"
         color="none" lines="full">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="light"></ion-icon>
+        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="dark"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
-          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}">
+          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}" toggle-icon="chevron-down-circle">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
 
-      <ion-item color="none" lines="full" button [disabled]="isLoading">
+      <ion-item class="select-item" color="none" button [disabled]="isLoading" lines="full">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"
-          color="light"></ion-icon>
+          color="dark"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
-          (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm">
+          (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-circle">
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>
@@ -47,7 +46,7 @@
       </ion-button>
       <ion-button id="all" expand="block" fill="clear" size="small">
         <ion-label class="button-label">{{'All' | translate}}</ion-label>
-        <ion-icon name="chevron-down" color="medium"></ion-icon>
+        <ion-icon size="small" name="chevron-down-circle" color="medium"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
