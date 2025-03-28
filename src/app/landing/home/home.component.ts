@@ -538,4 +538,24 @@ export class HomeComponent implements OnDestroy {
       },
     });
   }
+
+  getActiveEvents(){
+    const currentTime = new Date().getTime();
+
+    const events = {
+      heats: this.heats
+      .filter((event) => {
+        const startedAtTime = new Date(event?.detectedAt).getTime();
+        return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+      }),
+      healths: this.healths
+      .filter((event) => {
+        const startedAtTime = new Date(event?.detectedAt).getTime();
+        return currentTime - startedAtTime < 24 * 60 * 60 * 1000;
+      })
+    }
+
+    return events;
+  }
+
 }

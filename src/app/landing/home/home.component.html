@@ -4,7 +4,7 @@
     <ion-spinner name="circular" color="primary"></ion-spinner>
   </div>
 
-  <div class="home-bg">
+  <div class="home-bg" *ngIf="!isLoading">
 
 
   <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
@@ -63,9 +63,6 @@
         </ion-grid>
       </ion-content> -->
 
-
-
-
       <ion-content #chatContainer class="chatbox">
 
         <!-- Chat Messages -->
@@ -96,7 +93,7 @@
     </ng-template>
   </ion-modal>
 
-  <div class="box-1">
+  <div class="box-1" *ngIf="!isLoading">
     <div *ngIf="!isLoading" class="div-1 container-fluid">
       <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
       routerLinkActive="router-link-active">
@@ -114,12 +111,61 @@
   
   <div *ngIf="!isLoading" >
     <div>
-      <ion-card>
-        <ion-card-header>
+      <!-- <ion-card> -->
+        <ion-toolbar>
           <ion-title>Active Events</ion-title>
-        </ion-card-header>
+        </ion-toolbar>
 
-      </ion-card>
+        <!-- <ion-card-content> -->
+
+        <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().heats">
+          <div class="line-container">
+            <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
+            <!-- <img *ngIf="event.type === 'Health Event'" src="../../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
+            <img *ngIf="event.type === 'Insemination'" src="../../../../assets/event-icons/vaccines_100dp_8C1AF6_FILL1_wght700_GRAD200_opsz48.svg" />
+            <img *ngIf="event.type === 'Pregnancy Check'" src="../../../../assets/event-icons/fertile_100dp_9B5278_FILL1_wght700_GRAD200_opsz48.svg" />
+            <img *ngIf="event.type === 'Drying Off'" src="../../../../assets/event-icons/cool_to_dry_100dp_FFFFFF_FILL1_wght700_GRAD200_opsz48.svg" />
+            <img *ngIf="event.type === 'Calved Event'" src="../../../../assets/event-icons/cake_100dp_F9DB78_FILL1_wght700_GRAD200_opsz48.svg" /> -->
+          </div>
+        
+            <!-- <ion-label>
+            </ion-label> -->
+            <ion-label style="font-weight: bold;">
+              <h3 style="font-weight: bold;">
+                <a href="#">
+                  {{event.animal.name}}
+                </a>
+              </h3>
+              <h3 style="font-weight: bold;">
+                {{event.type}}
+              </h3>
+                <ion-note style="font-weight: bold;">
+                  Heat Instensity: {{ event.heatStrength }} %
+                </ion-note> 
+                <!-- <ion-note style="font-weight: bold;" *ngIf="event.healthIndex !== undefined">
+                  Health Index: {{ event.healthIndex }} / 100
+                </ion-note>
+                <ion-note style="font-weight: bold;" *ngIf="event.inseminator !== undefined">
+                  {{"Inseminated by: "+event?.['inseminator']?.username }}
+                </ion-note> -->
+            </ion-label>
+        
+            <ion-label style="text-align: end;">
+              <ion-note style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
+                {{event.isActive ? "Active": "Inactive"}}
+              </ion-note><br />
+              <ion-note color="medium" style="font-size: small; font-weight: bold;">
+                {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
+              </ion-note>
+        <ion-note color="medium" style="font-size: small; font-weight: bold;">
+                {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
+              </ion-note>
+            </ion-label>
+          </ion-item>
+
+        <!-- </ion-card-content> -->
+
+      <!-- </ion-card> -->
     </div>
   </div>
 
