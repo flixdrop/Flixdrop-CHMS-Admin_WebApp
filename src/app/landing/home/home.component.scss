@@ -262,41 +262,41 @@ ion-content {
 // }
 
 
-@media (max-width: 1200px) {
-  ion-content {
+// @media (max-width: 1200px) {
+//   ion-content {
 
-    .home-bg{
-      grid-template-columns: 1fr;
-    }
+//     .home-bg{
+//       grid-template-columns: 1fr;
+//     }
 
-    .div-1 {
-      grid-template-columns: repeat(3, 1fr);
-    }
+//     .div-1 {
+//       grid-template-columns: repeat(3, 1fr);
+//     }
 
-    .div-2 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-}
+//     .div-2 {
+//       grid-template-columns: repeat(3, 1fr);
+//     }
+//   }
+// }
 
-@media (max-width: 500px) {
-  ion-content {
+// @media (max-width: 500px) {
+//   ion-content {
 
-    .home-bg{
-      grid-template-columns: 1fr;
-    }
+//     .home-bg{
+//       grid-template-columns: 1fr;
+//     }
 
-    .div-1 {
-      grid-template-columns: 1fr;
-    }
-  }
-}
+//     .div-1 {
+//       grid-template-columns: 1fr;
+//     }
+//   }
+// }
 
 
-@media (max-width: 800px) {
-  ion-content {
-    .div-2 {
-      grid-template-columns: 1fr;
-    }
-  }
-}
+// @media (max-width: 800px) {
+//   ion-content {
+//     .div-2 {
+//       grid-template-columns: 1fr;
+//     }
+//   }
+// }

@@ -15,8 +15,8 @@ ion-toolbar {
     justify-content: stretch;
     align-content: flex-start;
     justify-items: stretch;
-    // height: calc(100vh - 200px);
-    height: calc(100vh - 300px);
+    height: calc(100vh - 200px);
+    // height: calc(100vh - 300px);
     padding: 1rem !important;
 
     table {
@@ -48,17 +48,17 @@ ion-toolbar {
         left: auto;
         top: 0;
         z-index: 1;
-        background: yellow !important;
+        background: var(--ion-color-primary-shade) !important;
 
         tr {
-          background: yellow !important;
+          background: var(--ion-color-primary-shade) !important;
 
           th {
-            background: yellow !important;
+            background: var(--ion-color-primary-shade) !important;
             vertical-align: middle;
             white-space: nowrap;
             padding: 0.5rem !important;
-            color: #202020 !important;
+            color: #ccc !important;
             font-weight: bold !important;
           }
 

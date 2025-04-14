@@ -338,7 +338,7 @@ export class HomeComponent implements OnDestroy {
 
   createCharts() {
     this.isLoading = true;
-    this.isGraphLoading = true;
+    // this.isGraphLoading = true;
     if (this.myChart_1 && this.myChart_2) {
       this.destroyCharts();
       this.ctx_1 = this.myChart_1.nativeElement.getContext("2d");
@@ -347,7 +347,7 @@ export class HomeComponent implements OnDestroy {
       this.plotGraph_2();
     }
     this.isLoading = false;
-    this.isGraphLoading = false;
+    // this.isGraphLoading = false;
   }
 
   destroyCharts() {
@@ -546,12 +546,12 @@ export class HomeComponent implements OnDestroy {
       heats: this.heats
       .filter((event) => {
         const startedAtTime = new Date(event?.detectedAt).getTime();
-        return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+        return currentTime - startedAtTime < 30*24 * 60 * 60 * 1000;
       }),
       healths: this.healths
       .filter((event) => {
         const startedAtTime = new Date(event?.detectedAt).getTime();
-        return currentTime - startedAtTime < 24 * 60 * 60 * 1000;
+        return currentTime - startedAtTime < 30*24 * 60 * 60 * 1000;
       })
     }
 

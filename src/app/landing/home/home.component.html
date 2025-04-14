@@ -109,27 +109,23 @@
     </div>
   </div>
   
-  <div *ngIf="!isLoading" >
+  <div *ngIf="!isLoading" [hidden]="isLoading" >
     <div>
-      <!-- <ion-card> -->
         <ion-toolbar>
           <ion-title>Active Events</ion-title>
         </ion-toolbar>
 
-        <!-- <ion-card-content> -->
+      <ion-toolbar color="primary">
+        <ion-title color="light"> 
+          Heats
+        </ion-title>
+      </ion-toolbar>
 
         <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().heats">
           <div class="line-container">
             <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
-            <!-- <img *ngIf="event.type === 'Health Event'" src="../../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
-            <img *ngIf="event.type === 'Insemination'" src="../../../../assets/event-icons/vaccines_100dp_8C1AF6_FILL1_wght700_GRAD200_opsz48.svg" />
-            <img *ngIf="event.type === 'Pregnancy Check'" src="../../../../assets/event-icons/fertile_100dp_9B5278_FILL1_wght700_GRAD200_opsz48.svg" />
-            <img *ngIf="event.type === 'Drying Off'" src="../../../../assets/event-icons/cool_to_dry_100dp_FFFFFF_FILL1_wght700_GRAD200_opsz48.svg" />
-            <img *ngIf="event.type === 'Calved Event'" src="../../../../assets/event-icons/cake_100dp_F9DB78_FILL1_wght700_GRAD200_opsz48.svg" /> -->
           </div>
-        
-            <!-- <ion-label>
-            </ion-label> -->
+      
             <ion-label style="font-weight: bold;">
               <h3 style="font-weight: bold;">
                 <a href="#">
@@ -142,12 +138,7 @@
                 <ion-note style="font-weight: bold;">
                   Heat Instensity: {{ event.heatStrength }} %
                 </ion-note> 
-                <!-- <ion-note style="font-weight: bold;" *ngIf="event.healthIndex !== undefined">
-                  Health Index: {{ event.healthIndex }} / 100
-                </ion-note>
-                <ion-note style="font-weight: bold;" *ngIf="event.inseminator !== undefined">
-                  {{"Inseminated by: "+event?.['inseminator']?.username }}
-                </ion-note> -->
+          
             </ion-label>
         
             <ion-label style="text-align: end;">
@@ -163,9 +154,44 @@
             </ion-label>
           </ion-item>
 
-        <!-- </ion-card-content> -->
+      <ion-toolbar color="primary">
+        <ion-title color="light">
+          Healths
+        </ion-title>
+      </ion-toolbar>
 
-      <!-- </ion-card> -->
+        <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().healths">
+          <div class="line-container">
+            <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
+          </div>
+        
+            <ion-label style="font-weight: bold;">
+              <h3 style="font-weight: bold;">
+                <a href="#">
+                  {{event.animal.name}}
+                </a>
+              </h3>
+              <h3 style="font-weight: bold;">
+                {{event.type}}
+              </h3>
+                <ion-note style="font-weight: bold;">
+                  Health Index: {{ event.healthIndex }} %
+                </ion-note> 
+            </ion-label>
+        
+            <ion-label style="text-align: end;">
+              <ion-note style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
+                {{event.isActive ? "Active": "Inactive"}}
+              </ion-note><br />
+              <ion-note color="medium" style="font-size: small; font-weight: bold;">
+                {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
+              </ion-note>
+        <ion-note color="medium" style="font-size: small; font-weight: bold;">
+                {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
+              </ion-note>
+            </ion-label>
+          </ion-item>
+
     </div>
   </div>
 
