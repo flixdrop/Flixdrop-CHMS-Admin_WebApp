@@ -14,7 +14,7 @@
         color="none" lines="full">
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="dark"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
-          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}" toggle-icon="chevron-down-circle">
+          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}" toggle-icon="chevron-down-outline">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -23,7 +23,7 @@
         <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"
           color="dark"></ion-icon>
         <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
-          (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-circle">
+          (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-outline">
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>

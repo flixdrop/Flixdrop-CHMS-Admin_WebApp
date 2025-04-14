@@ -329,7 +329,7 @@ export class HomeComponent implements OnDestroy {
                 ).length * 0.9
               ).toString(),
         totalCount: 0,
-        icon: "../../../assets/images/New Installtions_Icon.png",
+        icon: "../../../assets/images/Installation_Icon.png",
         counter: 0,
         route: "installations",
       },
