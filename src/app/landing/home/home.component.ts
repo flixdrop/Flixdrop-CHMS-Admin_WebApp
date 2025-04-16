@@ -23,7 +23,6 @@ export class HomeComponent implements OnDestroy {
 
   language: string = "English";
   isLoading: boolean = false;
-  isGraphLoading: boolean = true;
 
   alertItems: {
     label: string;
@@ -95,8 +94,8 @@ export class HomeComponent implements OnDestroy {
               this.chart2Parameter2 = translations["Pregnancy"];
             }
           });
+          this.isLoading = false;
       }
-      this.isLoading = false;
     },
     (error) => {
       console.error("Error with translations: ", error);
@@ -106,7 +105,6 @@ export class HomeComponent implements OnDestroy {
 
   handleAuthenticatedUser(userId: string, role: string) {
     this.isLoading = true;
-
     if (role === "SUPER_ADMIN") {
       combineLatest([
         this.userService.adminId$,
@@ -153,14 +151,17 @@ export class HomeComponent implements OnDestroy {
         }
         this.isLoading = false;
       },
-      (error) => {
-        console.error('Error fetching data:', error);
-        this.isLoading = false;
-      }
+
+      // (error) => {
+      //   console.error('Error fetching data:', error);
+      //   this.isLoading = false;
+      // }
     );
   }
 
   updateAlertItems(farmId: string) {
+    this.isLoading = true;
+
     const currentTime = new Date().getTime();
 
     this.alertItems = [
@@ -334,11 +335,13 @@ export class HomeComponent implements OnDestroy {
         route: "installations",
       },
     ];
+
+    this.isLoading = false;
+
   }
 
   createCharts() {
     this.isLoading = true;
-    // this.isGraphLoading = true;
     if (this.myChart_1 && this.myChart_2) {
       this.destroyCharts();
       this.ctx_1 = this.myChart_1.nativeElement.getContext("2d");
@@ -347,7 +350,6 @@ export class HomeComponent implements OnDestroy {
       this.plotGraph_2();
     }
     this.isLoading = false;
-    // this.isGraphLoading = false;
   }
 
   destroyCharts() {
@@ -393,12 +395,10 @@ export class HomeComponent implements OnDestroy {
               +this.alertItems.find((item) => item.label == "Health Events")
                 ?.totalCount,
             ],
-            spanGaps: 7,
-            borderWidth: 4,
+            spanGaps: 0,
             pointBorderWidth: 0,
-            borderRadius: 7,
             pointBackgroundColor:["#ffffff","#ffffff"],
-            backgroundColor: ["#FFB200", "#BF3131"],
+            backgroundColor: ["#fcb045", "#e52d27"],
           },
         ],
       },
@@ -412,7 +412,7 @@ export class HomeComponent implements OnDestroy {
             position: "top",
             align: "end",
             labels: {
-              padding: 20,
+              padding: 10,
               textAlign: "right",
               font: {
                 weight: "bolder",
@@ -449,21 +449,17 @@ export class HomeComponent implements OnDestroy {
           {
             label: `${this.chart2Parameter1}`,
             barPercentage: 1,
-            borderRadius: 4,
-            borderWidth: 4,
             pointBorderWidth: 0,
             pointBackgroundColor: "#ffffff",
             data: [
               +this.alertItems.find((item) => item.label == "Heat Events")
                 ?.value,
             ],
-            backgroundColor: "#FFB200",
+            backgroundColor: "#fcb045",
           },
           {
             label: `${this.chart2Parameter2}`,
             barPercentage: 1,
-            borderRadius: 4,
-            borderWidth: 4,
             pointBorderWidth: 0,
             pointBackgroundColor: "#ffffff",
             data: [
@@ -472,7 +468,7 @@ export class HomeComponent implements OnDestroy {
                 ?.value.toString()
                 .split("/")[1],
             ],
-            backgroundColor: "#CC2B52",
+            backgroundColor: "#BA5370",
           },
         ],
       },
@@ -511,7 +507,7 @@ export class HomeComponent implements OnDestroy {
             position: "top",
             align: "end",
             labels: {
-              padding: 20,
+              padding: 10,
               textAlign: "right",
               font: {
                 weight: "bolder",
@@ -540,6 +536,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   getActiveEvents(){
+    this.isLoading = true;
     const currentTime = new Date().getTime();
 
     const events = {
@@ -553,8 +550,10 @@ export class HomeComponent implements OnDestroy {
         const startedAtTime = new Date(event?.detectedAt).getTime();
         return currentTime - startedAtTime < 30*24 * 60 * 60 * 1000;
       })
-    }
+    };
 
+    this.isLoading = false;
+    
     return events;
   }
 

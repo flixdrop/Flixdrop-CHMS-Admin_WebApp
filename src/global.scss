@@ -9,138 +9,83 @@
 
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
-*{
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+* {
+  // -moz-box-sizing: border-box;
+  // -webkit-box-sizing: border-box;
+  // box-sizing: border-box;
 }
 
-body{
-    margin: 0;
-    font-family: var(--bs-body-font-family);
-    font-size: var(--bs-body-font-size);
-    font-weight: var(--bs-body-font-weight);
-    line-height: var(--bs-body-line-height);
-    color: var(--bs-body-color);
-    text-align: var(--bs-body-text-align);
-    background-color: var(--bs-body-bg);
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(16, 24, 32, 0);
+body {
+  // margin: 0;
+  // font-family: var(--bs-body-font-family);
+  // font-size: var(--bs-body-font-size);
+  // font-weight: var(--bs-body-font-weight);
+  // line-height: var(--bs-body-line-height);
+  // color: var(--bs-body-color);
+  // text-align: var(--bs-body-text-align);
+  // background-color: var(--bs-body-bg);
+  // -webkit-text-size-adjust: 100%;
+  // -webkit-tap-highlight-color: rgba(16, 24, 32, 0);
 }
 
 canvas {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 th.sort-asc::after {
-    content: " \2191";
-    font-weight: bolder !important;
-    font-size: larger !important;
+  content: " \2191";
+  font-weight: bolder !important;
+  font-size: larger !important;
 }
 
 th.sort-desc::after {
-    content: " \2193";
-    font-weight: bolder !important;
-    font-size: larger !important;
+  content: " \2193";
+  font-weight: bolder !important;
+  font-size: larger !important;
 }
 
 ion-select-popover {
-    max-height: 300px !important;
+  max-height: 300px !important;
 }
 
-ion-searchbar{
-    // padding: 0 1rem !important;
+ion-searchbar {
+  // padding: 0 1rem !important;
 }
 
 .searchbar-input.sc-ion-searchbar-md {
-    padding: 0 !important;
-    border: 2px solid #ddd !important;
-    border-radius: 2px;
-    box-shadow: none !important;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    text-align: center;
-    font-size: small;
-    font-weight: bold;
-  }
-  
-  .searchbar-search-icon.sc-ion-searchbar-md {
-    top: 5px;
-  }
-
-  ion-popover{
-    --offset-y: 20px !important;
-  }
-
-  ion-progress-bar::part(track) {
-    background: #ddd;
-  }
-  
-  ion-progress-bar::part(progress) {
-    background: rgba(255, 69, 0, 0.3);
-  }
-
-  .full-width-modal{
-    --max-width	: 100% !important;
-    --min-width	: 100% !important;
-    --width : 100% !important;
-  }
-
-  
-  .medium-width-modal{
-    --max-width	: 60% !important;
-    --min-width	: 60% !important;
-    --width : 100% !important;
-  }
-
-  ion-col{
-    display: flex;
-    align-items: center;
-
-  }
-
-
-/* WebKit browsers */
-::-webkit-scrollbar {
-  width: 4px;  /* Adjust the width as needed */
-  height: 4px;  /* Adjust the width as needed */
+  // padding: 0 !important;
+  border: 2px solid #eee !important;
+  border-radius: 4px;
+  box-shadow: none !important;
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+  // gap: 8px;
+  // text-align: center;
+  font-size: small;
+  font-weight: bold;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #f1f1f1;  /* Adjust track color */
+ion-popover {
+  --offset-y: 20px !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: navy;  /* Adjust scrollbar color */
-  border-radius: 4px;  /* Rounded corners (optional) */
+ion-progress-bar::part(track) {
+  background: #ddd;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: navy;  /* Scrollbar color on hover */
+ion-progress-bar::part(progress) {
+  background: rgba(255, 69, 0, 0.3);
 }
 
-
-  :host ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px; 
+.full-width-modal {
+  --max-width: 100% !important;
+  --min-width: 100% !important;
+  --width: 100% !important;
 }
 
-:host ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-}
-
-:host ::-webkit-scrollbar-thumb {
-    background-color: navy;
-    border-radius: 4px;
-}
-
-:host ::-webkit-scrollbar-thumb:hover {
-    background-color: navy;
-}
-
-:host {
-    scrollbar-width: thin;
-    scrollbar-color: navy #f1f1f1;
+.medium-width-modal {
+  --max-width: 60% !important;
+  --min-width: 60% !important;
+  --width: 100% !important;
 }

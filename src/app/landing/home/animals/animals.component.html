@@ -77,17 +77,13 @@
       <ion-grid>
         <ion-row>
           <ion-col sizeLg="4">
-
-            <ion-toolbar>
               <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
                 cancel-button-icon="arrow-back-circle" showCancelButton="focus"
                 placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
               </ion-searchbar>
-            </ion-toolbar>
           </ion-col>
 
           <ion-col>
-
             <ion-toolbar>
               <ion-icon slot="start" name="filter"></ion-icon>
               <ion-breadcrumbs>
@@ -110,7 +106,40 @@
       <caption *ngIf="results.length > 0">List of Animals</caption>
       <caption *ngIf="results.length == 0">
         {{'No Animal Available'| translate}}</caption>
+
       <thead>
+
+        <!-- <tr>
+
+        <div style="display: grid; grid-template-columns: 50% 50%; min-width: 100% !important; width: 100% !important;">
+         
+          <div style="width: 100% !important;">
+              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+              cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+              placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+            </ion-searchbar>
+          </div>
+
+          <div style="width: 100% !important;">
+            <ion-toolbar>
+              <ion-icon slot="start" name="filter"></ion-icon>
+
+                <ion-breadcrumbs>
+                  <ion-breadcrumb expand="block" [class.active]="activeRange === 7" (click)="setRange(7)">
+                  Last 7 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 30" (click)="setRange(30)">
+                  Last 30 Days
+                </ion-breadcrumb>
+                <ion-breadcrumb expand="block" [class.active]="activeRange === 60" (click)="setRange(60)">
+                  Last 60 Days
+                </ion-breadcrumb>
+              </ion-breadcrumbs>
+            </ion-toolbar>
+
+          </div>
+        </div>
+      </tr> -->
 
         <tr>
           <th scope="col" (click)="sortTable(0)"

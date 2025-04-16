@@ -1,13 +1,16 @@
 <ion-content [scrollEvents]="true" class="ion-padding">
-  <div style="width: 100%; display: flex; align-items: center;
+
+  <ion-spinner name="circular" color="primary" *ngIf="isLoading"></ion-spinner>
+
+  <!-- <div style="width: 100%; display: flex; align-items: center;
         justify-content: center;" *ngIf="isLoading">
     <ion-spinner name="circular" color="primary"></ion-spinner>
-  </div>
+  </div> -->
 
   <div class="home-bg" *ngIf="!isLoading">
 
 
-  <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
     <ion-button id="open-modal" expand="block" style="margin: 1rem;">
       <ion-icon size="large" name="logo-ionitron" style="margin-right: 8px;"></ion-icon>
       <ion-label style="font-size: small; font-weight: bold;">
@@ -15,20 +18,20 @@
       </ion-label>
     </ion-button>
   </ion-fab> -->
-  <ion-modal #modal trigger="open-modal">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>
-            <ion-icon size="large" name="logo-ionitron" style="margin-right: 8px;"></ion-icon>
-            Chat with Flixdrop AI Assistant</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="modal.dismiss()">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
+    <ion-modal #modal trigger="open-modal" *ngIf="!isLoading">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>
+              <ion-icon size="large" name="logo-ionitron" style="margin-right: 8px;"></ion-icon>
+              Chat with Flixdrop AI Assistant</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="modal.dismiss()">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
 
-      <!-- <ion-content>
+        <!-- <ion-content>
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col class="ion-align-self-start">
@@ -63,69 +66,79 @@
         </ion-grid>
       </ion-content> -->
 
-      <ion-content #chatContainer class="chatbox">
+        <ion-content #chatContainer class="chatbox" *ngIf="!isLoading">
 
-        <!-- Chat Messages -->
-        <div *ngFor="let message of messages">
-          <p [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">
-            <label [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">{{
-              message.sender === 'user' ? 'You' : 'AI' }}:</label><br />
-            {{ message.content }}
-          </p>
-        </div>
+          <!-- Chat Messages -->
+          <div *ngFor="let message of messages">
+            <p [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">
+              <label [ngClass]="{'user-message': message.sender === 'user', 'ai-message': message.sender === 'ai'}">{{
+                message.sender === 'user' ? 'You' : 'AI' }}:</label><br />
+              {{ message.content }}
+            </p>
+          </div>
 
-        <ion-item>
-          <ion-input label="You" labelPlacement="stacked" [(ngModel)]="inputText"
-            placeholder="Enter your message."></ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-input label="You" labelPlacement="stacked" [(ngModel)]="inputText"
+              placeholder="Enter your message."></ion-input>
+          </ion-item>
 
-        <ion-item lines="none">
-          <ion-button slot="end" size="small" expand="block" fill="clear" style="border-radius: 4px;"
-            (click)="sendMessage()">
-            <ion-label style="font-size: small; font-weight: bold;">
-              Send
-            </ion-label>
-            <ion-icon name="send" style="margin-left: 8px;"></ion-icon>
-          </ion-button>
-        </ion-item>
+          <ion-item lines="none">
+            <ion-button slot="end" size="small" expand="block" fill="clear" style="border-radius: 4px;"
+              (click)="sendMessage()">
+              <ion-label style="font-size: small; font-weight: bold;">
+                Send
+              </ion-label>
+              <ion-icon name="send" style="margin-left: 8px;"></ion-icon>
+            </ion-button>
+          </ion-item>
 
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
-  <div class="box-1" *ngIf="!isLoading">
-    <div *ngIf="!isLoading" class="div-1 container-fluid">
-      <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
-      routerLinkActive="router-link-active">
-      <img src="{{item.icon}}" />
-      <div class="div-1-1-2">
-        <div>
-          <h1 class="value counter">{{ item.value }}</h1>
-        </div>
-        <div>
-          <p class="label">{{ item.label | translate}}</p>
+    <div class="box-1" *ngIf="!isLoading">
+
+      <div *ngIf="!isLoading" class="div-1 container-fluid">
+        <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
+          routerLinkActive="router-link-active">
+          <img src="{{item.icon}}" />
+          <div class="div-1-1-2">
+            <div>
+              <h1 class="value counter">{{ item.value }}</h1>
+            </div>
+            <div>
+              <p class="label">{{ item.label | translate}}</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  
-  <div *ngIf="!isLoading" [hidden]="isLoading" class="div-3">
-    <div>
-        <ion-toolbar>
-          <ion-title>Active Events</ion-title>
-        </ion-toolbar>
 
-      <ion-toolbar color="primary">
-        <ion-title color="light"> 
-          Heats
-        </ion-title>
-      </ion-toolbar>
+      <div *ngIf="!isLoading" class="div-3">
+        <div>
+          <ion-toolbar color="light">
+            <ion-title>
+              <b>
+                Active Events
+              </b>
+            </ion-title>
+          </ion-toolbar>
 
-        <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().heats">
-          <div class="line-container">
-            <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
-          </div>
-      
+          <ion-toolbar color="primary">
+            <ion-item color="none">
+              <ion-title color="light">
+                Heats
+              </ion-title>
+              <ion-label slot="end" color="warning">
+                <p>Heat Events in 24 Hrs</p>
+              </ion-label>
+            </ion-item>
+          </ion-toolbar>
+
+          <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().heats">
+            <div class="line-container">
+              <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
+            </div>
+
             <ion-label style="font-weight: bold;">
               <h3 style="font-weight: bold;">
                 <a href="#">
@@ -135,12 +148,12 @@
               <h3 style="font-weight: bold;">
                 {{event.type}}
               </h3>
-                <ion-note style="font-weight: bold;">
-                  Heat Instensity: {{ event.heatStrength }} %
-                </ion-note> 
-          
+              <ion-note style="font-weight: bold;">
+                Heat Instensity: {{ event.heatStrength }} %
+              </ion-note>
+
             </ion-label>
-        
+
             <ion-label style="text-align: end;">
               <ion-note style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
                 {{event.isActive ? "Active": "Inactive"}}
@@ -148,23 +161,28 @@
               <ion-note color="medium" style="font-size: small; font-weight: bold;">
                 {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
               </ion-note>
-        <ion-note color="medium" style="font-size: small; font-weight: bold;">
+              <ion-note color="medium" style="font-size: small; font-weight: bold;">
                 {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
               </ion-note>
             </ion-label>
           </ion-item>
 
-      <ion-toolbar color="primary">
-        <ion-title color="light">
-          Healths
-        </ion-title>
-      </ion-toolbar>
+          <ion-toolbar color="primary">
+            <ion-item color="none">
+              <ion-title color="light">
+                Healths
+              </ion-title>
+              <ion-label slot="end" color="warning">
+                <p>Health Events in 24 Hrs</p>
+              </ion-label>
+            </ion-item>
+          </ion-toolbar>
 
-        <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().healths">
-          <div class="line-container">
-            <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
-          </div>
-        
+          <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().healths">
+            <div class="line-container">
+              <img src="../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
+            </div>
+
             <ion-label style="font-weight: bold;">
               <h3 style="font-weight: bold;">
                 <a href="#">
@@ -174,11 +192,11 @@
               <h3 style="font-weight: bold;">
                 {{event.type}}
               </h3>
-                <ion-note style="font-weight: bold;">
-                  Health Index: {{ event.healthIndex }} %
-                </ion-note> 
+              <ion-note style="font-weight: bold;">
+                Health Index: {{ event.healthIndex }} %
+              </ion-note>
             </ion-label>
-        
+
             <ion-label style="text-align: end;">
               <ion-note style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
                 {{event.isActive ? "Active": "Inactive"}}
@@ -186,30 +204,27 @@
               <ion-note color="medium" style="font-size: small; font-weight: bold;">
                 {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
               </ion-note>
-        <ion-note color="medium" style="font-size: small; font-weight: bold;">
+              <ion-note color="medium" style="font-size: small; font-weight: bold;">
                 {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
               </ion-note>
             </ion-label>
           </ion-item>
 
+        </div>
+      </div>
+
     </div>
+    
+    <div *ngIf="!isLoading" class="div-2 container-fluid">
+      <div class="div-2-1">
+        <canvas class="canvas" #myChart_1 data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
+          aria-expanded="false" aria-controls="collapseWidthExample"></canvas>
+      </div>
+      <div class="div-2-1">
+        <canvas class="canvas" #myChart_2></canvas>
+      </div>
+    </div>
+
   </div>
-
-</div>
-
-
-  <div *ngIf="!isLoading" class="div-2 container-fluid">
-    <div class="div-2-1">
-      <canvas class="canvas" #myChart_1 data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
-        aria-expanded="false" aria-controls="collapseWidthExample"></canvas>
-    </div>
-    <div class="div-2-1">
-      <canvas class="canvas" #myChart_2></canvas>
-    </div>
-  </div>
-
- 
-
-</div>
 
 </ion-content>

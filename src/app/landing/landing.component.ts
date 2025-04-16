@@ -13,12 +13,12 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     state('in', style({
       display: 'block',
       transform: 'translateY(0)',
-      opacity: 1
+      opacity: 1,
     })),
     state('out', style({
       transform: 'translateY(-100%)',
       opacity: 0,
-      display: 'none'
+      display: 'none',
     })),
     transition('in => out', animate('100ms ease-in')),
     transition('out => in', animate('100ms ease-out'))
@@ -27,18 +27,18 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   trigger('slideDown', [
     state('in', style({
       transform: 'translateY(100)',
-      opacity: 1
+      opacity: 1,
     })),
     state('out', style({
       transform: 'translateY(-0%)',
-      opacity: 0
+      opacity: 0,
     })),
     transition('in => out', animate('100ms ease-in')),
     transition('out => in', animate('100ms ease-out'))
   ])
 ]
-
 })
+
 export class LandingComponent implements OnInit {
 
   isVisible: boolean = true;
