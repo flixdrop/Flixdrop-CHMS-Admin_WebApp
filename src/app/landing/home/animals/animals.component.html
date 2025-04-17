@@ -74,7 +74,7 @@
 
     <table id="myTable" class="table">
 
-      <ion-grid>
+      <!-- <ion-grid>
         <ion-row>
           <ion-col sizeLg="4">
               <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
@@ -101,7 +101,7 @@
 
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
 
       <caption *ngIf="results.length > 0">List of Animals</caption>
       <caption *ngIf="results.length == 0">
@@ -109,37 +109,68 @@
 
       <thead>
 
-        <!-- <tr>
+        <tr style="background: white !important;">
 
-        <div style="display: grid; grid-template-columns: 50% 50%; min-width: 100% !important; width: 100% !important;">
-         
-          <div style="width: 100% !important;">
-              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
-              cancel-button-icon="arrow-back-circle" showCancelButton="focus"
-              placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
-            </ion-searchbar>
-          </div>
+          <th colspan="10" style="background: white !important;">
+            <!-- <div style="">
+              <div>
+                <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                  cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                  placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+                </ion-searchbar>
+              </div>
 
-          <div style="width: 100% !important;">
-            <ion-toolbar>
-              <ion-icon slot="start" name="filter"></ion-icon>
+              <div>
+                <ion-toolbar>
+                  <ion-icon slot="start" name="filter"></ion-icon>
 
-                <ion-breadcrumbs>
-                  <ion-breadcrumb expand="block" [class.active]="activeRange === 7" (click)="setRange(7)">
-                  Last 7 Days
-                </ion-breadcrumb>
-                <ion-breadcrumb expand="block" [class.active]="activeRange === 30" (click)="setRange(30)">
-                  Last 30 Days
-                </ion-breadcrumb>
-                <ion-breadcrumb expand="block" [class.active]="activeRange === 60" (click)="setRange(60)">
-                  Last 60 Days
-                </ion-breadcrumb>
-              </ion-breadcrumbs>
-            </ion-toolbar>
+                  <ion-breadcrumbs>
+                    <ion-breadcrumb expand="block" [class.active]="activeRange === 7" (click)="setRange(7)">
+                      Last 7 Days
+                    </ion-breadcrumb>
+                    <ion-breadcrumb expand="block" [class.active]="activeRange === 30" (click)="setRange(30)">
+                      Last 30 Days
+                    </ion-breadcrumb>
+                    <ion-breadcrumb expand="block" [class.active]="activeRange === 60" (click)="setRange(60)">
+                      Last 60 Days
+                    </ion-breadcrumb>
+                  </ion-breadcrumbs>
+                </ion-toolbar>
 
-          </div>
-        </div>
-      </tr> -->
+              </div>
+            </div> -->
+
+            <ion-grid>
+              <ion-row>
+                <ion-col sizeLg="4">
+                    <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                      cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                      placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+                    </ion-searchbar>
+                </ion-col>
+      
+                <ion-col>
+                  <ion-toolbar>
+                    <ion-icon slot="start" name="filter"></ion-icon>
+                    <ion-breadcrumbs>
+                      <ion-breadcrumb expand="block" [class.active]="activeRange === 7" (click)="setRange(7)">
+                        Last 7 Days
+                      </ion-breadcrumb>
+                      <ion-breadcrumb expand="block" [class.active]="activeRange === 30" (click)="setRange(30)">
+                        Last 30 Days
+                      </ion-breadcrumb>
+                      <ion-breadcrumb expand="block" [class.active]="activeRange === 60" (click)="setRange(60)">
+                        Last 60 Days
+                      </ion-breadcrumb>
+                    </ion-breadcrumbs>
+                  </ion-toolbar>
+      
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </th>
+        </tr>
 
         <tr>
           <th scope="col" (click)="sortTable(0)"
@@ -180,7 +211,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let animal of results">
+        <tr *ngFor="let animal of results | paginate: { itemsPerPage: 10, currentPage: p }; let i = index ">
 
           <td> <a [routerLink]="['/', 'farm', 'dashboard','charts', animal.collar.name]"
               routerLinkActive="router-link-active">{{animal.name}}</a> </td>
@@ -232,6 +263,10 @@
           <td></td>
         </tr>
       </tbody>
+
+      <tfoot>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </tfoot>
     </table>
 
   </div>

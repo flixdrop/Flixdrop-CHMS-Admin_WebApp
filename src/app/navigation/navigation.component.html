@@ -1,55 +1,47 @@
 <ion-header class="nav-header">
 
-  <div  class="header-bg"> 
+  <div class="header-bg">
 
-  <ion-toolbar class="nav-toolbar" color="none">
-    <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
-      [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
-    <ion-img class="brand-logo" slot="start" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
-      src="../../../assets/icons/itc-logo.png"></ion-img>
+    <ion-toolbar class="nav-toolbar" color="none">
+      <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
+        [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
+      <ion-img class="brand-logo" slot="start" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
+        src="../../../assets/icons/itc-logo.png"></ion-img>
 
 
-    <ion-buttons slot="start">
-      <ion-item class="select-item" *ngIf="typeOfUser === 'SUPER_ADMIN'" button [disabled]="isLoading" style="margin-right: 8px !important;"
-        color="none" lines="full">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="person-circle" color="dark"></ion-icon>
-        <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{'Admin' | translate}}"
-          (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}" toggle-icon="chevron-down-outline">
+      <ion-buttons slot="start">
+        <ion-select *ngIf="typeOfUser === 'SUPER_ADMIN'" fill="solid" [disabled]="isLoading" interface="popover"
+          label="{{'Admin' | translate}}" (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}"
+          toggle-icon="chevron-down-outline">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
         </ion-select>
-      </ion-item>
-
-      <ion-item class="select-item" color="none" button [disabled]="isLoading" lines="full">
-        <ion-icon style="height: 32px; height: 32px; margin-right: 8px;" name="trail-sign-sharp"
-          color="dark"></ion-icon>
-        <ion-select color="dark" [disabled]="isLoading" interface="popover" label="{{ 'Farm' | translate }}"
+        <ion-select [disabled]="isLoading" fill="solid" interface="popover" label="{{ 'Farm' | translate }}"
           (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-outline">
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>
-      </ion-item>
-    </ion-buttons>
+      </ion-buttons>
 
-    <ion-buttons slot="end">
-      <ion-button size="small" [routerLink]="['/', 'farm', 'dashboard']" routerLinkActive="router-link-active"
-        expand="block" size="small" fill="clear">
-        <ion-label class="button-label">{{'Home' | translate}}</ion-label>
-        <ion-icon name="home" color="medium"></ion-icon>
-      </ion-button>
-      <ion-button id="search-animal" expand="block" fill="clear" size="small">
-        <ion-label class="button-label">{{'Search Animals' | translate}}</ion-label>
-        <ion-icon name="search" color="medium"></ion-icon>
-      </ion-button>
-      <ion-button size="small" expand="block" size="small" fill="clear" id="language" (click)="onClickLanguage()">
-        <ion-label class="button-label">{{language | translate}}</ion-label>
-        <ion-icon name="language" color="medium"></ion-icon>
-      </ion-button>
-      <ion-button id="all" expand="block" fill="clear" size="small">
-        <ion-label class="button-label">{{'All' | translate}}</ion-label>
-        <ion-icon size="small" name="chevron-down-circle" color="medium"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button size="small" [routerLink]="['/', 'farm', 'dashboard']" routerLinkActive="router-link-active"
+          expand="block" size="small">
+          <ion-label class="button-label">{{'Home' | translate}}</ion-label>
+          <ion-icon name="home" color="medium"></ion-icon>
+        </ion-button>
+        <ion-button id="search-animal" expand="block" fill="clear" size="small">
+          <ion-label class="button-label">{{'Search Animals' | translate}}</ion-label>
+          <ion-icon name="search" color="medium"></ion-icon>
+        </ion-button>
+        <ion-button size="small" expand="block" size="small" fill="clear" id="language" (click)="onClickLanguage()">
+          <ion-label class="button-label">{{language | translate}}</ion-label>
+          <ion-icon name="language" color="medium"></ion-icon>
+        </ion-button>
+        <ion-button id="all" expand="block" fill="clear" size="small">
+          <ion-label class="button-label">{{'All' | translate}}</ion-label>
+          <ion-icon size="small" name="chevron-down-circle" color="medium"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
 
     <!-- <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
     slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
@@ -83,7 +75,7 @@
     </swiper-slide>
   </swiper-container> -->
 
-</div>
+  </div>
 
 </ion-header>
 

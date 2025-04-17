@@ -4,12 +4,16 @@
 }
 
 .header-bg{
-  padding: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: #e8e8e8;
   // clip-path: polygon(0 0, 100% 0, 100% 20%, 100% 97%, 97% 100%, 3% 100%, 0 97%, 0% 20%);
 }
 
 .nav-toolbar {
-  // background: transparent !important;
+  padding: 0.5rem;
+  background: #eee !important;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px !important;
+  --box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px !important;
 }
 
 .brand-logo {
@@ -20,7 +24,6 @@
   aspect-ratio: 1/1;
   pointer-events: none;
   background: #fff;
-  border: 2px solid #eee;
 }
 
 .brand-logo:hover {
@@ -111,14 +114,33 @@ ion-select {
   font-weight: bold !important;
 }
 
+ion-select{
+  width: 200px !important;
+  margin: 0 1rem !important;
+  // --border-radius: 10px !important;
+  // border-radius: 10px !important;
+
+  // padding: 0 !important;
+  // --padding: 0 !important;
+
+  // margin: 0 !important;
+  // --margin: 0 !important;
+
+  // --padding-bottom	: 0 !important;
+  // --padding-end: 0 !important;
+  // --padding-start : 0 !important;
+
+  ion-select-option{
+  width: 100% !important;
+
+  }
+
+}
+
 ion-icon {
   height: 18px !important;
   width: 18px !important;
   color: var(--ion-color-medium) !important;
-}
-
-.select-item{
-
 }
 
 swiper-container {

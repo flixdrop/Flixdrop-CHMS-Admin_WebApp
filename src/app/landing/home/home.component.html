@@ -1,11 +1,9 @@
 <ion-content [scrollEvents]="true" class="ion-padding">
 
-  <ion-spinner name="circular" color="primary" *ngIf="isLoading"></ion-spinner>
-
-  <!-- <div style="width: 100%; display: flex; align-items: center;
-        justify-content: center;" *ngIf="isLoading">
+  <div *ngIf="isLoading" style="width: 100%; display: flex; align-items: center;
+        justify-content: center;">
     <ion-spinner name="circular" color="primary"></ion-spinner>
-  </div> -->
+  </div>
 
   <div class="home-bg" *ngIf="!isLoading">
 

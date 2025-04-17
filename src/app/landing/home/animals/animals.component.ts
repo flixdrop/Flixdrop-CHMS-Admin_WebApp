@@ -11,6 +11,7 @@ import { SortTableService } from "src/app/services/sort-table/sort-table.service
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { RouterModule } from "@angular/router";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @Component({
   selector: "app-animals",
@@ -21,6 +22,7 @@ import { RouterModule } from "@angular/router";
     FormsModule,
     TranslateModule,
     RouterModule,
+    NgxPaginationModule
   ],
   templateUrl: "./animals.component.html",
   styleUrls: ["./animals.component.scss"],
@@ -61,6 +63,8 @@ export class AnimalsComponent implements OnInit, OnDestroy {
 
   farmId: string | null = null;
   private farmIdSubscription: Subscription;
+
+  p: number = 1;
 
   constructor(
     private authService: AuthService,
