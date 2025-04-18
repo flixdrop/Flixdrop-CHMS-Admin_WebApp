@@ -72,7 +72,7 @@ export class AnimalsComponent implements OnInit, OnDestroy {
     private inputHandlerService: InputHandlerService,
     private sortHandlerService: SortTableService,
     private actionSheetController: ActionSheetController
-  ) {}
+  ) { }
 
   // ngOnDestroy() {
   //   this.csvdata = [];
@@ -459,7 +459,7 @@ export class AnimalsComponent implements OnInit, OnDestroy {
         },
         {
           text: "Cancel",
-          handler: async () => {},
+          handler: async () => { },
         },
       ],
     });
@@ -516,23 +516,23 @@ export class AnimalsComponent implements OnInit, OnDestroy {
       animal.name,
       this.heatEvents.length > 0
         ? this.heatEvents.filter(
-            (heatEvent) => heatEvent.animal.id == animal.id
-          ).length
+          (heatEvent) => heatEvent.animal.id == animal.id
+        ).length
         : "0",
       this.inseminations.length > 0
         ? this.inseminations.filter(
-            (insemination) => insemination.animal.id == animal.id
-          ).length
+          (insemination) => insemination.animal.id == animal.id
+        ).length
         : "0",
       this.pregnantEvents.length > 0
         ? this.pregnantEvents.filter(
-            (pregnantEvent) => pregnantEvent.animal.id == animal.id
-          ).length
+          (pregnantEvent) => pregnantEvent.animal.id == animal.id
+        ).length
         : "0",
       this.healthEvents.length > 0
         ? this.healthEvents.filter(
-            (healthEvent) => healthEvent.animal.id == animal.id
-          ).length
+          (healthEvent) => healthEvent.animal.id == animal.id
+        ).length
         : "0",
       this.milkings
         .filter((milking) => milking.animal.id == animal.id)

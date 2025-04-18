@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-installations',
@@ -14,7 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     IonicModule,
     FormsModule,
-    TranslateModule
+    TranslateModule,
+    NgxPaginationModule
   ],
   templateUrl: './installations.component.html',
   styleUrls: ['./installations.component.scss'],
@@ -34,6 +36,8 @@ export class InstallationsComponent implements OnInit, OnDestroy {
   fromDate: string;
   toDate: string;
   maxDate: string;
+
+  p: number = 1;
 
   constructor(private authService: AuthService, private userService: UserService) { }
 

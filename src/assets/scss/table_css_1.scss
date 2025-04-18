@@ -15,8 +15,7 @@ ion-toolbar {
     justify-content: stretch;
     align-content: flex-start;
     justify-items: stretch;
-    // height: calc(100vh - 200px);
-    // height: calc(100vh - 300px);
+    height: calc(100vh - 200px);
     padding: 1rem !important;
 
     table {
@@ -27,7 +26,7 @@ ion-toolbar {
         font-weight: bold;
         font-size: small !important;
         padding: 1rem !important;
-        color: black !important;
+        color: var(--ion-color-medium) !important;
         background: whitesmoke;
       }
 
@@ -48,17 +47,26 @@ ion-toolbar {
         left: auto;
         top: 0;
         z-index: 1;
-        background: var(--ion-color-primary-shade) !important;
+        background: var(--ion-color-primary) !important;
+
+        .header-1 {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 300px auto;
+          gap: 1rem;
+          align-items: center;
+          justify-content: flex-start;
+        }
 
         tr {
-          background: var(--ion-color-primary-shade) !important;
+          background: var(--ion-color-primary) !important;
 
           th {
-            background: var(--ion-color-primary-shade) !important;
+            background: var(--ion-color-primary) !important;
             vertical-align: middle;
             white-space: nowrap;
             padding: 0.5rem !important;
-            color: #ccc !important;
+            color: var(--ion-color-light) !important;
             font-weight: bold !important;
           }
 
@@ -78,7 +86,7 @@ ion-toolbar {
             white-space: nowrap;
             padding: 1rem !important;
             font-weight: bold !important;
-            color: #303030 !important;
+            color: var(--ion-color-medium) !important;
             text-transform: capitalize !important;
             vertical-align: top !important;
             text-align: justify;
@@ -86,15 +94,15 @@ ion-toolbar {
 
             a {
               cursor: pointer;
-              color: var(--ion-color-primary) !important;
+              color: var(--ion-color-secondary) !important;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
             }
 
             a:hover {
-              color: var(--ion-color-primary-shade) !important;
-              text-decoration: 1px solid var(--ion-color-primary) underline !important;
+              color: var(--ion-color-secondary-shade) !important;
+              text-decoration: 1px solid var(--ion-color-secondary) underline !important;
               text-underline-offset: 5px;
               white-space: nowrap;
               overflow: hidden;
@@ -122,10 +130,9 @@ ion-toolbar {
 
               ion-icon {
                 transform: scale(1.2);
-                color: orange !important;
+                color: orangered !important;
                 padding: 0 !important;
               }
-
             }
 
             .health-label {
@@ -148,7 +155,7 @@ ion-toolbar {
 
               ion-icon {
                 transform: scale(1.2);
-                color: red !important;
+                color: var(--ion-color-danger) !important;
                 padding: 0 !important;
               }
 
@@ -174,8 +181,9 @@ ion-toolbar {
     justify-content: space-evenly;
     gap: 1rem;
 
-    ion-icon {
-      color: var(--ion-color-medium);
+    ion-icon,
+    ion-label {
+      color: var(--ion-color-medium) !important;
     }
 
     ion-datetime-button {
@@ -207,7 +215,7 @@ ion-grid {
       margin: 0 !important;
       padding: 0 !important;
 
-      display: flex; 
+      display: flex;
       align-items: center;
       justify-content: center;
 

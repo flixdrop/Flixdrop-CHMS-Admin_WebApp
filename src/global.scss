@@ -10,22 +10,22 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 * {
-  // -moz-box-sizing: border-box;
-  // -webkit-box-sizing: border-box;
-  // box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-  // margin: 0;
-  // font-family: var(--bs-body-font-family);
-  // font-size: var(--bs-body-font-size);
-  // font-weight: var(--bs-body-font-weight);
-  // line-height: var(--bs-body-line-height);
-  // color: var(--bs-body-color);
-  // text-align: var(--bs-body-text-align);
-  // background-color: var(--bs-body-bg);
-  // -webkit-text-size-adjust: 100%;
-  // -webkit-tap-highlight-color: rgba(16, 24, 32, 0);
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(16, 24, 32, 0);
 }
 
 canvas {
@@ -48,28 +48,6 @@ ion-select-popover {
   max-height: 300px !important;
 }
 
-ion-searchbar {
-  padding: 0 1rem !important;
-}
-
-.searchbar-input.sc-ion-searchbar-md {
-  padding: 0 !important;
-  border: 2px solid #eee !important;
-  border-radius: 4px;
-  box-shadow: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  text-align: center;
-  font-size: small;
-  font-weight: bold;
-}
-
-.searchbar-search-icon.sc-ion-searchbar-md {
-  top: 5px;
-}
-
 ion-popover {
   --offset-y: 20px !important;
 }
@@ -79,7 +57,7 @@ ion-progress-bar::part(track) {
 }
 
 ion-progress-bar::part(progress) {
-  background: rgba(255, 69, 0, 0.3);
+  background: var(--ion-color-dark);
 }
 
 .full-width-modal {

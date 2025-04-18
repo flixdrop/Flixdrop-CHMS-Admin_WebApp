@@ -7,11 +7,12 @@ import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
 import { InputHandlerService } from "src/app/services/input-handler/input-handler.service";
 import { SortTableService } from "src/app/services/sort-table/sort-table.service";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @Component({
   selector: "app-healths",
   standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule, TranslateModule],
+  imports: [CommonModule, IonicModule, FormsModule, TranslateModule, NgxPaginationModule],
   templateUrl: "./healths.component.html",
   styleUrls: ["./healths.component.scss"],
 })
@@ -29,6 +30,8 @@ export class HealthsComponent implements OnInit, OnDestroy {
   toDate: string;
   maxDate: string;
   isLoading: boolean = false;
+
+  p: number = 1;
 
   constructor(
     private userService: UserService,

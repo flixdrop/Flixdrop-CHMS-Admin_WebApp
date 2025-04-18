@@ -69,7 +69,7 @@ ion-header {
 	background-color: white;
 	background: white;
 	--background: white;
-	--color: var(--ion-color-dark);
+	--color: var(--ion-color-medium);
 	box-shadow: none !important;
 }
 
@@ -77,9 +77,8 @@ ion-toolbar {
 	background-color: white;
 	background: white;
 	--background: white;
-	--color: var(--ion-color-dark);
+	--color: var(--ion-color-medium);
 	box-shadow: none !important;
-
 	--border-width: 0 !important;
 	--ion-toolbar-background: white;
 }
@@ -108,9 +107,8 @@ ion-content {
 ion-radio {
 	--border-radius: 4px;
 	--inner-border-radius: 4px;
-
-	--color: #ddd;
-	--color-checked: #FF9800;
+	--color: var(--ion-color-medium);
+	--color-checked: var(--ion-color-primary);
 }
 
 ion-accordion-group {
@@ -124,11 +122,12 @@ ion-accordion-group {
 }
 
 ion-toast{
-	color: #303030 !important;
+	color: var(--ion-color-medium) !important;
 	font-weight: bold !important;
 	--border-width: none !important;
 	--box-shadow: none !important;
-	--box-shadow: rgba(50, 50, 93, 0.10) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -18px inset !important;
-	margin: 1rem !important;
-	padding: 1rem !important;
+	// --box-shadow: rgba(50, 50, 93, 0.10) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -18px inset !important;
+	--box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
+	// margin: 1rem !important;
+	// padding: 1rem !important;
 }

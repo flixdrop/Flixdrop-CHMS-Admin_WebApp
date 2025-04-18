@@ -25,52 +25,56 @@
 
   <div *ngIf="!isLoading" class="table-container">
     <table id="myTable" class="table">
-      <ion-grid>
-        <ion-row>
-          <ion-col sizeLg="4">
-            <ion-toolbar>
-              <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
-                cancel-button-icon="arrow-back-circle" showCancelButton="focus"
-                placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
-              </ion-searchbar>
-            </ion-toolbar>
-          </ion-col>
-          <ion-col>
-            <div class="filter-section">
-              <span>
-                <ion-icon name="calendar"></ion-icon>
-                <ion-label>From</ion-label>
-                <ion-datetime-button datetime="datetime-1"></ion-datetime-button>
-              </span>
-              <span>
-                <ion-icon name="calendar"></ion-icon>
-                <ion-label>Till</ion-label>
-                <ion-datetime-button datetime="datetime-2"></ion-datetime-button>
-              </span>
-            </div>
-
-            <ion-popover [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime id="datetime-1" presentation="date" [(ngModel)]="fromDate" [showDefaultButtons]="true"
-                  displayFormat="YYYY-MM-DD" [max]="maxDate" (ionChange)="filterEvents()"></ion-datetime>
-              </ng-template>
-            </ion-popover>
-            <ion-popover [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime id="datetime-2" presentation="date" [(ngModel)]="toDate" [showDefaultButtons]="true"
-                  displayFormat="YYYY-MM-DD" [min]="fromDate" [max]="maxDate"
-                  (ionChange)="filterEvents()"></ion-datetime>
-              </ng-template>
-            </ion-popover>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
+  
       <caption *ngIf="results.length > 0">List of Heats</caption>
       <caption *ngIf="results.length == 0">
         {{'No Heat Available'| translate}}</caption>
 
       <thead>
+
+        <tr>
+          <th colspan="12" style="background: white !important;">
+              <div style="width: 100%; display: grid; grid-template-columns: 300px auto; gap: 1rem; align-items: center; justify-content: flex-start;">
+                <div>
+                  <ion-toolbar>
+                    <ion-searchbar class="ion-margin" searchIcon="search-circle" clearIcon="backspace"
+                      cancel-button-icon="arrow-back-circle" showCancelButton="focus"
+                      placeholder="{{'Search Animals' | translate}}" [debounce]="1000" (ionInput)="handleInput($event)">
+                    </ion-searchbar>
+                  </ion-toolbar>
+                </div>
+                <div>
+                  <div class="filter-section">
+                    <span>
+                      <ion-icon size="large" name="calendar"></ion-icon>
+                      <ion-label>From</ion-label>
+                      <ion-datetime-button datetime="datetime-1"></ion-datetime-button>
+                    </span>
+                    <span>
+                      <ion-icon size="large" name="calendar"></ion-icon>
+                      <ion-label>Till</ion-label>
+                      <ion-datetime-button datetime="datetime-2"></ion-datetime-button>
+                    </span>
+                  </div>
+      
+                  <ion-popover [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime id="datetime-1" presentation="date" [(ngModel)]="fromDate" [showDefaultButtons]="true"
+                        displayFormat="YYYY-MM-DD" [max]="maxDate" (ionChange)="filterEvents()"></ion-datetime>
+                    </ng-template>
+                  </ion-popover>
+                  <ion-popover [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime id="datetime-2" presentation="date" [(ngModel)]="toDate" [showDefaultButtons]="true"
+                        displayFormat="YYYY-MM-DD" [min]="fromDate" [max]="maxDate"
+                        (ionChange)="filterEvents()"></ion-datetime>
+                    </ng-template>
+                  </ion-popover>
+                </div>
+              </div>
+          </th>
+        </tr>
+
         <tr>
           <th scope="col" (click)="sortTable(0)"
             [ngClass]="{'sort-asc': sortOrders[0] === 'asc', 'sort-desc': sortOrders[0] === 'desc'}">{{'Owner Name'|
@@ -98,7 +102,7 @@
         </tr>
       </thead>
       <tbody *ngIf="results.length > 0">
-        <tr *ngFor="let heatAlert of results; let i=index">
+        <tr *ngFor="let heatAlert of results | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 
           <td>{{heatAlert?.animal?.farm?.organization?.user?.username}}</td>
           <td>{{heatAlert?.animal?.farm?.name}}</td>
@@ -119,6 +123,10 @@
 
       </tbody>
 
+      <tfoot>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </tfoot>
+      
     </table>
   </div>
 </ion-content>

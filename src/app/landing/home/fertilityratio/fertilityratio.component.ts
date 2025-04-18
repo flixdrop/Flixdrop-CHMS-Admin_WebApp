@@ -8,23 +8,24 @@ import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
 import { InputHandlerService } from "src/app/services/input-handler/input-handler.service";
 import { SortTableService } from "src/app/services/sort-table/sort-table.service";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @Component({
   selector: "app-fertilityratio",
   standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule, TranslateModule],
+  imports: [CommonModule, IonicModule, FormsModule, TranslateModule, NgxPaginationModule],
   templateUrl: "./fertilityratio.component.html",
   styleUrls: ["./fertilityratio.component.scss"],
 })
 export class FertilityRatioComponent implements OnInit {
-  
+
   private fetchUserDataSub: Subscription;
   private userDataSub: Subscription;
   private getAllAnimalsSub: Subscription;
   private getFarmAnimalsSub: Subscription;
-  
+
   activeRange: number = 7;
-  
+
   results: any[] = [];
   animals: any[] = [];
   healthEvents: any[] = [];
@@ -32,26 +33,28 @@ export class FertilityRatioComponent implements OnInit {
   inseminations: any[] = [];
   pregnancyEvents: any[] = [];
   milkings: any[] = [];
-  
+
   sortOrders = {};
   csvdata = [];
-  
+
   startDate: string;
   endDate: string;
-  
+
   fromDate: string;
   toDate: string;
   maxDate: string;
   isLoading: boolean = false;
-  
+
   private farmIdSubscription: Subscription;
+
+  p: number = 1;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private inputHandlerService: InputHandlerService,
     private sortHandlerService: SortTableService,
-  ) {}
+  ) { }
 
   ngOnDestroy() {
     this.csvdata = [];
@@ -71,7 +74,7 @@ export class FertilityRatioComponent implements OnInit {
       this.farmIdSubscription.unsubscribe();
     }
   }
-  
+
   ionViewWillEnter() {
     let userId;
     this.isLoading = true;
@@ -111,23 +114,23 @@ export class FertilityRatioComponent implements OnInit {
     this.isLoading = true;
     if (!this.farmIdSubscription) {
       this.farmIdSubscription = this.userService.farmId$.subscribe((farmId) => {
-        if(farmId){
+        if (farmId) {
           this.results =
-          farmId === "All Farms"
-          ? this.heatEvents
-          : this.heatEvents.filter(
-            (event) => event?.animal.farm.id === farmId
-          );
+            farmId === "All Farms"
+              ? this.heatEvents
+              : this.heatEvents.filter(
+                (event) => event?.animal.farm.id === farmId
+              );
 
           this.pregnancyEvents =
-          farmId === "All Farms"
-          ? this.pregnancyEvents
-          : this.pregnancyEvents.filter(
-            (event) => event?.animal.farm.id === farmId
-          );
+            farmId === "All Farms"
+              ? this.pregnancyEvents
+              : this.pregnancyEvents.filter(
+                (event) => event?.animal.farm.id === farmId
+              );
           this.isLoading = false;
         }
-        });
+      });
     }
 
   }
@@ -145,7 +148,7 @@ export class FertilityRatioComponent implements OnInit {
           new Date(b.detectedAt).getTime() - new Date(a.detectedAt).getTime()
       );
 
-      this.pregnancyEvents = this.pregnancyEvents
+    this.pregnancyEvents = this.pregnancyEvents
       .filter((event) => {
         const startedAtTime = new Date(event?.eventDateTime).getTime();
         return startedAtTime >= from && startedAtTime <= to;
@@ -170,7 +173,7 @@ export class FertilityRatioComponent implements OnInit {
       this.sortOrders
     );
   }
- 
+
   getAnimalHeatStrength(animalId: string) {
     const filteredElements = this.heatEvents.filter(
       (element) => element?.animal?.id === animalId
@@ -184,7 +187,7 @@ export class FertilityRatioComponent implements OnInit {
         : prev;
     });
     return latestElement;
-  }  
+  }
 
   getAnimalLastInsemination(animalId: string) {
     const filteredElements = this.inseminations.filter(
@@ -199,7 +202,7 @@ export class FertilityRatioComponent implements OnInit {
         : prev;
     });
     return latestElement;
-  }  
+  }
 
   getAnimalPregnancyStatus(animalId: string) {
     const filteredElements = this.pregnancyEvents.filter(
@@ -214,6 +217,6 @@ export class FertilityRatioComponent implements OnInit {
         : prev;
     });
     return latestElement;
-  }  
+  }
 
 }

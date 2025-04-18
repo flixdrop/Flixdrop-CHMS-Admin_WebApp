@@ -121,7 +121,7 @@
             </ion-title>
           </ion-toolbar>
 
-          <ion-toolbar color="primary">
+          <ion-toolbar color="dark">
             <ion-item color="none">
               <ion-title color="light">
                 Heats
@@ -132,7 +132,7 @@
             </ion-item>
           </ion-toolbar>
 
-          <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().heats">
+          <ion-item *ngFor="let event of getActiveEvents().heats">
             <div class="line-container">
               <img src="../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
             </div>
@@ -165,7 +165,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-toolbar color="primary">
+          <ion-toolbar color="dark">
             <ion-item color="none">
               <ion-title color="light">
                 Healths
@@ -176,7 +176,7 @@
             </ion-item>
           </ion-toolbar>
 
-          <ion-item class="ion-margin-horizontal" *ngFor="let event of getActiveEvents().healths">
+          <ion-item *ngFor="let event of getActiveEvents().healths">
             <div class="line-container">
               <img src="../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
             </div>
