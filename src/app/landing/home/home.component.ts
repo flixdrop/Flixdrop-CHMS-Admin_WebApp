@@ -54,7 +54,7 @@ export class HomeComponent implements OnDestroy {
     private authService: AuthService,
     private userService: UserService,
     private translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     if (this.userDataSub) {
@@ -94,13 +94,13 @@ export class HomeComponent implements OnDestroy {
               this.chart2Parameter2 = translations["Pregnancy"];
             }
           });
-          this.isLoading = false;
+        this.isLoading = false;
       }
     },
-    (error) => {
-      console.error("Error with translations: ", error);
-  }
-  );
+      (error) => {
+        console.error("Error with translations: ", error);
+      }
+    );
   }
 
   handleAuthenticatedUser(userId: string, role: string) {
@@ -152,11 +152,11 @@ export class HomeComponent implements OnDestroy {
         this.isLoading = false;
       },
 
-      // (error) => {
-      //   console.error('Error fetching data:', error);
-      //   this.isLoading = false;
-      // }
-    );
+        // (error) => {
+        //   console.error('Error fetching data:', error);
+        //   this.isLoading = false;
+        // }
+      );
   }
 
   updateAlertItems(farmId: string) {
@@ -171,8 +171,8 @@ export class HomeComponent implements OnDestroy {
           farmId === "All Farms"
             ? this.animals.length.toString()
             : this.animals
-                .filter((animal) => animal.farm.id === farmId)
-                .length.toString(),
+              .filter((animal) => animal.farm.id === farmId)
+              .length.toString(),
         totalCount: 0,
         icon: "../../../assets/images/Cattle_Icon.png",
         counter: 0,
@@ -185,8 +185,8 @@ export class HomeComponent implements OnDestroy {
           farmId === "All Farms"
             ? this.activities.length.toString()
             : this.activities
-                .filter((event) => event.animal.farm.id === farmId)
-                .length.toString(),
+              .filter((event) => event.animal.farm.id === farmId)
+              .length.toString(),
         totalCount: 0,
         icon: "../../../assets/images/Cattle_Icon.png",
         counter: 0,
@@ -198,24 +198,24 @@ export class HomeComponent implements OnDestroy {
         value:
           farmId === "All Farms"
             ? this.heats
-                .filter((event) => {
-                  const startedAtTime = new Date(event?.detectedAt).getTime();
-                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
-                })
-                .length.toString()
+              .filter((event) => {
+                const startedAtTime = new Date(event?.detectedAt).getTime();
+                return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+              })
+              .length.toString()
             : this.heats
-                .filter(
-                  (event) =>
-                    event?.animal.farm.id === farmId &&
-                    currentTime - new Date(event?.detectedAt).getTime() <
-                      30 * 24 * 60 * 60 * 1000
-                )
-                .length.toString(),
+              .filter(
+                (event) =>
+                  event?.animal.farm.id === farmId &&
+                  currentTime - new Date(event?.detectedAt).getTime() <
+                  30 * 24 * 60 * 60 * 1000
+              )
+              .length.toString(),
         totalCount:
           farmId === "All Farms"
             ? this.heats.length
             : this.heats.filter((event) => event?.animal.farm.id === farmId)
-                .length,
+              .length,
         icon: "../../../assets/images/Heat_Icon.png",
         counter: 0,
         route: "heats",
@@ -225,24 +225,24 @@ export class HomeComponent implements OnDestroy {
         value:
           farmId === "All Farms"
             ? this.healths
-                .filter((event) => {
-                  const startedAtTime = new Date(event?.detectedAt).getTime();
-                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
-                })
-                .length.toString()
+              .filter((event) => {
+                const startedAtTime = new Date(event?.detectedAt).getTime();
+                return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+              })
+              .length.toString()
             : this.healths
-                .filter(
-                  (event) =>
-                    event?.animal.farm.id === farmId &&
-                    currentTime - new Date(event?.detectedAt).getTime() <
-                      30 * 24 * 60 * 60 * 1000
-                )
-                .length.toString(),
+              .filter(
+                (event) =>
+                  event?.animal.farm.id === farmId &&
+                  currentTime - new Date(event?.detectedAt).getTime() <
+                  30 * 24 * 60 * 60 * 1000
+              )
+              .length.toString(),
         totalCount:
           farmId === "All Farms"
             ? this.healths.length
             : this.healths.filter((event) => event?.animal.farm.id === farmId)
-                .length,
+              .length,
         icon: "../../../assets/images/Health_Icon.png",
         counter: 0,
         route: "healths",
@@ -252,21 +252,21 @@ export class HomeComponent implements OnDestroy {
         value:
           farmId === "All Farms"
             ? this.inseminations
-                .filter((event) => {
-                  const startedAtTime = new Date(
-                    event?.eventDateTime
-                  ).getTime();
-                  return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
-                })
-                .length.toString()
+              .filter((event) => {
+                const startedAtTime = new Date(
+                  event?.eventDateTime
+                ).getTime();
+                return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+              })
+              .length.toString()
             : this.inseminations
-                .filter(
-                  (event) =>
-                    event?.animal.farm.id === farmId &&
-                    currentTime - new Date(event?.eventDateTime).getTime() <
-                      30 * 24 * 60 * 60 * 1000
-                )
-                .length.toString(),
+              .filter(
+                (event) =>
+                  event?.animal.farm.id === farmId &&
+                  currentTime - new Date(event?.eventDateTime).getTime() <
+                  30 * 24 * 60 * 60 * 1000
+              )
+              .length.toString(),
         totalCount: 0,
         icon: "../../../assets/images/Farm_Icon.png",
         counter: 0,
@@ -277,29 +277,29 @@ export class HomeComponent implements OnDestroy {
         value:
           farmId === "All Farms"
             ? this.heats.length.toString() +
-              "/" +
-              this.pregnancy_checks.length.toString()
+            "/" +
+            this.pregnancy_checks.length.toString()
             : this.heats
-                .filter((event) => {
-                  const startedAtTime = new Date(event?.detectedAt).getTime();
-                  return (
-                    currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
-                    event?.animal.farm.id === farmId
-                  );
-                })
-                .length.toString() +
-              "/" +
-              this.pregnancy_checks
-                .filter((event) => {
-                  const startedAtTime = new Date(
-                    event?.eventDateTime
-                  ).getTime();
-                  return (
-                    currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
-                    event?.animal.farm.id === farmId
-                  );
-                })
-                .length.toString(),
+              .filter((event) => {
+                const startedAtTime = new Date(event?.detectedAt).getTime();
+                return (
+                  currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
+                  event?.animal.farm.id === farmId
+                );
+              })
+              .length.toString() +
+            "/" +
+            this.pregnancy_checks
+              .filter((event) => {
+                const startedAtTime = new Date(
+                  event?.eventDateTime
+                ).getTime();
+                return (
+                  currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000 &&
+                  event?.animal.farm.id === farmId
+                );
+              })
+              .length.toString(),
         totalCount: 0,
         icon: "../../../assets/images/Farm_Icon.png",
         counter: 0,
@@ -325,10 +325,10 @@ export class HomeComponent implements OnDestroy {
           farmId === "All Farms"
             ? Math.floor(this.collars.length * 0.9).toString()
             : Math.floor(
-                this.collars.filter(
-                  (collar) => collar.animal.farm.id === farmId
-                ).length * 0.9
-              ).toString(),
+              this.collars.filter(
+                (collar) => collar.animal.farm.id === farmId
+              ).length * 0.9
+            ).toString(),
         totalCount: 0,
         icon: "../../../assets/images/Installation_Icon.png",
         counter: 0,
@@ -385,19 +385,19 @@ export class HomeComponent implements OnDestroy {
       data: {
         labels: [
           `${this.chart1Parameter2}`,
-          `${this.chart1Parameter3}` 
+          `${this.chart1Parameter3}`
         ],
         datasets: [
           {
             data: [
               +this.alertItems.find((item) => item.label == "Heat Events")
-              ?.totalCount,
+                ?.totalCount,
               +this.alertItems.find((item) => item.label == "Health Events")
                 ?.totalCount,
             ],
             spanGaps: 0,
             pointBorderWidth: 0,
-            pointBackgroundColor:["#ffffff","#ffffff"],
+            pointBackgroundColor: ["#ffffff", "#ffffff"],
             backgroundColor: ["#fcb045", "#e52d27"],
           },
         ],
@@ -535,25 +535,25 @@ export class HomeComponent implements OnDestroy {
     });
   }
 
-  getActiveEvents(){
+  getActiveEvents() {
     this.isLoading = true;
     const currentTime = new Date().getTime();
 
     const events = {
       heats: this.heats
-      .filter((event) => {
-        const startedAtTime = new Date(event?.detectedAt).getTime();
-        return currentTime - startedAtTime < 30*24 * 60 * 60 * 1000;
-      }),
+        .filter((event) => {
+          const startedAtTime = new Date(event?.detectedAt).getTime();
+          return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+        }),
       healths: this.healths
-      .filter((event) => {
-        const startedAtTime = new Date(event?.detectedAt).getTime();
-        return currentTime - startedAtTime < 30*24 * 60 * 60 * 1000;
-      })
+        .filter((event) => {
+          const startedAtTime = new Date(event?.detectedAt).getTime();
+          return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
+        })
     };
 
     this.isLoading = false;
-    
+
     return events;
   }
 

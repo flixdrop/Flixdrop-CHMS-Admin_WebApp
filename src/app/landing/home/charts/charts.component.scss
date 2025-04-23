@@ -1,29 +1,31 @@
 ion-toolbar {
     ion-label {
-      text-transform: capitalize !important;
-      font-size: small !important;
-      font-weight: bold !important;
+        text-transform: capitalize !important;
+        font-size: small !important;
+        font-weight: bold !important;
     }
-  }
+}
 
 .outer-div {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0.5rem;
     gap: 1rem;
-    background-color: white ;
 
     ion-icon {
         cursor: pointer;
-        height: 50px !important;
-        width: 50px !important;
+        height: 100px !important;
+        width: 100px !important;
         color: var(--ion-color-medium) !important;
         align-self: center;
     }
 
     .custom-div-1 {
-        background-color: white ;
+        transition: transform 0.7s ease-in-out,
+            opacity 0.7s ease-in-out,
+            width 0.7s ease-in-out,
+            height 0.7s ease-in-out;
+
         canvas {
             width: 100% !important;
             height: 100% !important;
@@ -32,6 +34,16 @@ ion-toolbar {
 
     .custom-div-1:hover {
         opacity: 97%;
+        cursor: grab;
+        transform: scale(1.01);
+        transition: transform 0.7s ease-in-out,
+            opacity 0.7s ease-in-out,
+            width 0.7s ease-in-out,
+            height 0.7s ease-in-out;
+
+        canvas {
+            background-color: white;
+        }
     }
 }
 
@@ -68,7 +80,7 @@ ion-toolbar {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
         .value {
-            color: var(--ion-color-light) !important;
+            color: var(--ion-color-medium) !important;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
             margin: 0 !important;
             font-weight: bold;
@@ -96,12 +108,12 @@ ion-toolbar {
 
     img {
         margin: 1rem !important;
-        padding: 0.5rem !important;
-        height: 60px;
-        width: 60px;
+        padding: 0.7rem !important;
+        height: 50px;
+        width: 50px;
         aspect-ratio: 1/1;
         background: #eee;
-        border-radius: 7px;
+        border-radius: 50%;
         overflow: visible !important;
     }
 }
@@ -110,7 +122,7 @@ ion-toolbar {
 .line-container::after {
     content: '';
     position: absolute;
-    width: 7px;
+    width: 10px;
     background-color: #eee;
 }
 
@@ -126,6 +138,9 @@ ion-toolbar {
     margin-bottom: -70px;
 }
 
-canvas{ 
-    background-color: white ;
+canvas {
+    border-radius: 7px;
+    padding: 1rem !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #16222A;
 }

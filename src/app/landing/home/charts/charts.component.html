@@ -23,8 +23,8 @@
 
     <ion-header class="ion-padding">
       <ion-toolbar>
-    
-        <ion-segment [value]="selectedSegment" (ionChange)="onSelectChartSegment($event)">
+
+        <ion-segment [value]="selectedSegment" (ionChange)="onSelectChartSegment($event)" color="dark">
           <ion-segment-button value="summary">
             <ion-label>Summary</ion-label>
           </ion-segment-button>
@@ -32,7 +32,7 @@
             <ion-label>History</ion-label>
           </ion-segment-button>
         </ion-segment>
-    
+
       </ion-toolbar>
     </ion-header>
 
@@ -42,87 +42,98 @@
     </div>
 
     <div [hidden]="!isLoading && !(selectedSegment === 'summary')" class="div-1">
-    <div class="div-1-1">
-      <div>
-        <p class="label">Last Health</p>
+      <div class="div-1-1">
+        <div>
+          <p class="label">Last Health</p>
+        </div>
+        <div>
+          <p class="value counter">{{ getAnimalHealthIndex(animal) ? "Health Index:
+            "+getAnimalHealthIndex(animal).healthIndex : "None" }}</p>
+        </div>
       </div>
-      <div>
-        <p class="value counter">{{ getAnimalHealthIndex(animal) ? "Health Index: "+getAnimalHealthIndex(animal).healthIndex : "None" }}</p>
+      <div class="div-1-1">
+        <div>
+          <p class="label">Last Heat</p>
+        </div>
+        <div>
+          <p class="value counter">{{ getAnimalHeatStrength(animal) ? "Heat Intensity:
+            "+getAnimalHeatStrength(animal).heatStrength : "None"}}</p>
+        </div>
+      </div>
+      <div class="div-1-1">
+        <div c>
+          <p class="label">Last Insemination</p>
+        </div>
+        <div>
+          <p class="value counter">{{ getAnimalInsemination(animal) ? (getAnimalInsemination(animal).eventDateTime |
+            date: 'MMM d, y, h:mm a') : "None"}}</p>
+        </div>
       </div>
     </div>
-    <div class="div-1-1">
-      <div>
-        <p class="label">Last Heat</p>
-      </div>
-      <div>
-        <p class="value counter">{{ getAnimalHeatStrength(animal) ? "Heat Intensity: "+getAnimalHeatStrength(animal).heatStrength : "None"}}</p>
-      </div>
-    </div>
-    <div class="div-1-1">
-      <div c>
-        <p class="label">Last Insemination</p>
-      </div>
-      <div>
-        <p class="value counter">{{ getAnimalInsemination(animal) ? (getAnimalInsemination(animal).eventDateTime | date: 'MMM d, y, h:mm a') : "None"}}</p>
-      </div>
-    </div>
-  </div>
 
-  <div [hidden]="!isLoading && !(selectedSegment === 'summary')" class="container-fluid outer-div"> 
-    <ion-icon name="play-skip-back" (click)="addChartDataSet()"></ion-icon>
-        <div class="custom-div-1">
-          <canvas id="myChart" #myChart></canvas>
+    <div [hidden]="!isLoading && !(selectedSegment === 'summary')" class="container-fluid outer-div">
+      <ion-icon name="play-skip-back" (click)="addChartDataSet()"></ion-icon>
+      <div class="custom-div-1">
+        <canvas id="myChart" #myChart></canvas>
+      </div>
+      <ion-icon name="play-skip-forward" (click)="removeChartDataSet()"></ion-icon>
     </div>
-    <ion-icon name="play-skip-forward" (click)="removeChartDataSet()"></ion-icon>
-  </div>  
-  
 
-  <div [hidden]="!isLoading && !(selectedSegment === 'history')">
-    <!-- <ion-row>
+
+    <div [hidden]="!isLoading && !(selectedSegment === 'history')">
+      <!-- <ion-row>
       <ion-col style="display: inline !important;" sizeLg="8" offset="2"> -->
 
-  <ion-item class="ion-margin-horizontal" *ngFor="let event of allEvents">
-  <div class="line-container">
-    <img *ngIf="event.type === 'Heat Event'" src="../../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
-    <img *ngIf="event.type === 'Health Event'" src="../../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
-    <img *ngIf="event.type === 'Insemination'" src="../../../../assets/event-icons/vaccines_100dp_8C1AF6_FILL1_wght700_GRAD200_opsz48.svg" />
-    <img *ngIf="event.type === 'Pregnancy Check'" src="../../../../assets/event-icons/fertile_100dp_9B5278_FILL1_wght700_GRAD200_opsz48.svg" />
-    <img *ngIf="event.type === 'Drying Off'" src="../../../../assets/event-icons/cool_to_dry_100dp_FFFFFF_FILL1_wght700_GRAD200_opsz48.svg" />
-    <img *ngIf="event.type === 'Calved Event'" src="../../../../assets/event-icons/cake_100dp_F9DB78_FILL1_wght700_GRAD200_opsz48.svg" />
-  </div>
+      <ion-item class="ion-margin-horizontal" *ngFor="let event of allEvents">
+        <div class="line-container">
+          <img *ngIf="event.type === 'Heat Event'"
+            src="../../../../assets/event-icons/emergency_heat_100dp_F19E39_FILL1_wght700_GRAD200_opsz48.svg" />
+          <img *ngIf="event.type === 'Health Event'"
+            src="../../../../assets/event-icons/pulse_alert_100dp_BB271A_FILL1_wght700_GRAD200_opsz48.svg" />
+          <img *ngIf="event.type === 'Insemination'"
+            src="../../../../assets/event-icons/vaccines_100dp_8C1AF6_FILL1_wght700_GRAD200_opsz48.svg" />
+          <img *ngIf="event.type === 'Pregnancy Check'"
+            src="../../../../assets/event-icons/fertile_100dp_9B5278_FILL1_wght700_GRAD200_opsz48.svg" />
+          <img *ngIf="event.type === 'Drying Off'"
+            src="../../../../assets/event-icons/cool_to_dry_100dp_FFFFFF_FILL1_wght700_GRAD200_opsz48.svg" />
+          <img *ngIf="event.type === 'Calved Event'"
+            src="../../../../assets/event-icons/cake_100dp_F9DB78_FILL1_wght700_GRAD200_opsz48.svg" />
+        </div>
 
-    <ion-label style="font-weight: bold;">
-      <h3 style="font-weight: bold;">
-        {{event.type}}
-      </h3>
-        <ion-note style="font-weight: bold;" *ngIf="event.heatStrength !== undefined">
-          Heat Instensity: {{ event.heatStrength }} %
-        </ion-note> 
-        <ion-note style="font-weight: bold;" *ngIf="event.healthIndex !== undefined">
-          Health Index: {{ event.healthIndex }} / 100
-        </ion-note>
-        <ion-note style="font-weight: bold;" *ngIf="event.inseminator !== undefined">
-          {{"Inseminated by: "+event?.['inseminator']?.username }}
-        </ion-note>
-    </ion-label>
+        <ion-label style="font-weight: bold;">
+          <h3 style="font-weight: bold;">
+            {{event.type}}
+          </h3>
+          <ion-note style="font-weight: bold;" *ngIf="event.heatStrength !== undefined">
+            Heat Instensity: {{ event.heatStrength }} %
+          </ion-note>
+          <ion-note style="font-weight: bold;" *ngIf="event.healthIndex !== undefined">
+            Health Index: {{ event.healthIndex }} / 100
+          </ion-note>
+          <ion-note style="font-weight: bold;" *ngIf="event.inseminator !== undefined">
+            {{"Inseminated by: "+event?.['inseminator']?.username }}
+          </ion-note>
+        </ion-label>
 
-    <ion-label style="text-align: end;">
-      <ion-note *ngIf="event.type === 'Heat Event' || event.type === 'Health Event'" style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
-        {{event.isActive ? "Active": "Inactive"}}
-      </ion-note><br />
-      <ion-note color="medium" style="font-size: small; font-weight: bold;" *ngIf="event.detectedAt !== undefined">
-        {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
-      </ion-note>
-<ion-note color="medium" style="font-size: small; font-weight: bold;" *ngIf="event.eventDateTime !== undefined">
-        {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
-      </ion-note>
-    </ion-label>
-  </ion-item>
-<!-- </ion-col>
+        <ion-label style="text-align: end;">
+          <ion-note *ngIf="event.type === 'Heat Event' || event.type === 'Health Event'"
+            style="font-size: small; font-weight: bold;" color='{{event.isActive ? "success": "danger"}}'>
+            {{event.isActive ? "Active": "Inactive"}}
+          </ion-note><br />
+          <ion-note color="medium" style="font-size: small; font-weight: bold;" *ngIf="event.detectedAt !== undefined">
+            {{ event.detectedAt | date: 'MMM d, y, h:mm a' }}
+          </ion-note>
+          <ion-note color="medium" style="font-size: small; font-weight: bold;"
+            *ngIf="event.eventDateTime !== undefined">
+            {{ event.eventDateTime | date: 'MMM d, y, h:mm a' }}
+          </ion-note>
+        </ion-label>
+      </ion-item>
+      <!-- </ion-col>
 </ion-row> -->
-</div> 
-  
-</div>
+    </div>
+
+  </div>
 
   <!-- <ion-grid [hidden]="!isLoading && selectedSegment !== 'history'">
     <ion-row>
@@ -165,5 +176,5 @@
 </ion-col>
 </ion-row>
 </ion-grid>  -->
-  
+
 </ion-content>

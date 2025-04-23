@@ -13,7 +13,7 @@ import { ActivitiesComponent } from './activities/activities.component';
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     redirectTo: '',
     pathMatch: 'full',
   },
@@ -49,12 +49,10 @@ const routes: Routes = [
     path: 'inseminations',
     component: InseminationsComponent,
   },
-
   {
     path: 'activities',
     component: ActivitiesComponent,
   },
-
   {
     path: 'charts/:animal',
     component: ChartsComponent,
@@ -65,4 +63,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }

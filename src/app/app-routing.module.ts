@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     path: 'farm',
     loadChildren: () =>
       import('./landing/landing.module').then((m) => m.LandingModule),
-    canActivate: [AuthGuardService], 
+    canActivate: [AuthGuardService],
   },
   {
     path: 'default-page',
@@ -24,7 +25,8 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-  }
+  },
+  { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 
 @NgModule({

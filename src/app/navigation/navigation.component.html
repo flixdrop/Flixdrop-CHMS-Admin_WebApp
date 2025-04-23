@@ -23,20 +23,19 @@
       </ion-buttons>
 
       <ion-buttons slot="end">
-        <ion-button size="small" [routerLink]="['/', 'farm', 'dashboard']" routerLinkActive="router-link-active"
-          expand="block" size="small">
+        <ion-button size="small" expand="block" [routerLink]="['/', 'farm', 'dashboard']">
           <ion-label class="button-label">{{'Home' | translate}}</ion-label>
           <ion-icon name="home" color="medium"></ion-icon>
         </ion-button>
-        <ion-button id="search-animal" expand="block" fill="clear" size="small">
+        <ion-button id="search-animal" size="small" expand="block" fill="clear">
           <ion-label class="button-label">{{'Search Animals' | translate}}</ion-label>
           <ion-icon name="search" color="medium"></ion-icon>
         </ion-button>
-        <ion-button size="small" expand="block" size="small" fill="clear" id="language" (click)="onClickLanguage()">
+        <ion-button size="small" expand="block" fill="clear" id="language" (click)="onClickLanguage()">
           <ion-label class="button-label">{{language | translate}}</ion-label>
           <ion-icon name="language" color="medium"></ion-icon>
         </ion-button>
-        <ion-button id="all" expand="block" fill="clear" size="small">
+        <ion-button id="all" size="small" expand="block" fill="clear">
           <ion-label class="button-label">{{'All' | translate}}</ion-label>
           <ion-icon size="small" name="chevron-down-circle" color="medium"></ion-icon>
         </ion-button>

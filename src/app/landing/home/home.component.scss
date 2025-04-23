@@ -37,8 +37,9 @@
       align-items: center;
       justify-content: flex-start;
       border-radius: 4px;
-      box-shadow: rgba(238,238,238, 0.4) 0px 0px 0px 2px, rgba(238,238,238, 0.65) 0px 4px 6px -1px, rgba(238,238,238, 0.08) 0px 1px 0px inset;
-      background-image: linear-gradient( 180.1deg,  rgba(253,245,86,1) 2.6%, rgba(225,210,1,1) 100.6% );
+      box-shadow: rgba(238, 238, 238, 0.4) 0px 0px 0px 2px, rgba(238, 238, 238, 0.65) 0px 4px 6px -1px, rgba(238, 238, 238, 0.08) 0px 1px 0px inset;
+      background-image: linear-gradient(180.1deg, rgba(253, 245, 86, 1) 2.6%, rgba(225, 210, 1, 1) 100.6%);
+
       .div-1-1-2 {
         display: flex;
         flex-direction: column;
@@ -102,8 +103,8 @@
     }
   }
 
-  .div-3{
-    padding: 1rem !important; 
+  .div-3 {
+    padding: 1rem !important;
   }
 
   .div-1,
@@ -161,6 +162,7 @@
 
   .line-container {
     margin-right: 8px;
+
     img {
       // height: 50px;
       // width: 50px;
@@ -174,7 +176,7 @@
   @media (max-width: 1200px) {
     ion-content {
 
-      .home-bg{
+      .home-bg {
         grid-template-columns: 1fr;
       }
 
@@ -191,7 +193,7 @@
   @media (max-width: 500px) {
     ion-content {
 
-      .home-bg{
+      .home-bg {
         grid-template-columns: 1fr;
       }
 
@@ -230,27 +232,27 @@
   }
 
 
-@media screen and (max-width: 768px) {
-  ion-content {
+  @media screen and (max-width: 768px) {
+    ion-content {
 
-    .div-1 {
-      grid-template-columns: repeat(3, 1fr);
-    }
+      .div-1 {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-    .div-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  ion-content {
-    .div-1 {
-      grid-template-columns: 100%;
-    }
-
-    .div-2 {
-      grid-template-columns: 100%;
+      .div-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
-}
+
+  @media screen and (max-width: 480px) {
+    ion-content {
+      .div-1 {
+        grid-template-columns: 100%;
+      }
+
+      .div-2 {
+        grid-template-columns: 100%;
+      }
+    }
+  }

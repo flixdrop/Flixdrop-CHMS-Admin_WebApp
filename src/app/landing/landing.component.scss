@@ -1,20 +1,21 @@
-ion-footer{
+ion-footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.8);
-    
-    img{
-        height: 32px; 
-        width: 32px;
-        aspect-ratio: 1/1; 
-        margin-bottom: 4px;
+
+    .logo {
+        height: 24px;
+        width: 24px;
+        aspect-ratio: 1/1;
         border: 2px solid #eee;
         border-radius: 2px;
     }
-    p{
+
+    p {
+        padding: 0 !important;
+        margin: 0 !important;
         font-weight: bold;
         font-size: x-small !important;
-        color: whitesmoke !important;
+        color: var(--ion-color-medium) !important;
     }
 }

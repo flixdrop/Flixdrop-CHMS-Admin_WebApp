@@ -3,60 +3,46 @@
   <div class="outerdiv">
 
     <div>
-      <img class="flixdroplogo" src="../../assets/images/fd.png" alt="FlixdropLogo">
+      <img class="logo" src="../../assets/images/fd.png" alt="Flixdrop Logo">
     </div>
 
     <div class="d-flex align-items-center justify-content-center">
 
       <form [formGroup]="loginForm" (ngSubmit)="onClickSubmit()" class="customform">
 
-        <div class="form-logo-section">
-          <img class="flixdroplogo" src="../../assets/images/fd.png" alt="FlixdropLogo">
+        <div class="form-header-section">
+          <img class="logo" src="../../assets/images/fd.png" alt="Flixdrop Logo">
         </div>
 
         <ion-item class="ion-margin-vertical">
           <ion-input label="User ID" label-placement="stacked" type="text" inputmode="text"
             placeholder="Enter Email ID / Mobile No." formControlName="username">
-            <ion-icon slot="start" name="person-circle" color="primary"></ion-icon>
+            <ion-icon slot="start" size="large" name="person-circle" color="dark"></ion-icon>
           </ion-input>
         </ion-item>
         <ion-item class="ion-margin-vertical">
           <ion-input label="Password" label-placement="stacked" id="password" type="password"
             placeholder="Enter Password" formControlName="password">
-            <ion-icon slot="start" name="key" color="primary"></ion-icon>
-            <ion-icon slot="end" size="small" name="{{passwordVisible ? 'eye':'eye-off'}}" color="medium"
+            <ion-icon slot="start" size="large" name="key" color="dark"></ion-icon>
+            <ion-icon slot="end" size="large" name="{{passwordVisible ? 'eye':'eye-off'}}" color="medium"
               (click)="showPassword()"></ion-icon>
           </ion-input>
         </ion-item>
-<!-- 
-        <div class="msg-section" style="margin: 1rem 0;">
-          <ion-label>
-            <p style="color: var(--ion-color-danger-shade) !important;"
-              *ngIf="!loginForm.controls['username'].valid && !loginForm.controls['username'].valid && loginForm.controls['username'].touched">
-              Please enter valid email address.</p>
-            <p style="color: var(--ion-color-danger-shade) !important;"
-              *ngIf="!loginForm.controls['password'].valid && !loginForm.controls['password'].valid && loginForm.controls['password'].touched">
-              Please enter your password.</p>
-            <p style="color: var(--ion-color-success-shade) !important;" *ngIf="loginForm.valid && loginForm.dirty">
-              You are good to Go</p>
-          </ion-label>
-        </div> -->
 
         <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0;">
           <ion-checkbox class="ion-margin-vertical" (ionChange)="onClickRememberMe($event)">Remember
             Me</ion-checkbox>
-          <a style="cursor: pointer; color: var(--ion-color-secondary-shade) !important;">Forgot
+          <a style="cursor: pointer; color: var(--ion-color-primary) !important;">Forgot
             Password ?</a>
         </div>
 
         <div>
-          <ion-button type="submit" color="primary">
+          <ion-button type="submit" color="success">
             <ion-label>Login</ion-label>
             <ion-icon slot="end" name="log-in"></ion-icon>
           </ion-button>
         </div>
 
-        
         <div class="msg-section" style="margin: 1rem 0;">
           <ion-label>
             <p style="color: var(--ion-color-danger-shade) !important;"
@@ -72,28 +58,15 @@
 
       </form>
 
-
     </div>
   </div>
 
 </ion-content>
 
-<!-- <ion-footer>
-  <div class="mask container-fluid" style="background-color: transparent; position: fixed; bottom: 0;">
-    <div class="d-flex flex-column justify-content-center align-items-start p-0">
-      <img style="height: 25px; width: 25px; border-radius: 4px;" src="../../assets/images/fd.png" alt="fd-icon">
-      <p>&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. <span style="color: goldenrod !important;"> Developed by flixdrop&#64;2023 </span> </p>
-    </div>
-  </div>
-</ion-footer> -->
-
 <ion-footer>
-  <div class="mask container-fluid" style="background-color: #252525;
-	background: #252525;
-	--background: #252525;">
-    <div class="d-flex flex-column justify-content-center align-items-start p-2">
-      <img style="height: 24px; width: 24px; border-radius: 4px;" src="../../assets/icons/fd.png" alt="fd-icon">
-      <p style="padding: 0 !important; margin: 0 !important;">&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. <span style="color: gold !important;"> Developed by flixdrop&#64;2023 </span> </p>
-    </div>
+  <div class="d-flex flex-column justify-content-center align-items-start p-2">
+    <img class="logo" src="../../assets/images/fd.png" alt="fd-icon">
+    <p>&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. <span style="color: gold !important;">
+        Developed by flixdrop&#64;2023 </span> </p>
   </div>
 </ion-footer>

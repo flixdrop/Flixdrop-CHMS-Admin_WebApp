@@ -6,26 +6,25 @@
     background-size: cover;
     opacity: 80%;
 
-    .flixdroplogo {
-        margin: 10px;
+    .logo {
+        cursor: pointer;
+        margin: 8px;
+        border: 2px solid #ddd;
         border-radius: 4px;
-        height: 7vmin;
+        width: 50px;
         aspect-ratio: 1/1;
         pointer-events: none;
-        opacity: 80%;
         background: #fff;
-        border: 2px solid #ddd;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; 
     }
 
-    .flixdroplogo:hover {
+    .logo:hover {
         cursor: pointer;
         opacity: 100%;
         transform: scale(1.1);
         transition: 1s ease;
     }
 
-    .form-logo-section{
+    .form-header-section {
         width: 100%;
         display: flex;
         align-items: center;
@@ -35,33 +34,35 @@
     .customform {
         background: white;
         border-radius: 4px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(7px);
         padding: 1rem !important;
-        margin: 1rem !important;
 
         ion-item {
             ion-icon {
-                font-size: 32px;
-                margin-right: 10px;
+                margin-right: 8px;
             }
         }
     }
-
-
 }
 
-
-ion-footer{
+ion-footer {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    img{
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;    }
-    p{
+    justify-content: center;
+    background-color: #232526;
+
+    .logo {
+        height: 24px;
+        width: 24px;
+        aspect-ratio: 1/1;
+        border: 2px solid #eee;
+        border-radius: 2px;
+    }
+
+    p {
+        padding: 0 !important;
+        margin: 0 !important;
         font-weight: bold;
-        font-size: small !important;
-        color: white !important;
+        font-size: x-small !important;
+        color: var(--ion-color-light) !important;
     }
 }

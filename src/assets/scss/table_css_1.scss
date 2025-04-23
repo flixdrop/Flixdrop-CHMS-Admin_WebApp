@@ -47,7 +47,7 @@ ion-toolbar {
         left: auto;
         top: 0;
         z-index: 1;
-        background: var(--ion-color-primary) !important;
+        background: var(--ion-color-dark) !important;
 
         .header-1 {
           width: 100%;
@@ -59,10 +59,10 @@ ion-toolbar {
         }
 
         tr {
-          background: var(--ion-color-primary) !important;
+          background: var(--ion-color-dark) !important;
 
           th {
-            background: var(--ion-color-primary) !important;
+            background: var(--ion-color-dark) !important;
             vertical-align: middle;
             white-space: nowrap;
             padding: 0.5rem !important;
@@ -94,7 +94,7 @@ ion-toolbar {
 
             a {
               cursor: pointer;
-              color: var(--ion-color-secondary) !important;
+              color: var(--ion-color-primary) !important;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;

@@ -53,7 +53,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private userService: UserService,
     private location: Location
-  ) {}
+  ) { }
 
   ngOnDestroy() {
     if (this.graphDataSub) {
@@ -115,68 +115,68 @@ export class ChartsComponent implements OnInit, OnDestroy {
                 this.allEvents = [
                   ...(Array.isArray(data["heatEvents"])
                     ? data["heatEvents"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Heat Event", "detectedAt")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Heat Event", "detectedAt")
+                      )
+                      .sort(sortByEventTime)
                     : []),
 
                   ...(Array.isArray(data["healthEvents"])
                     ? data["healthEvents"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Health Event", "detectedAt")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Health Event", "detectedAt")
+                      )
+                      .sort(sortByEventTime)
                     : []),
 
                   ...(Array.isArray(data["inseminations"])
                     ? data["inseminations"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Insemination", "eventDateTime")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Insemination", "eventDateTime")
+                      )
+                      .sort(sortByEventTime)
                     : []),
 
                   ...(Array.isArray(data["pregnancy_checks"])
                     ? data["pregnancy_checks"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Pregnancy Check", "eventDateTime")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Pregnancy Check", "eventDateTime")
+                      )
+                      .sort(sortByEventTime)
                     : []),
 
                   ...(Array.isArray(data["drying_offs"])
                     ? data["drying_offs"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Drying Off", "eventDateTime")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Drying Off", "eventDateTime")
+                      )
+                      .sort(sortByEventTime)
                     : []),
 
                   ...(Array.isArray(data["calvedEvents"])
                     ? data["calvedEvents"]
-                        .filter(
-                          (event) => event?.animal.collar.name === animalId
-                        )
-                        .map((event) =>
-                          mapEvent(event, "Calved Event", "eventDateTime")
-                        )
-                        .sort(sortByEventTime)
+                      .filter(
+                        (event) => event?.animal.collar.name === animalId
+                      )
+                      .map((event) =>
+                        mapEvent(event, "Calved Event", "eventDateTime")
+                      )
+                      .sort(sortByEventTime)
                     : []),
                 ];
 
@@ -254,7 +254,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
             const [year, month, day] = dateStr.split("-").map(Number);
             const [hours, minutes] = startTimeStr.split(":").map(Number);
             const combinedDate = new Date(year, month - 1, day, hours, minutes);
-          
+
             let object: any = {
               date: combinedDate,
               activity: {
@@ -329,51 +329,59 @@ export class ChartsComponent implements OnInit, OnDestroy {
           {
             yAxisID: "percentage",
             tension: 0.1,
-            borderWidth: 4,
+            borderWidth: 10,
             label: "Heat Intensity",
             data: this.data,
             parsing: {
               xAxisKey: "date",
               yAxisKey: "activity.heat",
             },
-            fill: false,
-            borderColor: "#87bc45",
             pointBorderWidth: 0,
-            pointBorderColor: "#87bc45",
-            pointBackgroundColor: "#87bc45",
+            pointBorderColor: "#DCE35B",
+            pointBackgroundColor: "#DCE35B",
+
+            segment: {
+              borderColor: ctx => '#DCE35B',
+            },
+            spanGaps: true,
+
           },
           {
             tension: 0.1,
-            borderWidth: 4,
+            borderWidth: 10,
             label: "Health Index",
             data: this.data,
             parsing: {
               xAxisKey: "date",
               yAxisKey: "activity.health",
             },
-            fill: false,
-            borderColor: "#ea5545",
             pointBorderWidth: 0,
-            pointBorderColor: "#ea5545",
-            pointBackgroundColor: "#ea5545",
+            pointBorderColor: "#f85032",
+            pointBackgroundColor: "#f85032",
+            segment: {
+              borderColor: ctx => '#f85032',
+            },
+            spanGaps: true,
           },
-
           {
-            tension: 0.1,
-            borderWidth: 0,
             label: "Feeding",
             data: this.data,
             parsing: {
               xAxisKey: "date",
               yAxisKey: "activity.feeding",
             },
-            fill: true,
-            borderColor: "#ffffff",
-            backgroundColor: "#27aeef90",
+            fill: false,
+            backgroundColor: "#a2ab5880",
+            pointBorderWidth: 0,
+            pointBorderColor: "#a2ab58",
+            pointBackgroundColor: "#a2ab58",
+            segment: {
+              borderColor: ctx => '#a2ab58',
+              borderDash: ctx => [6, 6],
+            },
+            spanGaps: true,
           },
           {
-            tension: 0.1,
-            borderWidth: 0,
             label: "Other",
             data: this.data,
             parsing: {
@@ -381,12 +389,17 @@ export class ChartsComponent implements OnInit, OnDestroy {
               yAxisKey: "activity.other",
             },
             fill: true,
-            borderColor: "#ffffff",
-            backgroundColor: "#ebdc7890",
+            backgroundColor: "#e9d36280",
+            pointBorderWidth: 0,
+            pointBorderColor: "#e9d362",
+            pointBackgroundColor: "#e9d362",
+            segment: {
+              borderColor: ctx => '#e9d362',
+              // borderDash: ctx => [6, 6],
+            },
+            spanGaps: true,
           },
           {
-            tension: 0.1,
-            borderWidth: 0,
             label: "Resting",
             data: this.data,
             parsing: {
@@ -394,25 +407,35 @@ export class ChartsComponent implements OnInit, OnDestroy {
               yAxisKey: "activity.resting",
             },
             fill: true,
-            borderColor: "#ffffff",
-            backgroundColor: "#f46a9b90",
+            backgroundColor: "#1cefff80",
+            pointBorderWidth: 0,
+            pointBorderColor: "#1cefff",
+            pointBackgroundColor: "#1cefff",
+            segment: {
+              borderColor: ctx => '#1cefff',
+              // borderDash: ctx => [6, 6],
+            },
+            spanGaps: true,
           },
           {
-            tension: 0.1,
-            borderWidth: 0,
             label: "Rumination",
             data: this.data,
             parsing: {
               xAxisKey: "date",
               yAxisKey: "activity.rumination",
             },
-            fill: true,
-            borderColor: "#ffffff",
-            backgroundColor: "#b2e06190",
+            fill: false,
+            backgroundColor: "#2C536480",
+            pointBorderWidth: 0,
+            pointBorderColor: "#DA22FF",
+            pointBackgroundColor: "#DA22FF",
+            segment: {
+              borderColor: ctx => '#DA22FF',
+              borderDash: ctx => [6, 6],
+            },
+            spanGaps: true,
           },
           {
-            tension: 0.1,
-            borderWidth: 0,
             label: "Standing",
             data: this.data,
             parsing: {
@@ -420,8 +443,15 @@ export class ChartsComponent implements OnInit, OnDestroy {
               yAxisKey: "activity.standing",
             },
             fill: true,
-            borderColor: "#ffffff",
-            backgroundColor: "#beb9db90",
+            backgroundColor: "#2C536480",
+            pointBorderWidth: 0,
+            pointBorderColor: "#2C5364",
+            pointBackgroundColor: "#2C5364",
+            segment: {
+              borderColor: ctx => '#2C5364',
+              // borderDash: ctx => [6, 6],
+            },
+            spanGaps: true,
           },
         ],
       },
@@ -481,6 +511,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
             },
           },
         },
+
         interaction: {
           mode: "index",
           intersect: false,
@@ -622,7 +653,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
         td.style.gridTemplateRows = "auto";
         td.style.gap = "1rem";
         td.style.padding = "0 1rem 0.5rem";
-        td.style.borderBottom = "1px solid rgba(0,0,0,0.06)";
 
         const div_1 = document.createElement("div");
         div_1.style.display = "flex";
@@ -632,7 +662,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
         span.style.background = colors.backgroundColor;
         span.style.height = "10px";
         span.style.width = "10px";
-        span.style.borderRadius = "5px";
         span.style.display = "inline-block";
 
         const customBody: string = body[0];
