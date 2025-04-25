@@ -1,15 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { HeatsComponent } from './heats/heats.component';
-import { FertilityRatioComponent } from './fertilityratio/fertilityratio.component';
-import { HealthsComponent } from './healths/healths.component';
-import { InseminationsComponent } from './inseminations/inseminations.component';
-import { InstallationsComponent } from './installations/installations.component';
-import { AnimalsComponent } from './animals/animals.component';
-import { FarmsComponent } from './farms/farms.component';
-import { ChartsComponent } from './charts/charts.component';
-import { ActivitiesComponent } from './activities/activities.component';
 
 const routes: Routes = [
   {
@@ -23,39 +14,48 @@ const routes: Routes = [
   },
   {
     path: 'animals',
-    component: AnimalsComponent,
+    loadComponent: () =>
+      import("../home/animals/animals.component").then((m) => m.AnimalsComponent)
   },
   {
     path: 'farms',
-    component: FarmsComponent,
+    loadComponent: () =>
+      import("../home/farms/farms.component").then((m) => m.FarmsComponent)
   },
   {
     path: 'heats',
-    component: HeatsComponent,
+    loadComponent: () =>
+      import("../home/heats/heats.component").then((m) => m.HeatsComponent)
   },
   {
     path: 'healths',
-    component: HealthsComponent,
+    loadComponent: () =>
+      import("../home/healths/healths.component").then((m) => m.HealthsComponent)
   },
   {
     path: 'installations',
-    component: InstallationsComponent,
+    loadComponent: () =>
+      import("../home/installations/installations.component").then((m) => m.InstallationsComponent)
   },
   {
     path: 'fertilityratio',
-    component: FertilityRatioComponent,
+    loadComponent: () =>
+      import("../home/fertilityratio/fertilityratio.component").then((m) => m.FertilityRatioComponent)
   },
   {
     path: 'inseminations',
-    component: InseminationsComponent,
+    loadComponent: () =>
+      import("../home/inseminations/inseminations.component").then((m) => m.InseminationsComponent)
   },
   {
     path: 'activities',
-    component: ActivitiesComponent,
+    loadComponent: () =>
+      import("../home/activities/activities.component").then((m) => m.ActivitiesComponent)
   },
   {
     path: 'charts/:animal',
-    component: ChartsComponent,
+    loadComponent: () =>
+      import("../home/charts/charts.component").then((m) => m.ChartsComponent)
   }
 ];
 
