@@ -8,7 +8,7 @@ import { combineLatest, Subscription } from "rxjs";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnDestroy {
   @ViewChild("myChart_1", { static: false }) myChart_1: ElementRef;
@@ -22,7 +22,7 @@ export class HomeComponent implements OnDestroy {
   private farmIdSubscription: Subscription;
 
   language: string = "English";
-  isLoading: boolean = false;
+  isLoading: boolean;
 
   alertItems: {
     label: string;
@@ -94,7 +94,6 @@ export class HomeComponent implements OnDestroy {
               this.chart2Parameter2 = translations["Pregnancy"];
             }
           });
-        this.isLoading = false;
       }
     },
       (error) => {
@@ -104,7 +103,6 @@ export class HomeComponent implements OnDestroy {
   }
 
   handleAuthenticatedUser(userId: string, role: string) {
-    this.isLoading = true;
     if (role === "SUPER_ADMIN") {
       combineLatest([
         this.userService.adminId$,
@@ -129,8 +127,6 @@ export class HomeComponent implements OnDestroy {
         this.fetchDataForFarm(userId, farmId);
       });
     }
-
-    this.isLoading = false;
   }
 
   fetchDataForFarm(userId: string, farmId: string) {
@@ -148,20 +144,16 @@ export class HomeComponent implements OnDestroy {
           this.activities = data["activities"] || [];
           this.updateAlertItems(farmId);
           this.createCharts();
+          this.isLoading = false;
         }
-        this.isLoading = false;
       },
-
-        // (error) => {
-        //   console.error('Error fetching data:', error);
-        //   this.isLoading = false;
-        // }
+        (error) => {
+          console.error('Error fetching data:', error);
+        }
       );
   }
 
   updateAlertItems(farmId: string) {
-    this.isLoading = true;
-
     const currentTime = new Date().getTime();
 
     this.alertItems = [
@@ -335,13 +327,10 @@ export class HomeComponent implements OnDestroy {
         route: "installations",
       },
     ];
-
-    this.isLoading = false;
-
   }
 
   createCharts() {
-    this.isLoading = true;
+    // this.isLoading = true;
     if (this.myChart_1 && this.myChart_2) {
       this.destroyCharts();
       this.ctx_1 = this.myChart_1.nativeElement.getContext("2d");
@@ -349,7 +338,6 @@ export class HomeComponent implements OnDestroy {
       this.plotGraph_1();
       this.plotGraph_2();
     }
-    this.isLoading = false;
   }
 
   destroyCharts() {
@@ -536,9 +524,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   getActiveEvents() {
-    this.isLoading = true;
     const currentTime = new Date().getTime();
-
     const events = {
       heats: this.heats
         .filter((event) => {
@@ -551,9 +537,6 @@ export class HomeComponent implements OnDestroy {
           return currentTime - startedAtTime < 30 * 24 * 60 * 60 * 1000;
         })
     };
-
-    this.isLoading = false;
-
     return events;
   }
 
