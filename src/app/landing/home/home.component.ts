@@ -50,6 +50,8 @@ export class HomeComponent implements OnDestroy {
   pregnancy_checks: any[] = [];
   activities: any[] = [];
 
+  totalAnimals: any;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -93,6 +95,10 @@ export class HomeComponent implements OnDestroy {
               this.chart2Parameter1 = translations["Heat"];
               this.chart2Parameter2 = translations["Pregnancy"];
             }
+          });
+
+          this.userService.fetchOrganizationDocuments(user['id']).subscribe((data)=>{
+              this.totalAnimals = data["animals"].length; 
           });
       }
     },

@@ -5,6 +5,27 @@
         <ion-spinner name="circular" color="primary"></ion-spinner>
       </div>
 
+      <!-- <div class="div-3">
+        <div>  -->
+          <!-- <ion-toolbar color="light">
+            <ion-title>
+              <b>
+                Active Events
+              </b>
+            </ion-title>
+          </ion-toolbar> -->
+  
+          <!-- <ion-toolbar color="dark">
+            <ion-item color="none">
+              <ion-title color="light">
+                Total Animals : {{totalAnimals}}
+              </ion-title>
+             
+            </ion-item>
+          </ion-toolbar> -->
+        <!-- </div>
+      </div> -->
+
   <div class="home-bg" *ngIf="!isLoading">
 
     <!-- <ion-fab slot="fixed" horizontal="end" vertical="bottom">
@@ -94,7 +115,6 @@
     </ion-modal>
 
     <div class="box-1">
-
       <div class="div-1 container-fluid">
         <div class="div-1-1" *ngFor="let item of alertItems" [routerLink]="['/', 'farm', 'dashboard', item.route]"
           routerLinkActive="router-link-active">
