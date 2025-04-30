@@ -2,23 +2,11 @@ import { Component, ElementRef, OnDestroy, ViewChild } from "@angular/core";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { UserService } from "src/app/services/user/user.service";
 import Chart, { ChartConfiguration } from "chart.js/auto";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { TranslateService } from "@ngx-translate/core";
 import { combineLatest, Subscription } from "rxjs";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
-  standalone: true,
-    imports: [
-      CommonModule,
-      IonicModule,
-      FormsModule,
-      TranslateModule,
-      RouterModule,
-    ],
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
