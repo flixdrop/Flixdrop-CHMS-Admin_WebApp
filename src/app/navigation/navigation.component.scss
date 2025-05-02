@@ -193,6 +193,24 @@ swiper-slide {
 
 }
 
+.overallcounts-section{
+  ion-row{
+    ion-col{
+      ion-label{
+        p{
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        h2{
+
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 1000px) {
   .button-label {
     display: none;

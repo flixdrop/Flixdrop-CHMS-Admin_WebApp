@@ -3,7 +3,6 @@
     <ion-item color="none">
       <ion-title color="light">
       </ion-title>
-     
     </ion-item>
   </ion-toolbar> -->
 
@@ -13,6 +12,28 @@
       <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
       [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
      
+      <ion-buttons slot="start">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="medium">
+                  <p>Account Holder</p>
+                  <h2 style="text-transform: lowercase;">{{user['email']}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="medium">
+                  <p>Type of Account</p>
+                  <h2>{{user['role']}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-buttons>
 
       <ion-buttons slot="end">
         <ion-button size="small" expand="block" [routerLink]="['/', 'farm', 'dashboard']">
@@ -32,17 +53,16 @@
           <ion-icon size="small" name="chevron-down-circle" color="medium"></ion-icon>
         </ion-button>
       </ion-buttons>
-
     </ion-toolbar>
 
     <ion-toolbar class="nav-toolbar" color="none">
       <!-- <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
         [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img> -->
       <ion-img class="brand-logo" slot="start" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
-        src="../../../assets/icons/itc-logo.png"></ion-img>
-
+        src="../../../assets/icons/itc-logo.png"></ion-img>  
 
       <ion-buttons slot="start">
+
         <ion-select *ngIf="typeOfUser === 'SUPER_ADMIN'" fill="solid" [disabled]="isLoading" interface="popover"
           label="{{'Admin' | translate}}" (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}"
           toggle-icon="chevron-down-outline">
@@ -53,6 +73,52 @@
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
         </ion-select>
+
+        <ion-grid class="overallcounts-section">
+          <ion-row>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="tertiary">
+                  <p>Total Admins</p>
+                  <h2>{{admins.length}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="tertiary">
+                  <p>Total Users</p>
+                  <h2>{{totalFarms}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="tertiary">
+                  <p>Total Animals</p>
+                  <h2>{{totalAnimals}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="tertiary">
+                  <p>Total Installations</p>
+                  <h2>{{totalInstallations}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col>
+              <ion-chip color="light">
+                <ion-label color="tertiary">
+                  <p>Total Events</p>
+                  <h2>{{totalEvents}}</h2>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
       </ion-buttons>
 
       <!-- <ion-buttons slot="end">

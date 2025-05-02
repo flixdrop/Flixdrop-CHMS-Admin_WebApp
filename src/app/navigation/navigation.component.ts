@@ -52,6 +52,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
   selectedAdmin: string | undefined;
   selectedFarm: string | undefined;
 
+  user: any;
+  totalAnimals: any;
+  totalFarms: any;
+  totalUsers: any;
+  totalInstallations: any;
+  totalEvents: any;
+
   // isHandset$: Observable<boolean> = this.breakpointObserver
   //   .observe(Breakpoints.Handset)
   //   .pipe(
@@ -85,8 +92,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.userDataSub = this.authService.authenticatedUser.subscribe((user) => {
       if (user) {
+        this.user = user;
         this.typeOfUser = user["role"];
         this.loadOrganizationData(user["id"]);
+
+        this.userService
+      .fetchOrganizationDocuments(user['id'])
+      .subscribe(
+        (data) => {
+          this.totalFarms = data['farms'].length;
+          this.totalAnimals = data['animals'].length;
+          this.totalInstallations = data['collars'].length;
+          this.totalEvents = data['heatEvents'].length + data['healthEvents'].length;
+        });
+
       } else {
         this.isLoading = false;
       }
