@@ -25,6 +25,9 @@ export const environment = {
     // apiUrl: "http://localhost:9000/api/v1"
 
     /** Connect with Local Computer Server Apollo Server using this API */
-    apiUrl: "http://localhost:9000/graphql"
+    // apiUrl: "http://localhost:9000/graphql"
+
+    apiUrl: "https://chms-backend.flixdrop.com/"
+
   }
 };
