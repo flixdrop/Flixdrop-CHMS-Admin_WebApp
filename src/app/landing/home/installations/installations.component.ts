@@ -38,8 +38,18 @@ export class InstallationsComponent implements OnInit, OnDestroy {
   maxDate: string;
 
   p: number = 1;
+  progress:number = 0;
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService) {
+    setInterval(() => {
+      this.progress += 1;
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+   }
 
   ngOnDestroy() {
     if (this.userDataSub) {

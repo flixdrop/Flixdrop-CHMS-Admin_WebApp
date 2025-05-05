@@ -6,7 +6,7 @@
 </ion-content>
 
 <ion-footer [@slideDown]="isVisible ? 'in' : 'out'">
-  <div class="d-flex flex-column justify-content-center align-items-start p-2">
+  <div class="d-flex flex-column justify-content-center align-items-start p-2" style="cursor: pointer;" [routerLink]="['/']" routerLinkActive="router-link-active">
     <img class="logo" src="../../assets/images/fd.png" alt="fd-icon">
     <p>&copy; Flixdrop Techology Pvt. Ltd. - 2024 . All Rights Reserved. <span style="color: gold !important;">
         Developed by flixdrop&#64;2023 </span> </p>

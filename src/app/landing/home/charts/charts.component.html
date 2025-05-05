@@ -36,9 +36,15 @@
       </ion-toolbar>
     </ion-header>
 
-    <div style="width: 100%; display: flex; align-items: center;
-    justify-content: center;" *ngIf="isLoading">
-      <ion-spinner name="circular" color="primary"></ion-spinner>
+    <div *ngIf="isLoading" class="progress-bar">
+      <div>
+        <ion-progress-bar [value]="progress"></ion-progress-bar>
+        <ion-chip color="light">
+          <ion-label [value]="progress">
+            Loading {{progress}}% ...
+          </ion-label>
+        </ion-chip>
+      </div>
     </div>
 
     <div [hidden]="!isLoading && !(selectedSegment === 'summary')" class="div-1">

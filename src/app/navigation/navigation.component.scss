@@ -4,13 +4,11 @@
 }
 
 .header-bg{
-  padding: 0.5rem;
   background-color: #e8e8e8;
   // clip-path: polygon(0 0, 100% 0, 100% 20%, 100% 97%, 97% 100%, 3% 100%, 0 97%, 0% 20%);
 }
 
 .nav-toolbar {
-  padding: 0.5rem;
   background: #eee !important;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px !important;
   --box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px !important;
@@ -18,12 +16,10 @@
 
 .brand-logo {
   cursor: pointer !important;
-  margin: 0 1rem;
   border-radius: 4px;
-  width: 50px !important;
-  aspect-ratio: 1/1;
+  height: 70px;
+  aspect-ratio: 16/9;
   pointer-events: none;
-  background: #fff;
 }
 
 .brand-logo:hover {
@@ -86,7 +82,7 @@ ion-button {
   ion-label {
     font-size: small;
     font-weight: bold;
-    color: black !important;
+    color: var(--ion-color-medium) !important;
   }
 
   ion-icon {

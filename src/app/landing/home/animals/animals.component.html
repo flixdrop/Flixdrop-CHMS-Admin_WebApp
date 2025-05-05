@@ -15,7 +15,6 @@
     </ion-buttons>
 
     <ion-buttons *ngIf="!isLoading" slot="end">
-
       <ion-button size="small" expand="block" (click)="confirmDownload()">
         <ion-label class="button-label">
           {{'Generate Report' | translate}}
@@ -23,7 +22,6 @@
         <ion-icon name="print"></ion-icon>
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
@@ -60,9 +58,15 @@
 
 <ion-content class="custom-content" [scrollEvents]="true">
 
-  <div style="width: 100%; display: flex; align-items: center;
-  justify-content: center;" *ngIf="isLoading">
-    <ion-spinner name="circular" color="primary"></ion-spinner>
+  <div *ngIf="isLoading" class="progress-bar">
+    <div>
+      <ion-progress-bar [value]="progress"></ion-progress-bar>
+      <ion-chip color="light">
+        <ion-label [value]="progress">
+          Loading {{progress}}% ...
+        </ion-label>
+      </ion-chip>
+    </div>
   </div>
 
   <div *ngIf="!isLoading" class="table-container">

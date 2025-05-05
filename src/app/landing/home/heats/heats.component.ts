@@ -33,12 +33,21 @@ export class HeatsComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
 
     p: number = 1;
+    progress:number = 0;
   
     constructor(
       private userService: UserService,
       private inputHandlerService: InputHandlerService,
       private sortHandlerService: SortTableService
     ) {
+      setInterval(() => {
+        this.progress += 1;
+        if (this.progress > 1) {
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1000);
+        }
+      }, 50);
       this.maxDate = new Date().toISOString().split('T')[0];
       this.toDate = new Date().toISOString();
       const thirtyDaysAgo = new Date();

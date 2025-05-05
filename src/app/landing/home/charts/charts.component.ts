@@ -39,21 +39,27 @@ export class ChartsComponent implements OnInit, OnDestroy {
   heatEvents: any[] = [];
   inseminations: any[] = [];
   allEvents: any[] = [];
-
   chartUnitCount: number = 10;
-
   isLoading: boolean = false;
-
   graphDataSub: Subscription;
-
   selectedSegment = "summary";
+  progress:number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
     private location: Location
-  ) { }
+  ) { 
+    setInterval(() => {
+      this.progress += 1;
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+  }
 
   ngOnDestroy() {
     if (this.graphDataSub) {

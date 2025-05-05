@@ -8,13 +8,16 @@
 
   <div class="header-bg">
 
-    <ion-toolbar class="nav-toolbar" color="none">
-      <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
-      [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
-     
+    <ion-toolbar class="nav-toolbar" color="none">  
       <ion-buttons slot="start">
-        <ion-grid>
+        <ion-grid class="overallcounts-section">
           <ion-row>
+            <ion-col>
+              <a [routerLink]="['/']" routerLinkActive="router-link-active">
+                <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade);" slot="start"
+                [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img>
+              </a>
+            </ion-col>
             <ion-col>
               <ion-chip color="light">
                 <ion-label color="medium">
@@ -36,10 +39,10 @@
       </ion-buttons>
 
       <ion-buttons slot="end">
-        <ion-button size="small" expand="block" [routerLink]="['/', 'farm', 'dashboard']">
+        <!-- <ion-button size="small" expand="block" [routerLink]="['/', 'farm', 'dashboard']">
           <ion-label class="button-label">{{'Home' | translate}}</ion-label>
           <ion-icon name="home" color="medium"></ion-icon>
-        </ion-button>
+        </ion-button> -->
         <ion-button id="search-animal" size="small" expand="block" fill="clear">
           <ion-label class="button-label">{{'Search Animals' | translate}}</ion-label>
           <ion-icon name="search" color="medium"></ion-icon>
@@ -56,14 +59,12 @@
     </ion-toolbar>
 
     <ion-toolbar class="nav-toolbar" color="none">
-      <!-- <ion-img class="brand-logo" style="border-right: 2px solid var(--ion-color-light-shade); " slot="start"
-        [routerLink]="['/']" routerLinkActive="router-link-active" src="../../assets/icons/fd.png"></ion-img> -->
-      <ion-img class="brand-logo" slot="start" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
-        src="../../../assets/icons/itc-logo.png"></ion-img>  
+   
+      <!-- <ion-img class="brand-logo" slot="start" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
+        src="../../../assets/icons/itc-logo.png"></ion-img>   -->
 
       <ion-buttons slot="start">
-
-        <ion-select *ngIf="typeOfUser === 'SUPER_ADMIN'" fill="solid" [disabled]="isLoading" interface="popover"
+        <!-- <ion-select *ngIf="typeOfUser === 'SUPER_ADMIN'" fill="solid" [disabled]="isLoading" interface="popover"
           label="{{'Admin' | translate}}" (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}"
           toggle-icon="chevron-down-outline">
           <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
@@ -72,10 +73,29 @@
           (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-outline">
           <ion-select-option value="All Farms">All Farms</ion-select-option>
           <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
-        </ion-select>
+        </ion-select> -->
 
         <ion-grid class="overallcounts-section">
           <ion-row>
+            <ion-col>
+              <ion-img class="brand-logo" *ngIf="!isLoading && typeOfUser !== 'SUPER_ADMIN'"
+              src="../../../assets/icons/itc-logo.png"></ion-img>  
+            </ion-col>
+            <ion-col>
+              <ion-select *ngIf="typeOfUser === 'SUPER_ADMIN'" fill="solid" [disabled]="isLoading" interface="popover"
+              label="{{'Admin' | translate}}" (ionChange)="onSelectAdmin($event)" selectedText="{{selectedAdmin}}"
+              toggle-icon="chevron-down-outline">
+              <ion-select-option [value]="admin" *ngFor="let admin of admins;">{{admin?.name}}</ion-select-option>
+            </ion-select>
+            </ion-col>
+            <ion-col>
+              <ion-select [disabled]="isLoading" fill="solid" interface="popover" label="{{ 'Farm' | translate }}"
+              (ionChange)="onSelectFarm($event)" [selectedText]="selectedFarm" toggle-icon="chevron-down-outline">
+              <ion-select-option value="All Farms">All Farms</ion-select-option>
+              <ion-select-option [value]="farm" *ngFor="let farm of farms;">{{ farm?.name }}</ion-select-option>
+            </ion-select>
+            </ion-col>
+
             <ion-col>
               <ion-chip color="light">
                 <ion-label color="tertiary">

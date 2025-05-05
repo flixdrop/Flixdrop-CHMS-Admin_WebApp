@@ -33,13 +33,23 @@ export class InseminationsComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
 
   p: number = 1;
+  progress:number = 0;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private inputHandlerService: InputHandlerService,
     private sortHandlerService: SortTableService,
-  ) {}
+  ) {
+    setInterval(() => {
+      this.progress += 1;
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+  }
 
   ngOnDestroy() {
     if (this.userDataSub) {

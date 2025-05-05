@@ -33,6 +33,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   maxDate: string;
 
   p: number = 1;
+  progress:number = 0;
 
   // Healthy thresholds for activities
   healthyFeedingTimeMin: number = 240;
@@ -51,7 +52,16 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private inputHandlerService: InputHandlerService,
     private sortHandlerService: SortTableService
-  ) {}
+  ) {
+    setInterval(() => {
+      this.progress += 1;
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+  }
 
   ngOnDestroy() {
     if (this.userDataSub) {

@@ -48,13 +48,23 @@ export class FertilityRatioComponent implements OnInit {
   private farmIdSubscription: Subscription;
 
   p: number = 1;
+  progress:number = 0;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private inputHandlerService: InputHandlerService,
     private sortHandlerService: SortTableService,
-  ) { }
+  ) { 
+    setInterval(() => {
+      this.progress += 1;
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+  }
 
   ngOnDestroy() {
     this.csvdata = [];
